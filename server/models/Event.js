@@ -11,9 +11,23 @@ const eventSchema = new Schema({
   time: {
     type: String,
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+  city: {
+    type: String,
   },
+  users: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
+  artists: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Artist',
+    },
+  ],
 });
+
+const Event = mongoose.model('Event', eventSchema);
+
+module.exports = Event;
