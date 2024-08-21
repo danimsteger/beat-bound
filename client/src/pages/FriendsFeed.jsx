@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Home = () => {
+const FriendsFeed = () => {
   const history = useHistory();
 
   const handleProfileClick = () => {
@@ -19,9 +19,9 @@ const Home = () => {
         </nav>
       </header>
       <section>
-        <h2>Featured Playlists</h2>
+        <h2>Friends Feed</h2>
         <div>
-          {/* TODO: Add featured playlists here */}
+          {/* TODO: Add shared songs/events by friends here */}
         </div>
       </section>
       <footer>
@@ -33,4 +33,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default FriendsFeed;

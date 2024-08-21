@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Home = () => {
+const ArtistPage = () => {
   const history = useHistory();
 
   const handleProfileClick = () => {
@@ -19,9 +19,21 @@ const Home = () => {
         </nav>
       </header>
       <section>
-        <h2>Featured Playlists</h2>
+        <h2>Artist Name</h2>
         <div>
-          {/* TODO: Add featured playlists here */}
+          {/* TODO: Add artist image and top songs here */}
+        </div>
+      </section>
+      <section>
+        <h2>Related Artists</h2>
+        <div>
+          {/* TODO: Add related artists here */}
+        </div>
+      </section>
+      <section>
+        <h2>Upcoming Events</h2>
+        <div>
+          {/* TODO: Add upcoming events here */}
         </div>
       </section>
       <footer>
@@ -33,4 +45,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ArtistPage;
