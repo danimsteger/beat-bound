@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Event = require();
+const Event = require('./Event');
 const Song = require('./Song');
+const Artist = require('./Artist');
 
 const userSchema = new Schema({
   firstName: {
