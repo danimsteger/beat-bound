@@ -11,11 +11,13 @@ const songSchema = new Schema({
   imageUrl: {
     type: String,
   },
-  artist: {
-    type: Schema.Types.ObjectId,
-    ref: 'Artist',
-    required: true,
-  },
+  artists: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Artist',
+      required: true,
+    },
+  ],
 
   users: [
     {
