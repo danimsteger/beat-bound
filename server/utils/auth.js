@@ -1,18 +1,28 @@
 const jwt = require('jsonwebtoken');
 const secret = 'mysecretsshhhhh';
 const expiration = '2h';
+const { GraphQLError } = require('graphql');
 
 module.exports = {
-  authMiddleware: function (req, res, next) {
+  AuthenticationError: new GraphQLError('Could not authenticate user.', {
+    extensions: {
+      code: 'UNAUTHENTICATED',
+    },
+  }),
+
+  authMiddleware: function ({ req }) {
     let token = req.query.token || req.headers.authorization;
 
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer ')
+    ) {
       token = token.split(' ')[1].trim();
     }
 
     if (!token) {
       console.log('No token provided');
-      return next();
+      return req;
     }
 
     try {
@@ -22,7 +32,7 @@ module.exports = {
       console.error('Invalid token:', error.message);
     }
 
-    return next();
+    return req;
   },
 
   signToken: function ({ username, email, _id }) {

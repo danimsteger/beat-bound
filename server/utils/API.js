@@ -1,6 +1,3 @@
-const fetch = require('node-fetch');
-const getAccessToken = require('./getToken');
-
 async function getTrack(trackQuery) {
     try {
         const accessToken = await getAccessToken();
@@ -55,3 +52,4 @@ async function getArtist(artistQuery) {
 };
 module.exports = { getTrack, getArtist } ;
 
+module.exports = getTrack;
