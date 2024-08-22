@@ -1,12 +1,4 @@
-// import React from 'react';
-import { useHistory } from 'react-router-dom';
-
 const ArtistPage = () => {
-  const history = useHistory();
-
-  const handleProfileClick = () => {
-    history.push('/login');
-  };
 
   return (
     <div>

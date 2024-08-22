@@ -9,12 +9,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NoMatch from './pages/NoMatch.jsx';
 import App from './App.jsx';
 import Home from './pages/Home';
-import ArtistPage from './pages/ArtistPage.jsx'
-import EventPage from './pages/EventPage.jsx'
-import FriendsFeed from './pages/FriendsFeed.jsx'
-import Profile from './pages/Profile.jsx'
-
-import Login from './pages/Login.jsx';
+// import ArtistPage from './pages/ArtistPage.jsx'
+// import EventPage from './pages/EventPage.jsx'
+// import FriendsFeed from './pages/FriendsFeed.jsx'
+// import Profile from './pages/Profile.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,22 +22,20 @@ const router = createBrowserRouter([
       {
         index: true, 
         element: <Home />
-      }, {
-        path: '/Login',
-        element: <Login />
-      }, {
-        path: '/ArtistPage',
-        element: <ArtistPage />
-      },{
-        path: '/EventPage',
-        element: <EventPage />
-      },{
-        path: '/FriendsFeed',
-        element: <FriendsFeed />
-      },{
-        path: '/Profile',
-        element: <Profile />
       },
+      // }, {
+      //   path: '/ArtistPage',
+      //   element: <ArtistPage />
+      // },{
+      //   path: '/EventPage',
+      //   element: <EventPage />
+      // },{
+      //   path: '/FriendsFeed',
+      //   element: <FriendsFeed />
+      // },{
+      //   path: '/Profile',
+      //   element: <Profile />
+      // },
     ]
   }
 ]);

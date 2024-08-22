@@ -1,13 +1,5 @@
-// import React from 'react';
-// import { useHistory } from 'react-router-dom';
 
 const EventPage = () => {
-  // const history = useHistory();
-
-  // const handleProfileClick = () => {
-  //   history.push('/login');
-  // };
-
   return (
     <div>
       <section>
