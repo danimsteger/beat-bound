@@ -1,6 +1,3 @@
-const fetch = require('node-fetch');
-const getAccessToken = require('./getToken');
-
 async function getTrack(trackQuery) {
     try {
         const accessToken = await getAccessToken();
@@ -27,5 +24,5 @@ async function getTrack(trackQuery) {
         console.error('Error:', error);
     }
 };
-module.exports = getTrack;
 
+module.exports = getTrack;
