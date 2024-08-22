@@ -1,40 +1,123 @@
 const jwt = require('jsonwebtoken');
 const { User, Song, Event, Artist } = require('../models');
+const mongoose = require('mongoose');
 
 const { signToken, AuthenticationError } = require('../utils/auth');
+
+const createSong = async (name, imageUrl) => {
+  const newSong = new Song({ name, imageUrl, artists: [], users: [] });
+  await newSong.save();
+  return newSong;
+};
+
+const updateUser = async (user) => {
+  await User.findByIdAndUpdate(user._id, {
+    $set: { songs: user.songs, events: user.events, artists: user.artist },
+  });
+};
+
+const createEvent = async (location, time, city) => {
+  const newEvent = new Event({ location, time, city, artists: [], users: [] });
+  await newEvent.save();
+  return newEvent;
+};
+
+const createArtist = async (name, imageUrl) => {
+  const newArtist = new Artist({ name, imageUrl, events: [], users: [] });
+  await newArtist.save({ new: true });
+  return newArtist;
+};
 
 const resolvers = {
   Query: {
     songs: async () => Song.find(),
-    users: async () => User.find(),
-    me: async (_, _, { user }) => {
+    events: async () => Event.find().populate('users'),
+    artists: async () => Artist.find().populate('users'),
+    users: async () =>
+      User.find({}).populate('songs').populate('events').populate('artists'),
+
+    me: async (_, { user }) => {
       if (!user) {
         throw AuthenticationError;
       }
 
-      const user = await User.findById(user._id)
+      const currentUser = await User.findById(user._id)
         .populate('songs')
         .populate('artists')
         .populate('events');
 
-      if (!user.songs) {
+      if (!currentUser.songs) {
         user.songs = [];
       }
 
-      if (!user.artists) {
+      if (!currentUser.artists) {
         user.artists = [];
       }
 
-      if (!user.events) {
+      if (!currentUser.events) {
         user.events = [];
       }
 
       return user;
     },
+    user: async (_, args) => {
+      return await User.findById(args.id)
+        .populate('songs')
+        .populate('artists')
+        .populate('events');
+    },
   },
   Mutation: {
-    addSong: async (parent, { name, imageUrl }) => {
-      return await Song.create({ name, imageUrl });
+    addSong: async (parent, { name, imageUrl, userId }, context) => {
+      const newSong = await createSong(name, imageUrl);
+
+      const user = await User.findById(userId);
+
+      await user.populate();
+
+      user.songs.push(newSong);
+      await updateUser(user);
+
+      newSong.users.push(user);
+      await newSong.save({ new: true });
+
+      return newSong;
+    },
+
+    addEvent: async (parent, { location, time, city, userId }, context) => {
+      const newEvent = await createEvent(location, time, city);
+      const user = await User.findById(userId);
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      await user.populate();
+
+      user.events.push(newEvent);
+      await updateUser(user);
+
+      newEvent.users.push(user);
+      await newEvent.save({ new: true });
+
+      return newEvent;
+    },
+
+    addArtist: async (parent, { name, imageUrl, userId }, context) => {
+      const newArtist = await createArtist(name, imageUrl);
+      const user = await User.findById(userId);
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      user.artists.push(newArtist);
+      await user.save();
+
+      newArtist.users.push(user);
+      await newArtist.save({ new: true });
+
+      return newArtist;
     },
 
     addUser: async (_, { firstName, lastName, email, password }) => {
@@ -43,12 +126,15 @@ const resolvers = {
         throw new UserInputError('A user with this email already exists');
       }
 
-      const newUser = await User.create({
-        firstName,
-        lastName,
-        email,
-        password,
-      });
+      const newUser = await User.create(
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        },
+        { new: true }
+      );
 
       const token = signToken(newUser);
 
