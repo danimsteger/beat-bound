@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+// deleted the React call from above ^ -wjl
 import { BrowserRouter as Router, Route, Redirect, useHistory } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
