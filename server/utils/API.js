@@ -27,5 +27,31 @@ async function getTrack(trackQuery) {
         console.error('Error:', error);
     }
 };
-module.exports = getTrack;
+
+async function getArtist(artistQuery) {
+    try {
+        const accessToken = await getAccessToken();
+        const url = `https://api.spotify.com/v1/search?query=${encodeURIComponent(artistQuery)}&type=artist&locale=en-US%2Cen%3Bq%3D0.9&offset=0&limit=1`;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        const data = await response.json();
+        if (data.artists && data.artists.items.length > 0) {
+            const artist = data.artists.items[0];
+            console.log('Artist Name:', artist.name);
+            console.log('URI:', artist.uri);
+            console.log('Image URL: ', artist.images[0].url);
+            console.log('External URL:', artist.external_urls.spotify);
+        } else {
+            console.log('No artist found');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+module.exports = { getTrack, getArtist } ;
 
