@@ -1,23 +1,15 @@
 // import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 const EventPage = () => {
-  const history = useHistory();
+  // const history = useHistory();
 
-  const handleProfileClick = () => {
-    history.push('/login');
-  };
+  // const handleProfileClick = () => {
+  //   history.push('/login');
+  // };
 
   return (
     <div>
-      <header>
-        <h1>BeatBound 🎵</h1>
-        <input type="text" placeholder="Search..." />
-        <nav>
-          <button>Home / Explore</button>
-          <button onClick={handleProfileClick}>My Profile</button>
-        </nav>
-      </header>
       <section>
         <h2>Event Name</h2>
         <div>

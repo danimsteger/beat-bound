@@ -10,14 +10,6 @@ const ArtistPage = () => {
 
   return (
     <div>
-      <header>
-        <h1>BeatBound 🎵</h1>
-        <input type="text" placeholder="Search..." />
-        <nav>
-          <button>Home / Explore</button>
-          <button onClick={handleProfileClick}>My Profile</button>
-        </nav>
-      </header>
       <section>
         <h2>Artist Name</h2>
         <div>
