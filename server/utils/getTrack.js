@@ -3,9 +3,7 @@ const getAccessToken = require('./getToken');
 
 async function getTrack(trackQuery) {
     try {
-        // const accessToken = await getAccessToken(); // Get the access token
-        const accessToken = 'BQC2g56mBNmpXDdS-7Vgg0q5ycgtqD77SyKeNU09OBtAB9kkbd5nOh9tisWZf2WOcDtLtTi0PkWvmbMuSRA_SyNwI8DmGPP0PI1xlJ9snFdPPvUQaQg';
-        // const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(trackQuery)}&type=track&limit=1`;
+        const accessToken = await getAccessToken();
         const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(trackQuery)}&type=track&limit=1&offset=0`;
         const response = await fetch(url, {
             method: 'GET',
@@ -28,7 +26,6 @@ async function getTrack(trackQuery) {
     } catch (error) {
         console.error('Error:', error);
     }
-}
+};
+module.exports = getTrack;
 
-
-getTrack('I can do it with a broken heart');
