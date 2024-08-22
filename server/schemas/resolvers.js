@@ -7,12 +7,11 @@ const resolvers = {
   Query: {
     songs: async () => Song.find(),
     users: async () => User.find(),
-    me: async (_, _, { user }) => {
+    me: async (parent, args, { user }) => {
       if (!user) {
-        throw AuthenticationError;
+        if (!user) throw new AuthenticationError("You must be logged in");
       }
-
-      const user = await User.findById(user._id)
+      const foundUser = await User.findById(user._id)
         .populate('songs')
         .populate('artists')
         .populate('events');
@@ -29,7 +28,7 @@ const resolvers = {
         user.events = [];
       }
 
-      return user;
+      return foundUser;
     },
   },
   Mutation: {
