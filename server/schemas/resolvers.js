@@ -51,20 +51,20 @@ const resolvers = {
 
       const token = signToken(newUser);
 
-      return { token, newUser };
+      return { token, user: newUser };
     },
 
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new AuthenticationError("No user found with this email address.");
       }
 
       const validPassword = await user.isCorrectPassword(password);
 
       if (!validPassword) {
-        throw AuthenticationError;
+        throw new AuthenticationError("Incorrect password.");
       }
 
       const token = signToken(user);
