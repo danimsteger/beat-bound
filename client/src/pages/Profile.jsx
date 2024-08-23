@@ -13,7 +13,7 @@ const Profile = () => {
         <div>{/* TODO: Add saved artists here */}</div>
       </section>
       <section>
-        <h2>My Saved Songs</h2>
+        <h2>My Saved Songs!</h2>
         <div>{/* TODO: Add saved songs here */}</div>
       </section>
       <footer>
