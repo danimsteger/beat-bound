@@ -5,7 +5,7 @@ import Nav from './components/Nav';
 import Auth from './utils/auth'; 
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
 });
 
 const authLink = setContext((_, { headers }) => {
