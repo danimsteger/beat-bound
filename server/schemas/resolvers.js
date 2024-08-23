@@ -36,11 +36,10 @@ const resolvers = {
     users: async () =>
       User.find({}).populate('songs').populate('events').populate('artists'),
 
-    me: async (_, { user }) => {
+    me: async (parent, args, { user }) => {
       if (!user) {
-        throw AuthenticationError;
+        if (!user) throw new AuthenticationError("You must be logged in");
       }
-
       const currentUser = await User.findById(user._id)
         .populate('songs')
         .populate('artists')
@@ -58,7 +57,7 @@ const resolvers = {
         user.events = [];
       }
 
-      return user;
+      return foundUser;
     },
     user: async (_, args) => {
       return await User.findById(args.id)
