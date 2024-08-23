@@ -5,7 +5,7 @@ import Nav from './components/Nav';
 import Auth from './utils/auth'; 
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+  uri: 'https://beat-bound.onrender.com/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
