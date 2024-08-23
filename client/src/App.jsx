@@ -33,7 +33,6 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Nav />
-      <Button type="primary"> Test Button</Button>
       <Outlet />
     </ApolloProvider>
   );

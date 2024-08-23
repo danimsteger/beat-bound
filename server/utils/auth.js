@@ -22,17 +22,18 @@ module.exports = {
 
     if (!token) {
       console.log('No token provided');
-      return req;
+      return {};
     }
 
     try {
       const decoded = jwt.verify(token, secret);
-      req.user = decoded;
+      console.log('Decoded User:', decoded);
+      return { user: decoded };
     } catch (error) {
       console.error('Invalid token:', error.message);
     }
 
-    return req;
+    return {};
   },
 
   signToken: function ({ username, email, _id }) {
