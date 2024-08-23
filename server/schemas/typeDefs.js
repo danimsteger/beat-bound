@@ -40,16 +40,16 @@ type Auth {
   users: [User]
 }
 
-  type Query {
-    users: [User]
-    songs: [Song]
-    me: User
-    user(id: ID!): User
-    events: [Event]
-    artists: [Artist]
-  }
+type Query {
+  users: [User]
+  songs: [Song]
+  me: User
+  user(id: ID!): User
+  events: [Event]
+  artists: [Artist]
+}
 
-  type Mutation {
+type Mutation {
   addSong(
     name: String!,
     imageUrl: String,
@@ -61,7 +61,7 @@ type Auth {
     lastName: String!
     email: String!
     password: String!
-): Auth
+  ): Auth
 
   login(
     email: String!
@@ -79,7 +79,22 @@ type Auth {
     name: String!
     imageUrl: String
     userId: [ID!]
-    ): Artist
+  ): Artist
+
+  removeEvent(
+    userId: ID!
+    eventId: ID!
+  ): User
+
+  removeArtist(
+    userId: ID!
+    artistId: ID!
+  ): User
+
+  removeSong(
+    userId: ID!
+    songId: ID!
+  ): User
   }
 
   

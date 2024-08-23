@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const { User, Song, Event, Artist } = require('../models');
 const mongoose = require('mongoose');
+const {
+  Types: { ObjectId },
+} = require('mongoose');
 
 const { signToken, AuthenticationError } = require('../utils/auth');
 
@@ -38,7 +41,7 @@ const resolvers = {
 
     me: async (parent, args, { user }) => {
       if (!user) {
-        if (!user) throw new AuthenticationError("You must be logged in");
+        if (!user) throw new AuthenticationError('You must be logged in');
       }
       const currentUser = await User.findById(user._id)
         .populate('songs')
@@ -48,15 +51,12 @@ const resolvers = {
       if (!currentUser.songs) {
         user.songs = [];
       }
-
       if (!currentUser.artists) {
         user.artists = [];
       }
-
       if (!currentUser.events) {
         user.events = [];
       }
-
       return foundUser;
     },
     user: async (_, args) => {
@@ -144,18 +144,61 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("No user found with this email address.");
+        throw new AuthenticationError('No user found with this email address.');
       }
 
       const validPassword = await user.isCorrectPassword(password);
 
       if (!validPassword) {
-        throw new AuthenticationError("Incorrect password.");
+        throw new AuthenticationError('Incorrect password.');
       }
 
       const token = signToken(user);
 
       return { token, user };
+    },
+
+    removeEvent: async (_, { userId, eventId }) => {
+      return User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $pull: {
+            events: {
+              _id: eventId,
+            },
+          },
+        },
+        { new: true }
+      );
+    },
+
+    removeArtist: async (_, { userId, artistId }) => {
+      // const artistObjectId = ObjectId(artistId);
+      return User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $pull: {
+            artists: {
+              _id: artistId,
+            },
+          },
+        },
+        { new: true }
+      );
+    },
+
+    removeSong: async (_, { userId, songId }) => {
+      return User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $pull: {
+            songs: {
+              _id: songId,
+            },
+          },
+        },
+        { new: true }
+      );
     },
   },
 };
