@@ -1,8 +1,14 @@
-import { Outlet } from 'react-router-dom';
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink,} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import Nav from './components/Nav';
-import Auth from './utils/auth'; 
+import { Outlet } from "react-router-dom";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import Nav from "./components/Nav";
+import Auth from "./utils/auth";
+import { Button } from "antd";
 
 const httpLink = createHttpLink({
   uri: import.meta.env.VITE_GRAPHQL_URI,
@@ -13,7 +19,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
@@ -26,8 +32,9 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-        <Nav />
-        <Outlet />
+      <Nav />
+      <Button type="primary"> Test Button</Button>
+      <Outlet />
     </ApolloProvider>
   );
 }
