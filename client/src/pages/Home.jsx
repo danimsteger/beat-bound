@@ -1,14 +1,14 @@
 import FeatPlaylistCarousel from "../components/FeatPlaylists";
+import FeatArtists from "../components/FeatArtists";
 
 const Home = () => {
   return (
     <div>
       <section>
         <FeatPlaylistCarousel></FeatPlaylistCarousel>
-        <h2> Featured Tracks</h2>
+        <FeatArtists></FeatArtists>
+        <h2> Featured Tracks???</h2>
         <div>{/* tracks */}</div>
-        <h2>Featured Playlists</h2>
-        <div id="playlists">{/* TODO: Add featured playlists here */}</div>
       </section>
       <footer>
         <div id="now-playing">{/* TODO: Add Now Playing bar here */}</div>
