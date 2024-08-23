@@ -10,6 +10,7 @@ let accessToken = {
 const TOKEN_EXPIRY_BUFFER = 30 * 1000;
 
 async function fetchAccessToken() {
+  console.log('Attempting to fetch new access token...');
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   const basicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString(
@@ -29,7 +30,8 @@ async function fetchAccessToken() {
     const expiresInMs = data.expires_in * 1000; // Convert seconds to milliseconds
     accessToken.value = data.access_token;
     accessToken.expiry = Date.now() + expiresInMs;
-    console.log("Token Expiry Time (ms):", accessToken.expiry); // Debug: Log the correct expiry time
+    console.log("Token Expiry Time (ms):", accessToken.expiry);
+    console.log('Token Created!')
     return accessToken.value;
   } else {
     throw new Error("Failed to obtain access token");
