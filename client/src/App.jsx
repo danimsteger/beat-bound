@@ -11,7 +11,7 @@ import Auth from "./utils/auth";
 import { Button } from "antd";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: "https://beat-bound.onrender.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
