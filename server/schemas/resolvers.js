@@ -33,7 +33,7 @@ const createArtist = async (name, imageUrl) => {
 
 const resolvers = {
   Query: {
-    songs: async () => Song.find(),
+    songs: async () => Song.find().populate('users'),
     events: async () => Event.find().populate('users'),
     artists: async () => Artist.find().populate('users'),
     users: async () =>
