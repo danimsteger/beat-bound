@@ -11,7 +11,7 @@ import Auth from "./utils/auth";
 import { Button } from "antd";
 
 const httpLink = createHttpLink({
-  uri: "https://beat-bound.onrender.com/graphql",
+  uri: import.meta.env.VITE_GRAPHQL_URI,
 });
 
 const authLink = setContext((_, { headers }) => {
