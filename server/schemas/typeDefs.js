@@ -7,9 +7,7 @@ const typeDefs = `
     songs: [Song]
     artists: [Artist]
     events: [Event]
-    
   }
-
 
 type Event {
   _id: ID
@@ -42,18 +40,20 @@ type Auth {
   users: [User]
 }
 
-
   type Query {
     users: [User]
     songs: [Song]
     me: User
-   
+    user(id: ID!): User
+    events: [Event]
+    artists: [Artist]
   }
 
   type Mutation {
   addSong(
     name: String!,
-    imageUrl: String
+    imageUrl: String,
+    userId: [ID!] 
   ): Song
 
   addUser(
@@ -68,7 +68,21 @@ type Auth {
     password: String!
     ): Auth
 
+  addEvent(
+    location: String!
+    time: String!
+    city: String!
+    userId: [ID!]
+    ): Event
+
+   addArtist(
+    name: String!
+    imageUrl: String
+    userId: [ID!]
+    ): Artist
   }
+
+  
 
 
 `;
