@@ -25,7 +25,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
-    "vitest": "^1.4.0"
+    "vitest": "^1.4.0",
+    "@vitejs/plugin-react": "^4.2.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.25.4",
