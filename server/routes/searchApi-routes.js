@@ -8,6 +8,7 @@ router.route("/track").get(async (req, res) => {
     const result = await getTrack(trackQuery);
     res.json(result);
   } catch (error) {
+    console.error('Error fetching track:', error);
     res.status(500).json({ error: "Failed to fetch track" });
   }
 });

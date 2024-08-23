@@ -1,9 +1,10 @@
 require("dotenv").config();
-const getAccessToken = require('./getToken');
+const getAccessToken = require("./getToken");
 
 async function getTrack(trackQuery) {
   try {
     const accessToken = await getAccessToken();
+    console.log("Access Token:", accessToken);
     const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
       trackQuery
     )}&type=track&limit=1&offset=0`;
@@ -17,14 +18,15 @@ async function getTrack(trackQuery) {
     const data = await response.json();
     if (data.tracks && data.tracks.items.length > 0) {
       const track = data.tracks.items[0];
-      console.log("Track Name:", track.name);
-      console.log(
-        "Artists:",
-        track.artists.map((artist) => artist.name).join(", ")
-      );
-      console.log("Album:", track.album.name);
-      console.log("Preview URL:", track.preview_url);
-      console.log("External URL:", track.external_urls.spotify);
+      const trackInfo = {
+        name: track.name,
+        artists: track.artists.map((artist) => artist.name).join(", "),
+        album: track.album.name,
+        previewUrl: track.preview_url,
+        externalUrl: track.external_urls.spotify,
+      };
+      console.log(trackInfo)
+      return trackInfo;
     } else {
       console.log("No tracks found");
     }
@@ -64,7 +66,9 @@ async function getArtist(artistQuery) {
 async function getArtistEvents(artistName) {
   try {
     const API_KEY = process.env.TICKETMASTER_API;
-    const attractionsUrl = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${encodeURIComponent(artistName)}&apikey=${API_KEY}&size=5`;
+    const attractionsUrl = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${encodeURIComponent(
+      artistName
+    )}&apikey=${API_KEY}&size=5`;
     const attractionsResponse = await fetch(attractionsUrl, { method: "GET" });
 
     if (!attractionsResponse.ok) {
