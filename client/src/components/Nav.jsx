@@ -5,59 +5,6 @@ import SignupForm from './SignupForm';
 import LoginForm from './LoginForm';
 import Auth from '../utils/auth';
 
-// function Nav() {
-//   const [showModal, setShowModal] = useState(false);
-//   function showNavigation() {
-//     if (Auth.loggedIn()) {
-//       return (
-//         <ul className="flex-row">
-//           <li className="mx-1">
-//             <Link to="/ArtistPage">
-//               Artist Page
-//             </Link>
-//           </li>
-//           <li className="mx-1">
-//             {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-//             <a href="/" onClick={() => Auth.logout()}>
-//               Logout
-//             </a>
-//           </li>
-//         </ul>
-//       );
-//     } else {
-//       return (
-//         <ul className="flex-row">
-//           <li className="mx-1">
-//             <Link to="/SignUp">
-//               Signup
-//             </Link>
-//           </li>
-//           <li className="mx-1">
-//             <Link to="/Login">
-//               Login
-//             </Link>
-//           </li>
-//         </ul>
-//       );
-//     }
-//   }
-
-//   return (
-//     <header className="flex-row px-1">
-//       <h1>
-//         <Link to="/">
-//           <span role="img" aria-label="shopping bag">🛍️</span>
-//           -Shop-Shop
-//         </Link>
-//       </h1>
-
-//       <nav>
-//         {showNavigation()}
-//       </nav>
-//     </header>
-//   );
-// }
-
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);

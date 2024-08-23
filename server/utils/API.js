@@ -1,4 +1,5 @@
 require("dotenv").config();
+const getAccessToken = require('./getToken');
 
 async function getTrack(trackQuery) {
   try {
