@@ -6,7 +6,8 @@ import Auth from "../utils/auth";
 
 const SignupForm = () => {
   const [userFormData, setUserFormData] = useState({
-    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -50,7 +51,8 @@ const SignupForm = () => {
     }
 
     const trimmedFormData = {
-      username: userFormData.username.trim(),
+      firstName: userFormData.firstName.trim(),
+      lastName: userFormData.lastName.trim(),
       email: userFormData.email.trim(),
       password: userFormData.password.trim(),
     };
@@ -65,7 +67,8 @@ const SignupForm = () => {
       }
 
       setUserFormData({
-        username: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
       });
@@ -84,17 +87,32 @@ const SignupForm = () => {
         </Alert>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Label htmlFor="username">First Name</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Your username"
-            name="username"
+            placeholder="Your first name"
+            name="firstName"
             onChange={handleInputChange}
-            value={userFormData.username}
+            value={userFormData.firstName}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Username is required!
+            First Name is required!
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="lastName">Last Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Your last name"
+            name="lastName"
+            onChange={handleInputChange}
+            value={userFormData.lastName}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Last Name is required!
           </Form.Control.Feedback>
         </Form.Group>
 
@@ -130,7 +148,8 @@ const SignupForm = () => {
         <Button
           disabled={
             !(
-              userFormData.username &&
+              userFormData.firstName &&
+              userFormData.lastName &&
               userFormData.email &&
               userFormData.password
             )
