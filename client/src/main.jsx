@@ -3,26 +3,26 @@
 // import App from './App.jsx';
 // import { BrowserRouter as Router } from 'react-router-dom';
 
-import ReactDOM from 'react-dom/client'
+import ReactDOM from "react-dom/client";
 // import './index.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import NoMatch from './pages/NoMatch.jsx';
-import App from './App.jsx';
-import Home from './pages/Home';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import NoMatch from "./pages/NoMatch.jsx";
+import App from "./App.jsx";
+import Home from "./pages/Home";
 // import ArtistPage from './pages/ArtistPage.jsx'
 // import EventPage from './pages/EventPage.jsx'
 // import FriendsFeed from './pages/FriendsFeed.jsx'
-// import Profile from './pages/Profile.jsx'
+import Profile from "./pages/Profile.jsx";
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     error: <NoMatch />,
     children: [
       {
-        index: true, 
-        element: <Home />
+        index: true,
+        element: <Home />,
       },
       // }, {
       //   path: '/ArtistPage',
@@ -33,19 +33,18 @@ const router = createBrowserRouter([
       // },{
       //   path: '/FriendsFeed',
       //   element: <FriendsFeed />
-      // },{
-      //   path: '/Profile',
-      //   element: <Profile />
       // },
-    ]
-  }
+      {
+        path: "/Profile",
+        element: <Profile />,
+      },
+    ],
+  },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
-)
-
-
+);
 
 // const Main = () => {
 //   return (

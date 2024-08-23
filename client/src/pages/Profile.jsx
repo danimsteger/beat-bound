@@ -1,48 +1,26 @@
-// // import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import React from "react";
 
-// const Profile = () => {
-//   const history = useHistory();
+import SavedEvents from "../components/profile/SavedEvents";
 
-//   const handleProfileClick = () => {
-//     history.push('/login');
-//   };
+const Profile = () => {
+  return (
+    <div>
+      <section>
+        <SavedEvents></SavedEvents>
+      </section>
+      <section>
+        <h2>My Saved Artists</h2>
+        <div>{/* TODO: Add saved artists here */}</div>
+      </section>
+      <section>
+        <h2>My Saved Songs!</h2>
+        <div>{/* TODO: Add saved songs here */}</div>
+      </section>
+      <footer>
+        <div>{/* TODO: Add Now Playing bar here */}</div>
+      </footer>
+    </div>
+  );
+};
 
-//   return (
-//     <div>
-//       <header>
-//         <h1>BeatBound 🎵</h1>
-//         <input type="text" placeholder="Search..." />
-//         <nav>
-//           <button>Home / Explore</button>
-//           <button onClick={handleProfileClick}>My Profile</button>
-//         </nav>
-//       </header>
-//       <section>
-//         <h2>My Saved Events</h2>
-//         <div>
-//           {/* TODO: Add saved events here */}
-//         </div>
-//       </section>
-//       <section>
-//         <h2>My Saved Artists</h2>
-//         <div>
-//           {/* TODO: Add saved artists here */}
-//         </div>
-//       </section>
-//       <section>
-//         <h2>My Saved Songs</h2>
-//         <div>
-//           {/* TODO: Add saved songs here */}
-//         </div>
-//       </section>
-//       <footer>
-//         <div>
-//           {/* TODO: Add Now Playing bar here */}
-//         </div>
-//       </footer>
-//     </div>
-//   );
-// };
-
-// export default Profile;
+export default Profile;
