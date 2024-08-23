@@ -1,5 +1,5 @@
-import FeatPlaylistCarousel from "../components/FeatPlaylists";
-import FeatArtists from "../components/FeatArtists";
+import FeatPlaylistCarousel from "../components/home/FeatPlaylists";
+import FeatArtists from "../components/home/FeatArtists";
 
 const Home = () => {
   return (
