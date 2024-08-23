@@ -1,45 +1,65 @@
-// // import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 
-// const Search = () => {
-//   const history = useHistory();
+const Search = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchType, setSearchType] = useState('track');
+  const [results, setResults] = useState(null);
 
-//   const handleProfileClick = () => {
-//     history.push('/login');
-//   };
+  const handleSearch = async () => {
+    let endpoint;
+    switch (searchType) {
+      case 'track':
+        endpoint = `/api/search/track?q=${encodeURIComponent(searchTerm)}`;
+        break;
+      case 'artist':
+        endpoint = `/api/search/artist?q=${encodeURIComponent(searchTerm)}`;
+        break;
+      case 'events':
+        endpoint = `/api/search/artist-events?q=${encodeURIComponent(searchTerm)}`;
+        break;
+      default:
+        return;
+    }
 
-//   return (
-//     <div>
-//       <header>
-//         <h1>BeatBound 🎵</h1>
-//         <input type="text" placeholder="Search..." />
-//         <nav>
-//           <button>Home / Explore</button>
-//           <button onClick={handleProfileClick}>My Profile</button>
-//         </nav>
-//       </header>
-//       <section>
-//         <h2>Showing Results for "Search Term"</h2>
-//         <div>
-//           <h3>Event Results</h3>
-//           {/* TODO: Add event results here */}
-//         </div>
-//         <div>
-//           <h3>Artist Results</h3>
-//           {/* TODO: Add artist results here */}
-//         </div>
-//         <div>
-//           <h3>Song Results</h3>
-//           {/* TODO: Add song results here */}
-//         </div>
-//       </section>
-//       <footer>
-//         <div>
-//           {/* TODO: Add Now Playing bar here */}
-//         </div>
-//       </footer>
-//     </div>
-//   );
-// };
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
-// export default Search;
+  return (
+    <div>
+      <h1>Search</h1>
+      <div>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search..."
+        />
+        <select
+          value={searchType}
+          onChange={(e) => setSearchType(e.target.value)}
+        >
+          <option value="track">Track</option>
+          <option value="artist">Artist</option>
+          <option value="events">Events</option>
+        </select>
+        <button onClick={handleSearch}>Search</button>
+      </div>
+      <div>
+        {results && (
+          <pre>{JSON.stringify(results, null, 2)}</pre>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Search;

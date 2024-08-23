@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
@@ -8,12 +9,16 @@ const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
+const routes = require('./routes');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  // introspection: true,
+  introspection: process.env.NODE_ENV !== 'production',
+  playground: process.env.NODE_ENV !== 'production',
 });
-// const getToken = require('./server/utils/getToken');
+
+app.use(cors());
+app.use(routes);
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {

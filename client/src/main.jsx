@@ -10,6 +10,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NoMatch from './pages/NoMatch.jsx';
 import App from './App.jsx';
 import Home from './pages/Home';
+import Search from './pages/Search.jsx'
 // import ArtistPage from './pages/ArtistPage.jsx'
 // import EventPage from './pages/EventPage.jsx'
 // import FriendsFeed from './pages/FriendsFeed.jsx'
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true, 
-        element: <Home />
+        element: <Search />
       },
       // }, {
       //   path: '/ArtistPage',
