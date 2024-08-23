@@ -13,12 +13,13 @@ const routes = require('./routes');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: process.env.NODE_ENV !== 'production',
-  playground: process.env.NODE_ENV !== 'production',
+  // introspection: process.env.NODE_ENV !== 'production',
+  // playground: process.env.NODE_ENV !== 'production',
 });
 
 app.use(cors());
 app.use(routes);
+console.log(process.env.NODE_ENV)
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
