@@ -116,7 +116,9 @@ async function getArtistEvents(artistName) {
           ? event._embedded.venues[0].city.name
           : "Unknown",
         externalUrl: event.url,
+        artist: [artistName],
       }));
+      console.log(formattedEvents);
 
       return formattedEvents.length > 0
         ? formattedEvents

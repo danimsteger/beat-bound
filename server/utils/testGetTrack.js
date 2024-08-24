@@ -2,15 +2,15 @@
 const getAccessToken = require('./getToken');
 const {getTrack, getArtist, getArtistEvents } = require('./API');
 
-(async () => {
-  try {
-      await getTrack('I can do it with a broken heart');
-      await getTrack('Million Days');
-    }
-  catch (error) {
-    console.error('Error:', error);
-  }
-})();
+// (async () => {
+//   try {
+//       await getTrack('I can do it with a broken heart');
+//       await getTrack('Million Days');
+//     }
+//   catch (error) {
+//     console.error('Error:', error);
+//   }
+// })();
 
 // (async () => {
 //     try {
@@ -22,10 +22,11 @@ const {getTrack, getArtist, getArtistEvents } = require('./API');
 //     }
 //   })();
 
-// getArtistEvents('Taylor Swift').then(result => {
-//   if (result.error) {
-//     console.log(result.error);
-//   } else {
-//     console.log('Upcoming Events:', result);
-//   }
-// });
+getArtistEvents('Taylor Swift').then(result => {
+  if (result.error) {
+    console.log(result.error);
+  } else {
+    // console.log('Upcoming Events:', result);
+    console.log('it worked')
+  }
+});

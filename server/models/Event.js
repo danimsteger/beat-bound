@@ -1,17 +1,39 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const eventSchema = new Schema({
-  location: {
+  name: {
     type: String,
     required: true,
     trim: true,
   },
-  time: {
+  date: {
     type: String,
+    required: true,
+  },
+  venue: {
+    type: String,
+    required: true,
+    trim: true,
   },
   city: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  externalUrl: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  artist: [
+    {
+      type: String,
+      trim: true,
+    },
+  ],
+  time: {
     type: String,
   },
   users: [
@@ -20,14 +42,8 @@ const eventSchema = new Schema({
       ref: 'User',
     },
   ],
-  artists: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Artist',
-    },
-  ],
 });
 
-const Event = mongoose.model('Event', eventSchema);
+const Event = mongoose.model("Event", eventSchema);
 
 module.exports = Event;
