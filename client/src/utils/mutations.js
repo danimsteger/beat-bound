@@ -38,43 +38,91 @@ export const ADD_USER = gql`
 
 // Adding a Song
 export const ADD_SONG = gql`
-  mutation addSong($name: String!, $artist: String!, $album: String!, $imageUrl: String, $externalUrl: String!) {
-    addSong(name: $name, artist: $artist, album: $album, imageUrl: $imageUrl, externalUrl: $externalUrl) {
+  mutation addSong(
+    $name: String!
+    $artist: String!
+    $album: String!
+    $imageUrl: String
+    $externalUrl: String!
+  ) {
+    addSong(
+      name: $name,
+      artist: $artist,
+      album: $album,
+      imageUrl: $imageUrl,
+      externalUrl: $externalUrl
+    ) {
       _id
       name
       artist
       album
       imageUrl
       externalUrl
+      users {
+        _id
+        email
+      }
     }
   }
 `;
 
 // Adding an Artist
 export const ADD_ARTIST = gql`
-  mutation addArtist($name: String!, $imageUrl: String, $externalUrl: String!) {
-    addArtist(name: $name, imageUrl: $imageUrl, externalUrl: $externalUrl) {
+  mutation addArtist(
+    $name: String!,
+    $spotifyId: String!,
+    $imageUrl: String,
+    $externalUrl: String!
+  ) {
+    addArtist(
+      name: $name,
+      spotifyId: $spotifyId,
+      imageUrl: $imageUrl,
+      externalUrl: $externalUrl
+    ) {
       _id
       name
+      spotifyId
       imageUrl
       externalUrl
+      users {
+        _id
+        email
+      }
     }
   }
 `;
 
 // Adding an Event
 export const ADD_EVENT = gql`
-mutation addEvent($name: String!, $date: String!, $venue: String!, $city: String!, $externalUrl: String!, $artistNames: [String!]!) {
-  addEvent(name: $name, date: $date, venue: $venue, city: $city, externalUrl: $externalUrl, artistNames: $artistNames ) {
-    _id
-    name
-    date
-    venue
-    city
-    externalUrl
-    artists
+  mutation addEvent(
+    $name: String!
+    $date: String!
+    $venue: String!
+    $city: String!
+    $externalUrl: String!
+    $artistNames: [String!]!
+  ) {
+    addEvent(
+      name: $name,
+      date: $date,
+      venue: $venue,
+      city: $city,
+      externalUrl: $externalUrl,
+      artistNames: $artistNames
+    ) {
+      _id
+      name
+      date
+      venue
+      city
+      externalUrl
+      users {
+        _id
+        email
+      }
+    }
   }
-}
 `;
 
 // Removing a song

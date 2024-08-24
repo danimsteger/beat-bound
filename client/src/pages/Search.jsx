@@ -60,32 +60,41 @@ const Search = () => {
 
     try {
       if (lastSearchType === "track") {
-        const artist = item.artists
-          ? Array.isArray(item.artists)
-            ? item.artists.join(", ")
-            : item.artists
-          : "Unknown Artist";
+        let artists = "Unknown Artist";
+
+        if (Array.isArray(item.artists) && item.artists.length > 0) {
+          console.log("item.artists in search function:", item.artists);
+          artists = item.artists
+            .map((artist) => artist?.name?.trim() || "Unknown Artist")
+            .join(", ");
+        } else if (item.artists && typeof item.artists === "string") {
+          artists = item.artists.trim();
+        }
+
+        const name = item.name ? item.name.trim() : "Unknown Name";
+        const album = item.album ? item.album.trim() : "Unknown Album";
 
         console.log("Track Mutation Variables:", {
-          name: item.name,
-          artist: artist,
-          album: item.album,
-          imageUrl: item.imageURL,
-          externalUrl: item.externalUrl,
+          name: name,
+          artist: artists,
+          album: album,
+          imageUrl: item.imageUrl || "",
+          externalUrl: item.externalUrl || "",
         });
 
         await addSong({
           variables: {
-            name: item.name,
-            artist: artist,
-            album: item.album,
-            imageUrl: item.imageURL || "",
-            externalUrl: item.externalUrl,
+            name: name,
+            artist: artists,
+            album: album,
+            imageUrl: item.imageUrl || "",
+            externalUrl: item.externalUrl || "",
           },
         });
       } else if (lastSearchType === "artist") {
         console.log("Artist Mutation Variables:", {
           name: item.name,
+          spotifyId: item.spotifyId,
           imageUrl: item.imageURL,
           externalUrl: item.externalUrl,
         });
@@ -93,19 +102,32 @@ const Search = () => {
         await addArtist({
           variables: {
             name: item.name,
+            spotifyId: item.spotifyId,
             imageUrl: item.imageURL || "",
-            externalUrl: item.externalUrl,
+            externalUrl: item.externalUrl || "",
           },
         });
       } else if (lastSearchType === "events") {
-        const artistNames = item.artists ? item.artists : ["Unknown Artist"];
+        const artistNames =
+          Array.isArray(item.artists) && item.artists.length > 0
+            ? item.artists
+            : ["Unknown Artist"];
+
+        console.log("Event Mutation Variables:", {
+          name: item.name,
+          date: item.date,
+          venue: item.venue,
+          city: item.city,
+          externalUrl: item.externalUrl,
+          artistNames: artistNames,
+        });
         await addEvent({
           variables: {
             name: item.name,
-            date: item.date,
-            venue: item.venue,
-            city: item.city,
-            externalUrl: item.externalUrl,
+            date: item.date || "",
+            venue: item.venue || "",
+            city: item.city || "",
+            externalUrl: item.externalUrl || "",
             artistNames: artistNames,
           },
         });
@@ -165,7 +187,8 @@ const Search = () => {
                     <Card.Body>
                       <Card.Title>{result.name}</Card.Title>
                       <Card.Text>
-                        <strong>Artists:</strong> {result.artists}
+                        <strong>Artists:</strong>{" "}
+                        {result.artists.map((artist) => artist.name).join(", ")}
                         <br />
                         <strong>Album:</strong> {result.album}
                       </Card.Text>
@@ -232,9 +255,9 @@ const Search = () => {
                       <br />
                       <strong>Venue:</strong> {result.venue}, {result.city}
                       <br />
-                      <strong>Artists:</strong>{" "}
+                      <strong>Artists:</strong>
                       {result.artist && result.artist.length > 0
-                        ? result.artist.join(", ")
+                        ? result.artist.map((artist) => artist.name).join(", ")
                         : "Unknown Artists"}
                     </Card.Text>
                     <Button

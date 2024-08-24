@@ -24,6 +24,7 @@ type Artist {
   _id: ID
   name: String
   imageUrl: String
+  spotifyId: String
   externalUrl: String
   users: [User]
   songs: [Song]
@@ -35,16 +36,16 @@ type Auth {
   user: User
 }
 
-type Song {
-  _id: ID
-  name: String
-  artist: String
-  album: String
-  imageUrl: String
-  externalUrl: String
-  artists: [Artist]
-  users: [User]
-}
+ type Song {
+    _id: ID
+    name: String
+    artist: String
+    album: String
+    imageUrl: String
+    externalUrl: String
+    artists: [Artist]
+    users: [User]
+  }
 
 type Query {
   users: [User]
@@ -57,12 +58,12 @@ type Query {
 
 type Mutation {
    addSong(
-    name: String!,
-    artist: String!,
-    album: String!,
-    imageUrl: String,
-    externalUrl: String!,
-  ): Song
+      name: String!,
+      artist: String!,
+      album: String!,
+      imageUrl: String,
+      externalUrl: String!,
+    ): Song
 
   addUser(
     firstName: String!
@@ -77,15 +78,17 @@ type Mutation {
     ): Auth
 
   addEvent(
-      name: String!
-      date: String!
-      venue: String!
-      city: String!
-      externalUrl: String!
-    ): Event
+    name: String!
+    date: String!
+    venue: String!
+    city: String!
+    externalUrl: String!
+    artistNames: [String!]!
+  ): Event
 
    addArtist(
       name: String!
+      spotifyId: String!
       imageUrl: String
       externalUrl: String!
     ): Artist
@@ -105,10 +108,6 @@ type Mutation {
     songId: ID!
   ): User
   }
-
-  
-
-
 `;
 
 module.exports = typeDefs;

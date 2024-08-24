@@ -27,9 +27,24 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  songs: [Song.schema],
-  artists: [Artist.schema],
-  events: [Event.schema],
+  songs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Song',
+    },
+  ],
+  artists: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Artist',
+    },
+  ],
+  events: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Event',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {

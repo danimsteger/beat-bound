@@ -2,36 +2,30 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-// const Song = require('./Song');
-// const Event = require('./Event');
-
 const artistSchema = new Schema({
   name: {
     type: String,
     required: true,
-    trim: true,
+  },
+  spotifyId: {
+    type: String,
+    unique: true,
+    required: true,
   },
   imageUrl: {
     type: String,
   },
-  users: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  ],
-  songs: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Song',
-    },
-  ],
-  events: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Event',
-    },
-  ],
+  externalUrl: {
+    type: String,
+  },
+  users: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  songs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Song',
+  }],
 });
 
 const Artist = mongoose.model('Artist', artistSchema);

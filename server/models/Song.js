@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -8,25 +8,30 @@ const songSchema = new Schema({
     required: true,
     trim: true,
   },
+  artist: {
+    type: String,
+    trim: true,
+  },
+  album: {
+    type: String,
+    trim: true,
+  },
   imageUrl: {
     type: String,
+    trim: true,
   },
-  artists: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Artist',
-      required: true,
-    },
-  ],
-
+  externalUrl: {
+    type: String,
+    trim: true,
+  },
   users: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
   ],
 });
 
-const Song = mongoose.model('Song', songSchema);
+const Song = mongoose.model("Song", songSchema);
 
 module.exports = Song;
