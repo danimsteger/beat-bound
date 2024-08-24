@@ -94,8 +94,7 @@ const ArtistPage = () => {
   if (artistLoading || eventsLoading) return <p>Loading...</p>;
   if (artistError || eventsError)
     return <p>Error: {artistError?.message || eventsError?.message}</p>;
-
-  const sampleArtist = {
+  sampleArtist = {
     id: 1,
     name: "Taylor Swift",
     imageUrl:
@@ -192,131 +191,134 @@ const ArtistPage = () => {
     },
     {
       id: 3,
-      name: "Olivia Rodrigo",
+      name: "Oliva Rodrigo",
       imageUrl:
         "https://media.gq.com/photos/610172681ac2ac787b459b47/4:3/w_2283,h_1712,c_limit/olivia-rodrigo-gq-september-2021-01.jpg",
     },
   ];
-
-  return (
-    <div>
-      <Row
-        gutter={40}
-        justify="center"
-        style={{ display: "flex", justifyContent: "space-evenly" }}
-      >
-        <Col flex={3}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Tooltip title="Add Artist to Profile">
-              <Button
-                type="primary"
-                shape="circle"
-                icon={<StarOutlined />}
-                style={{ margin: "40px" }}
-                size="large"
-                onClick={() => handleAddArtist(artist)}
-              />
-            </Tooltip>
-            <h1 style={{ margin: "20px", marginTop: "30px" }}>
-              {sampleArtist.name}
-            </h1>
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <img
-              src={sampleArtist.imageUrl}
-              style={{ width: "100%", margin: 10, borderRadius: 20 }}
-            />
-          </div>
-          <ArtistEvents events={sampleArtist.events} />
-        </Col>
-        <Col flex={2}>
-          <ArtistSongs songs={sampleArtist.songs} />
-        </Col>
-        <Col flex={2}>
-          <RelatedArtists artists={sampleRelatedArtists} />
-        </Col>
-      </Row>
-      <section>
-        <h2>{artist?.name}</h2>
-        <div>
-          {artist?.imageUrl && (
-            <img
-              src={artist.imageUrl || "https://via.placeholder.com/150"}
-              alt={artist.name}
-            />
-          )}
-          <h3>Top Songs</h3>
-          {artist?.songs &&
-            artist.songs.map((song, index) => (
-              <div key={index}>
-                <p>{song.name}</p>
-                <audio controls>
-                  <source src={song.preview_url} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
-            ))}
-          {Auth.loggedIn() && (
-            <button onClick={() => handleAddArtist(artist)}>
-              Add to My Page
-            </button>
-          )}
-        </div>
-      </section>
-      <section>
-        <h2>Related Artists</h2>
-        <div>
-          {artist?.relatedArtists?.length > 0 ? (
-            artist.relatedArtists.map((relatedArtist, index) => (
-              <div key={index}>
-                <p>{relatedArtist.name}</p>
-                <img
-                  src={
-                    relatedArtist.imageUrl || "https://via.placeholder.com/150"
-                  }
-                  alt={relatedArtist.name}
+  // switch STAR button to add profile to disabled on click!!!
+  const ArtistPage = () => {
+    return (
+      <div>
+        <Row
+          gutter={40}
+          justify="center"
+          style={{ display: "flex", justifyContent: "space-evenly" }}
+        >
+          <Col flex={3}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Tooltip title="Add Artist to Profile">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<StarOutlined />}
+                  style={{ margin: "40px" }}
+                  size="large"
                 />
-              </div>
-            ))
-          ) : (
-            <p>No related artists found.</p>
-          )}
-        </div>
-      </section>
-      <section>
-        <h2>Upcoming Events</h2>
-        <div>
-          {events.length > 0 ? (
-            events.map((event, index) => (
-              <div key={index}>
-                <p>{event.name}</p>
-                <p>
-                  {event.date} - {event.city}
-                </p>
-                <a
-                  href={event.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Event
-                </a>
-                {Auth.loggedIn() && (
-                  <button onClick={() => handleAddEvent(event)}>
-                    Add to My Page
-                  </button>
-                )}
-              </div>
-            ))
-          ) : (
-            <p>No upcoming events found.</p>
-          )}
-        </div>
-      </section>
-      <footer>
-        <div>{/* Add Now Playing bar here */}</div>
-      </footer>
-    </div>
-  );
+              </Tooltip>
+              <h1 style={{ margin: "20px", marginTop: "30px" }}>
+                {sampleArtist.name}
+              </h1>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <img
+                src={sampleArtist.imageUrl}
+                style={{ width: "100%", margin: 10, borderRadius: 20 }}
+              />
+            </div>
+            <ArtistEvents events={sampleArtist.events}></ArtistEvents>
+          </Col>
+          <Col flex={2}>
+            <ArtistSongs songs={sampleArtist.songs}></ArtistSongs>
+          </Col>
+          <Col flex={2}>
+            <RelatedArtists artists={sampleRelatedArtists}></RelatedArtists>
+          </Col>
+        </Row>
+        <section>
+          <h2>{artist?.name}</h2>
+          <div>
+            {artist?.imageUrl && (
+              <img
+                src={artist.imageUrl || "https://via.placeholder.com/150"}
+                alt={artist.name}
+              />
+            )}
+            <h3>Top Songs</h3>
+            {/* Display top songs here */}
+            {artist?.songs &&
+              artist.songs.map((song, index) => (
+                <div key={index}>
+                  <p>{song.name}</p>
+                  <audio controls>
+                    <source src={song.preview_url} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                </div>
+              ))}
+            {Auth.loggedIn() && (
+              <button onClick={() => handleAddArtist(artist)}>
+                Add to My Page
+              </button>
+            )}
+          </div>
+        </section>
+        <section>
+          <h2>Related Artists</h2>
+          <div>
+            {artist?.relatedArtists?.length > 0 ? (
+              artist.relatedArtists.map((relatedArtist, index) => (
+                <div key={index}>
+                  <p>{relatedArtist.name}</p>
+                  <img
+                    src={
+                      relatedArtist.imageUrl ||
+                      "https://via.placeholder.com/150"
+                    }
+                    alt={relatedArtist.name}
+                  />
+                </div>
+              ))
+            ) : (
+              <p>No related artists found.</p>
+            )}
+          </div>
+        </section>
+        <section>
+          <h2>Upcoming Events</h2>
+          <div>
+            {events.length > 0 ? (
+              events.map((event, index) => (
+                <div key={index}>
+                  <p>{event.name}</p>
+                  <p>
+                    {event.date} - {event.city}
+                  </p>
+                  <a
+                    href={event.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Event
+                  </a>
+                  {Auth.loggedIn() && (
+                    <button onClick={() => handleAddEvent(event)}>
+                      Add to My Page
+                    </button>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p>No upcoming events found.</p>
+            )}
+          </div>
+        </section>
+        <footer>
+          <div>{/* Add Now Playing bar here */}</div>
+        </footer>
+      </div>
+    );
+  };
 };
 
 export default ArtistPage;

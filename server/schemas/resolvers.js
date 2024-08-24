@@ -1,11 +1,12 @@
-const jwt = require('jsonwebtoken');
-const { User, Song, Event, Artist } = require('../models');
-const mongoose = require('mongoose');
+const jwt = require("jsonwebtoken");
+const { User, Song, Event, Artist } = require("../models");
+const mongoose = require("mongoose");
+const { ApolloError } = require('@apollo/server/errors');
 const {
   Types: { ObjectId },
-} = require('mongoose');
+} = require("mongoose");
 
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const createSong = async (name, imageUrl) => {
   const newSong = new Song({ name, imageUrl, artists: [], users: [] });
@@ -33,26 +34,26 @@ const createArtist = async (name, imageUrl) => {
 
 const resolvers = {
   Query: {
-    songs: async () => Song.find().populate('users'),
-    events: async () => Event.find().populate('users'),
-    artists: async () => Artist.find().populate('users'),
+    songs: async () => Song.find().populate("users"),
+    events: async () => Event.find().populate("users"),
+    artists: async () => Artist.find().populate("users"),
     users: async () =>
-      User.find({}).populate('songs').populate('events').populate('artists'),
+      User.find({}).populate("songs").populate("events").populate("artists"),
 
     me: async (parent, args, { user }) => {
       if (!user) {
-        throw new AuthenticationError('You must be logged in');
+        throw new AuthenticationError("You must be logged in");
       }
-    
+
       const currentUser = await User.findById(user._id)
-        .populate('songs')
-        .populate('artists')
-        .populate('events');
-    
+        .populate("songs")
+        .populate("artists")
+        .populate("events");
+
       if (!currentUser) {
-        throw new AuthenticationError('User not found');
+        throw new AuthenticationError("User not found");
       }
-    
+
       if (!currentUser.songs) {
         currentUser.songs = [];
       }
@@ -62,20 +63,24 @@ const resolvers = {
       if (!currentUser.events) {
         currentUser.events = [];
       }
-    
+
       return currentUser;
     },
     user: async (_, args) => {
       return await User.findById(args.id)
-        .populate('songs')
-        .populate('artists')
-        .populate('events');
+        .populate("songs")
+        .populate("artists")
+        .populate("events");
     },
   },
   Mutation: {
-    addSong: async (parent, { name, artist, album, imageUrl, externalUrl }, context) => {
+    addSong: async (
+      parent,
+      { name, artist, album, imageUrl, externalUrl },
+      context
+    ) => {
       if (!context || !context.user) {
-        throw new AuthenticationError('You need to be logged in!');
+        throw new AuthenticationError("You need to be logged in!");
       }
 
       const newSong = await Song.create({
@@ -86,16 +91,22 @@ const resolvers = {
         externalUrl,
       });
 
-      await User.findByIdAndUpdate(context.user._id, { $push: { songs: newSong._id } });
+      await User.findByIdAndUpdate(context.user._id, {
+        $push: { songs: newSong._id },
+      });
 
       return newSong;
     },
 
-    addEvent: async (parent, { name, date, venue, city, externalUrl }, context) => {
+    addEvent: async (
+      parent,
+      { name, date, venue, city, externalUrl },
+      context
+    ) => {
       if (!context.user) {
-        throw new AuthenticationError('You need to be logged in!');
+        throw new AuthenticationError("You need to be logged in!");
       }
-    
+
       const newEvent = await Event.create({
         name,
         date,
@@ -105,65 +116,72 @@ const resolvers = {
         externalUrl,
         users: [context.user._id],
       });
-    
+
       await User.findByIdAndUpdate(context.user._id, {
-        $addToSet: { events: newEvent._id }
+        $addToSet: { events: newEvent._id },
       });
-    
+
       return newEvent;
     },
 
     addArtist: async (parent, { name, imageUrl, externalUrl }, context) => {
       if (!context.user) {
-        throw new AuthenticationError('You need to be logged in!');
+        throw new AuthenticationError("You need to be logged in!");
       }
-    
+
       const newArtist = await Artist.create({
         name,
         imageUrl,
         externalUrl,
         users: [context.user._id],
       });
-    
+
       await User.findByIdAndUpdate(context.user._id, {
-        $addToSet: { artists: newArtist._id }
+        $addToSet: { artists: newArtist._id },
       });
-    
+
       return newArtist;
     },
 
     addUser: async (_, { firstName, lastName, email, password }) => {
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        throw new UserInputError('A user with this email already exists');
-      }
+      try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+          throw new Error('A user with this email already exists');
+        }
 
-      const newUser = await User.create(
-        {
+        const newUser = await User.create({
           firstName,
           lastName,
           email,
           password,
-        },
-        { new: true }
-      );
+        });
 
-      const token = signToken(newUser);
+        const token = signToken(newUser);
 
-      return { token, user: newUser };
+        return { token, user: newUser };
+      } catch (err) {
+        console.error('Error creating user:', err); // Log the specific error
+
+        if (err.name === 'ValidationError') {
+          throw new Error('User validation failed: ' + Object.keys(err.errors).join(', '));
+        }
+
+        throw new Error('Failed to create user');
+      }
     },
 
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('No user found with this email address.');
+        throw new AuthenticationError("No user found with this email address.");
       }
 
       const validPassword = await user.isCorrectPassword(password);
 
       if (!validPassword) {
-        throw new AuthenticationError('Incorrect password.');
+        throw new AuthenticationError("Incorrect password.");
       }
 
       const token = signToken(user);
