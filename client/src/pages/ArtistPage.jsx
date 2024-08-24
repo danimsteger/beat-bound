@@ -2,6 +2,8 @@ import { StarOutlined } from "@ant-design/icons";
 import { Tooltip, Button, Row, Col } from "antd";
 
 import ArtistEvents from "../components/artist/ArtistEvents";
+import ArtistSongs from "../components/artist/ArtistSongs";
+import RelatedArtists from "../components/artist/RelatedArtists";
 
 const sampleArtist = {
   id: 1,
@@ -61,15 +63,56 @@ const sampleArtist = {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz-0gZGjxoAp2wa6pbtGIR_9nsVwQZMHbOQ&s",
       artists: ["Taylor Swift", "Florence + The Machine"],
     },
+    {
+      id: 3,
+      name: "Fortnight",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz-0gZGjxoAp2wa6pbtGIR_9nsVwQZMHbOQ&s",
+      artists: ["Taylor Swift", "Post Malone"],
+    },
+    {
+      id: 4,
+      name: "Mastermind",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Midnights_-_Taylor_Swift.png/220px-Midnights_-_Taylor_Swift.png",
+      artists: ["Taylor Swift"],
+    },
+    {
+      id: 5,
+      name: "Karma",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Midnights_-_Taylor_Swift.png/220px-Midnights_-_Taylor_Swift.png",
+      artists: ["Taylor Swift"],
+    },
   ],
 };
 
+const sampleRelatedArtists = [
+  {
+    id: 1,
+    name: "Sabrina Carpenter",
+    imageUrl:
+      "https://cdns-images.dzcdn.net/images/cover/e3221287a77eb262944e6528766eeba4/1900x1900-000000-80-0-0.jpg",
+  },
+  {
+    id: 2,
+    name: "Chappell Roan",
+    imageUrl:
+      "https://media.pitchfork.com/photos/64ff1676931354660ba71d8b/master/pass/Chappell-Roan-Princess.jpg",
+  },
+  {
+    id: 3,
+    name: "Oliva Rodrigo",
+    imageUrl:
+      "https://media.gq.com/photos/610172681ac2ac787b459b47/4:3/w_2283,h_1712,c_limit/olivia-rodrigo-gq-september-2021-01.jpg",
+  },
+];
 // switch STAR button to add profile to disabled on click!!!
 const ArtistPage = () => {
   return (
     <div>
       <Row
-        gutter={16}
+        gutter={40}
         justify="center"
         style={{ display: "flex", justifyContent: "space-evenly" }}
       >
@@ -97,11 +140,10 @@ const ArtistPage = () => {
           <ArtistEvents events={sampleArtist.events}></ArtistEvents>
         </Col>
         <Col flex={2}>
-          <h1>ARTISTS TOP SONGS HERE!!!</h1>
+          <ArtistSongs songs={sampleArtist.songs}></ArtistSongs>
         </Col>
         <Col flex={2}>
-          {" "}
-          <h1>RELATED ARTIST CARDS HERE!!!</h1>
+          <RelatedArtists artists={sampleRelatedArtists}></RelatedArtists>
         </Col>
       </Row>
     </div>

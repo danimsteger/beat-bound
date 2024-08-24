@@ -1,4 +1,5 @@
-import { List } from "antd";
+import { List, Tooltip, Button } from "antd";
+import { StarOutlined } from "@ant-design/icons";
 
 const ArtistEvents = ({ events }) => {
   return (
@@ -31,7 +32,12 @@ const ArtistEvents = ({ events }) => {
               }}
             >
               <div style={{ marginRight: "20px" }}>
-                <img width={100} alt="logo" src={item.artists[0].imageUrl} />
+                <img
+                  width={150}
+                  alt="logo"
+                  src={item.artists[0].imageUrl}
+                  style={{ borderRadius: 20 }}
+                />
               </div>
 
               <div style={{ flex: 1 }}>
@@ -46,6 +52,15 @@ const ArtistEvents = ({ events }) => {
                   }
                 />
                 {item.time}
+                <Tooltip title="Add Event to Profile">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<StarOutlined />}
+                    style={{ margin: "10px" }}
+                    size="medium"
+                  />
+                </Tooltip>
               </div>
             </div>
           </List.Item>
