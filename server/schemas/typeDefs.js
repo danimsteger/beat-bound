@@ -11,9 +11,11 @@ const typeDefs = `
 
 type Event {
   _id: ID
-  location: String
-  time: String
+  name: String
+  date: String
+  venue: String
   city: String
+  externalUrl: String
   users: [User]
   artists: [Artist]
 }
@@ -22,6 +24,7 @@ type Artist {
   _id: ID
   name: String
   imageUrl: String
+  externalUrl: String
   users: [User]
   songs: [Song]
   events: [Event]
@@ -32,10 +35,13 @@ type Auth {
   user: User
 }
 
-  type Song {
+type Song {
   _id: ID
   name: String
+  artist: String
+  album: String
   imageUrl: String
+  externalUrl: String
   artists: [Artist]
   users: [User]
 }
@@ -50,10 +56,12 @@ type Query {
 }
 
 type Mutation {
-  addSong(
+   addSong(
     name: String!,
+    artist: String!,
+    album: String!,
     imageUrl: String,
-    userId: [ID!] 
+    externalUrl: String!,
   ): Song
 
   addUser(
@@ -69,17 +77,18 @@ type Mutation {
     ): Auth
 
   addEvent(
-    location: String!
-    time: String!
-    city: String!
-    userId: [ID!]
+      name: String!
+      date: String!
+      venue: String!
+      city: String!
+      externalUrl: String!
     ): Event
 
    addArtist(
-    name: String!
-    imageUrl: String
-    userId: [ID!]
-  ): Artist
+      name: String!
+      imageUrl: String
+      externalUrl: String!
+    ): Artist
 
   removeEvent(
     userId: ID!
@@ -103,12 +112,3 @@ type Mutation {
 `;
 
 module.exports = typeDefs;
-
-// events: [Event]
-// artists: [Artist]
-// artist(_id: ID!): Artist
-// user: User
-// event(_id: ID!): Event
-// songs: [Song]
-
-// user

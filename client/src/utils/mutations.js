@@ -38,49 +38,42 @@ export const ADD_USER = gql`
 
 // Adding a Song
 export const ADD_SONG = gql`
-  mutation addSong($name: String!, $imageUrl: String, $userId: ID!) {
-    addSong(name: $name, imageUrl: $imageUrl, userId: $userId) {
+  mutation addSong($name: String!, $artist: String!, $album: String!, $imageUrl: String, $externalUrl: String!) {
+    addSong(name: $name, artist: $artist, album: $album, imageUrl: $imageUrl, externalUrl: $externalUrl) {
       _id
       name
+      artist
+      album
       imageUrl
-      artists {
-        _id
-        name
-      }
+      externalUrl
     }
   }
 `;
 
 // Adding an Artist
 export const ADD_ARTIST = gql`
-  mutation addArtist($name: String!, $imageUrl: String, $userId: ID!) {
-    addArtist(name: $name, imageUrl: $imageUrl, userId: $userId) {
+  mutation addArtist($name: String!, $imageUrl: String, $externalUrl: String!) {
+    addArtist(name: $name, imageUrl: $imageUrl, externalUrl: $externalUrl) {
       _id
       name
       imageUrl
+      externalUrl
     }
   }
 `;
 
 // Adding an Event
 export const ADD_EVENT = gql`
-  mutation addEvent($location: String!, $time: String!, $city: String!, $userId: ID!) {
-    addEvent(location: $location, time: $time, city: $city, userId: $userId) {
-      _id
-      location
-      time
-      city
-      artists {
-        _id
-        name
-      }
-      users {
-        _id
-        firstName
-        lastName
-      }
-    }
+mutation addEvent($name: String!, $date: String!, $venue: String!, $city: String!, $externalUrl: String!) {
+  addEvent(name: $name, date: $date, venue: $venue, city: $city, externalUrl: $externalUrl) {
+    _id
+    name
+    date
+    venue
+    city
+    externalUrl
   }
+}
 `;
 
 // Removing a song

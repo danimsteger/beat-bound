@@ -12,11 +12,9 @@ const LoginForm = () => {
   const [loginUser] = useMutation(LOGIN_USER, {
     onCompleted: (data) => {
       const token = data.login.token;
-      console.log("Received token:", token);
       Auth.login(token);
 
       const storedToken = localStorage.getItem('id_token');
-      console.log("Token in localStorage:", storedToken);
       
       if (!storedToken) {
         console.error("Token was not stored properly.");
@@ -24,13 +22,9 @@ const LoginForm = () => {
     },
     onError: (error) => {
       setShowAlert(true);
-      console.log("There was an error", error);
-      console.error("Full Apollo Error:", error);
       if (error.graphQLErrors) {
         error.graphQLErrors.forEach((err) => {
           console.error("GraphQL Error:", err.message);
-          console.log("Detailed Error Object:", err);
-          console.log(JSON.stringify(err, null, 2));
         });
       }
       if (error.networkError) {
@@ -54,7 +48,6 @@ const LoginForm = () => {
         const { data } = await loginUser({
           variables: userFormData,
         });
-        console.log('Login successful, token:', data.login.token);
         Auth.login(data.login.token);
         setTimeout(() => {
           const token = localStorage.getItem('id_token');

@@ -31,7 +31,11 @@ const startApolloServer = async () => {
   app.use(
     '/graphql',
     expressMiddleware(server, {
-      context: authMiddleware,
+      context: ({ req }) => {
+        const context = authMiddleware({ req });
+        console.log('Context in expressMiddleware:', context);
+        return context;
+      },
     })
   );
 

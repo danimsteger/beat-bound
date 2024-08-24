@@ -41,23 +41,29 @@ const resolvers = {
 
     me: async (parent, args, { user }) => {
       if (!user) {
-        if (!user) throw new AuthenticationError('You must be logged in');
+        throw new AuthenticationError('You must be logged in');
       }
+    
       const currentUser = await User.findById(user._id)
         .populate('songs')
         .populate('artists')
         .populate('events');
-
+    
+      if (!currentUser) {
+        throw new AuthenticationError('User not found');
+      }
+    
       if (!currentUser.songs) {
-        user.songs = [];
+        currentUser.songs = [];
       }
       if (!currentUser.artists) {
-        user.artists = [];
+        currentUser.artists = [];
       }
       if (!currentUser.events) {
-        user.events = [];
+        currentUser.events = [];
       }
-      return foundUser;
+    
+      return currentUser;
     },
     user: async (_, args) => {
       return await User.findById(args.id)
@@ -67,55 +73,62 @@ const resolvers = {
     },
   },
   Mutation: {
-    addSong: async (parent, { name, imageUrl, userId }, context) => {
-      const newSong = await createSong(name, imageUrl);
+    addSong: async (parent, { name, artist, album, imageUrl, externalUrl }, context) => {
+      if (!context || !context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
 
-      const user = await User.findById(userId);
+      const newSong = await Song.create({
+        name,
+        artist,
+        album,
+        imageUrl,
+        externalUrl,
+      });
 
-      await user.populate();
-
-      user.songs.push(newSong);
-      await updateUser(user);
-
-      newSong.users.push(user);
-      await newSong.save({ new: true });
+      await User.findByIdAndUpdate(context.user._id, { $push: { songs: newSong._id } });
 
       return newSong;
     },
 
-    addEvent: async (parent, { location, time, city, userId }, context) => {
-      const newEvent = await createEvent(location, time, city);
-      const user = await User.findById(userId);
-
-      if (!user) {
-        throw new Error('User not found');
+    addEvent: async (parent, { name, date, venue, city, externalUrl }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
       }
-
-      await user.populate();
-
-      user.events.push(newEvent);
-      await updateUser(user);
-
-      newEvent.users.push(user);
-      await newEvent.save({ new: true });
-
+    
+      const newEvent = await Event.create({
+        name,
+        date,
+        venue,
+        location: city,
+        city,
+        externalUrl,
+        users: [context.user._id],
+      });
+    
+      await User.findByIdAndUpdate(context.user._id, {
+        $addToSet: { events: newEvent._id }
+      });
+    
       return newEvent;
     },
 
-    addArtist: async (parent, { name, imageUrl, userId }, context) => {
-      const newArtist = await createArtist(name, imageUrl);
-      const user = await User.findById(userId);
-
-      if (!user) {
-        throw new Error('User not found');
+    addArtist: async (parent, { name, imageUrl, externalUrl }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
       }
-
-      user.artists.push(newArtist);
-      await user.save();
-
-      newArtist.users.push(user);
-      await newArtist.save({ new: true });
-
+    
+      const newArtist = await Artist.create({
+        name,
+        imageUrl,
+        externalUrl,
+        users: [context.user._id],
+      });
+    
+      await User.findByIdAndUpdate(context.user._id, {
+        $addToSet: { artists: newArtist._id }
+      });
+    
       return newArtist;
     },
 

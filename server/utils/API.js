@@ -7,7 +7,7 @@ async function getTrack(trackQuery) {
     console.log("Access Token:", accessToken);
     const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
       trackQuery
-    )}&type=track&limit=1&offset=0`;
+    )}&type=track&offset=0&limit=5`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -17,16 +17,16 @@ async function getTrack(trackQuery) {
 
     const data = await response.json();
     if (data.tracks && data.tracks.items.length > 0) {
-      const track = data.tracks.items[0];
-      const trackInfo = {
+      const tracks = data.tracks.items.map((track) => ({
         name: track.name,
         artists: track.artists.map((artist) => artist.name).join(", "),
         album: track.album.name,
+        imageURL: track.album.images.length > 0 ? track.album.images[0].url : null,
         previewUrl: track.preview_url,
         externalUrl: track.external_urls.spotify,
-      };
-      console.log(trackInfo)
-      return trackInfo;
+      }));
+      console.log(tracks)
+      return tracks;
     } else {
       console.log("No tracks found");
     }
@@ -40,7 +40,7 @@ async function getArtist(artistQuery) {
     const accessToken = await getAccessToken();
     const url = `https://api.spotify.com/v1/search?query=${encodeURIComponent(
       artistQuery
-    )}&type=artist&locale=en-US%2Cen%3Bq%3D0.9&offset=0&limit=1`;
+    )}&type=artist&locale=en-US%2Cen%3Bq%3D0.9&offset=0&limit=5`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -50,11 +50,14 @@ async function getArtist(artistQuery) {
 
     const data = await response.json();
     if (data.artists && data.artists.items.length > 0) {
-      const artist = data.artists.items[0];
-      console.log("Artist Name:", artist.name);
-      console.log("URI:", artist.uri);
-      console.log("Image URL: ", artist.images[0].url);
-      console.log("External URL:", artist.external_urls.spotify);
+      const artists = data.artists.items.map((artist) => ({
+        name: artist.name,
+        URI: artist.uri,
+        imageURL: artist.images.length > 0 ? artist.images[0].url : null,
+        externalUrl: artist.external_urls.spotify,
+      }));
+      console.log(artists);
+      return artists;
     } else {
       console.log("No artist found");
     }
