@@ -64,14 +64,15 @@ export const ADD_ARTIST = gql`
 
 // Adding an Event
 export const ADD_EVENT = gql`
-mutation addEvent($name: String!, $date: String!, $venue: String!, $city: String!, $externalUrl: String!) {
-  addEvent(name: $name, date: $date, venue: $venue, city: $city, externalUrl: $externalUrl) {
+mutation addEvent($name: String!, $date: String!, $venue: String!, $city: String!, $externalUrl: String!, $artistNames: [String!]!) {
+  addEvent(name: $name, date: $date, venue: $venue, city: $city, externalUrl: $externalUrl, artistNames: $artistNames ) {
     _id
     name
     date
     venue
     city
     externalUrl
+    artists
   }
 }
 `;

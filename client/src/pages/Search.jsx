@@ -45,6 +45,7 @@ const Search = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+      console.log(data);
       setResults(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -56,11 +57,15 @@ const Search = () => {
       console.error("User is not logged in.");
       return;
     }
-  
+
     try {
       if (lastSearchType === "track") {
-        const artist = item.artists ? (Array.isArray(item.artists) ? item.artists.join(", ") : item.artists) : "Unknown Artist";
-        
+        const artist = item.artists
+          ? Array.isArray(item.artists)
+            ? item.artists.join(", ")
+            : item.artists
+          : "Unknown Artist";
+
         console.log("Track Mutation Variables:", {
           name: item.name,
           artist: artist,
@@ -68,7 +73,7 @@ const Search = () => {
           imageUrl: item.imageURL,
           externalUrl: item.externalUrl,
         });
-  
+
         await addSong({
           variables: {
             name: item.name,
@@ -78,14 +83,13 @@ const Search = () => {
             externalUrl: item.externalUrl,
           },
         });
-  
       } else if (lastSearchType === "artist") {
         console.log("Artist Mutation Variables:", {
           name: item.name,
           imageUrl: item.imageURL,
           externalUrl: item.externalUrl,
         });
-  
+
         await addArtist({
           variables: {
             name: item.name,
@@ -93,8 +97,8 @@ const Search = () => {
             externalUrl: item.externalUrl,
           },
         });
-  
       } else if (lastSearchType === "events") {
+        const artistNames = item.artists ? item.artists : ["Unknown Artist"];
         await addEvent({
           variables: {
             name: item.name,
@@ -102,10 +106,11 @@ const Search = () => {
             venue: item.venue,
             city: item.city,
             externalUrl: item.externalUrl,
+            artistNames: artistNames,
           },
         });
       }
-  
+
       alert("Item added to your page!");
     } catch (error) {
       console.error("Error adding item to page:", error);
@@ -117,7 +122,7 @@ const Search = () => {
       }
       alert("There was an error adding this item to your page.");
     }
-  }
+  };
 
   return (
     <Container>
@@ -133,10 +138,7 @@ const Search = () => {
             />
           </Col>
           <Col xs={6} md={2}>
-            <Form.Select
-              value={searchType}
-              onChange={handleSearchTypeChange}
-            >
+            <Form.Select value={searchType} onChange={handleSearchTypeChange}>
               <option value="track">Track</option>
               <option value="artist">Artist</option>
               <option value="events">Events</option>
@@ -178,10 +180,7 @@ const Search = () => {
                       {result.previewUrl && (
                         <div className="mt-3">
                           <audio controls>
-                            <source
-                              src={result.previewUrl}
-                              type="audio/mpeg"
-                            />
+                            <source src={result.previewUrl} type="audio/mpeg" />
                             Your browser does not support the audio element.
                           </audio>
                         </div>
@@ -232,6 +231,11 @@ const Search = () => {
                       <strong>Date:</strong> {result.date}
                       <br />
                       <strong>Venue:</strong> {result.venue}, {result.city}
+                      <br />
+                      <strong>Artists:</strong>{" "}
+                      {result.artist && result.artist.length > 0
+                        ? result.artist.join(", ")
+                        : "Unknown Artists"}
                     </Card.Text>
                     <Button
                       href={result.externalUrl}

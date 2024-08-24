@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { User, Song, Event, Artist } = require("../models");
 const mongoose = require("mongoose");
-const { ApolloError } = require('@apollo/server/errors');
+const { ApolloError } = require("@apollo/server/errors");
 const {
   Types: { ObjectId },
 } = require("mongoose");
@@ -111,9 +111,9 @@ const resolvers = {
         name,
         date,
         venue,
-        location: city,
         city,
         externalUrl,
+        artist: [artistName],
         users: [context.user._id],
       });
 
@@ -147,7 +147,7 @@ const resolvers = {
       try {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-          throw new Error('A user with this email already exists');
+          throw new Error("A user with this email already exists");
         }
 
         const newUser = await User.create({
@@ -161,13 +161,15 @@ const resolvers = {
 
         return { token, user: newUser };
       } catch (err) {
-        console.error('Error creating user:', err); // Log the specific error
+        console.error("Error creating user:", err); // Log the specific error
 
-        if (err.name === 'ValidationError') {
-          throw new Error('User validation failed: ' + Object.keys(err.errors).join(', '));
+        if (err.name === "ValidationError") {
+          throw new Error(
+            "User validation failed: " + Object.keys(err.errors).join(", ")
+          );
         }
 
-        throw new Error('Failed to create user');
+        throw new Error("Failed to create user");
       }
     },
 
