@@ -1,52 +1,15 @@
-// import IndivEvent from "./IndivEvent";
-
 import { List } from "antd";
 
-const sampleEvent = [
-  {
-    id: 1,
-    time: "7:00",
-    city: "Charlotte",
-    venue: "Bank of America Stadium",
-    eventUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-    artists: [
-      {
-        name: "Taylor Swift",
-        imageUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz-0gZGjxoAp2wa6pbtGIR_9nsVwQZMHbOQ&s",
-      },
-      {
-        name: "Sabrina Carpenter",
-        imageUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz-0gZGjxoAp2wa6pbtGIR_9nsVwQZMHbOQ&s",
-      },
-    ],
-  },
-  {
-    id: 2,
-    time: "5:00",
-    city: "Columbia",
-    venue: "Williams Brice Stadium",
-    eventUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-    artists: [
-      {
-        name: "Olivia Rodrigo",
-        imageUrl:
-          "https://media.gq.com/photos/610172681ac2ac787b459b47/4:3/w_2283,h_1712,c_limit/olivia-rodrigo-gq-september-2021-01.jpg",
-      },
-    ],
-  },
-];
-const SavedEvents = () => {
+const ArtistEvents = ({ events }) => {
   return (
     <div style={{ margin: "5px" }}>
-      <h1 style={{ textAlign: "center" }}>My Events</h1>
+      <h1 style={{ textAlign: "center", marginTop: 10 }}>Events</h1>
       <List
         style={{
           margin: "20px",
         }}
         itemLayout="vertical"
-        dataSource={sampleEvent}
+        dataSource={events}
         renderItem={(item) => (
           <List.Item
             key={item.id}
@@ -92,4 +55,4 @@ const SavedEvents = () => {
   );
 };
 
-export default SavedEvents;
+export default ArtistEvents;

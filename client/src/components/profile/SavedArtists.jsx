@@ -23,8 +23,16 @@ const sampleArtists = [
 
 const SavedArtists = () => {
   return (
-    <div style={{ margin: "10px" }}>
-      <h1>SAVED ARTISTS:</h1>
+    <div
+      style={{
+        margin: "10px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <h1 style={{ textAlign: "center" }}>My Artists</h1>
       {sampleArtists.map((artist) => (
         <ArtistCard key={artist.id} artist={artist} />
       ))}

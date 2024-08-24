@@ -2,24 +2,29 @@ import React from "react";
 
 import SavedEvents from "../components/profile/SavedEvents";
 import SavedArtists from "../components/profile/SavedArtists";
+import SavedSongs from "../components/profile/SavedSongs";
 
 import { Row, Col } from "antd";
 
 const Profile = () => {
   return (
     <div>
-      <Row gutter={16}>
-        <Col xs={24} sm={24} md={24} lg={8}>
+      <Row
+        gutter={16}
+        justify="center"
+        style={{ display: "flex", justifyContent: "space-evenly" }}
+      >
+        <Col flex={1} style={{ marginRight: "0px", marginLeft: "50px" }}>
           {" "}
           <SavedEvents></SavedEvents>
         </Col>
-        <Col xs={24} sm={24} md={24} lg={8}>
+        <Col flex={3} style={{ marginRight: "50px", marginLeft: "0px" }}>
           {" "}
           <SavedArtists></SavedArtists>
         </Col>
-        <Col xs={24} sm={24} md={24} lg={8}>
+        <Col flex={1} style={{ marginRight: "50px", marginLeft: "10px" }}>
           {" "}
-          <SavedEvents></SavedEvents>
+          <SavedSongs></SavedSongs>
         </Col>
       </Row>
 

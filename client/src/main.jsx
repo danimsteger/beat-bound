@@ -10,8 +10,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NoMatch from "./pages/NoMatch.jsx";
 import App from "./App.jsx";
 import Home from "./pages/Home";
-import Search from './pages/Search.jsx'
-// import ArtistPage from './pages/ArtistPage.jsx'
+import Search from "./pages/Search.jsx";
+import ArtistPage from "./pages/ArtistPage.jsx";
 // import EventPage from './pages/EventPage.jsx'
 // import FriendsFeed from './pages/FriendsFeed.jsx'
 import Profile from "./pages/Profile.jsx";
@@ -22,17 +22,17 @@ const router = createBrowserRouter([
     errorElement: <NoMatch />,
     children: [
       {
-        index: true, 
-        element: <Home />
+        index: true,
+        element: <Home />,
       },
       {
-        path: '/search-page',
-        element: <Search />
+        path: "/search-page",
+        element: <Search />,
       },
-      // }, {
-      //   path: '/ArtistPage',
-      //   element: <ArtistPage />
-      // },{
+      {
+        path: "/ArtistPage",
+        element: <ArtistPage />,
+      },
       //   path: '/EventPage',
       //   element: <EventPage />
       // },{
