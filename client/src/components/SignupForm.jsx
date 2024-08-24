@@ -56,6 +56,7 @@ const SignupForm = () => {
       email: userFormData.email.trim(),
       password: userFormData.password.trim(),
     };
+    console.log('Submitting form with data:', trimmedFormData);
 
     if (form.checkValidity()) {
       try {
