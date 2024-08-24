@@ -1,21 +1,28 @@
 import React from "react";
 
 import SavedEvents from "../components/profile/SavedEvents";
+import SavedArtists from "../components/profile/SavedArtists";
+
+import { Row, Col } from "antd";
 
 const Profile = () => {
   return (
     <div>
-      <section>
-        <SavedEvents></SavedEvents>
-      </section>
-      <section>
-        <h2>My Saved Artists</h2>
-        <div>{/* TODO: Add saved artists here */}</div>
-      </section>
-      <section>
-        <h2>My Saved Songs!</h2>
-        <div>{/* TODO: Add saved songs here */}</div>
-      </section>
+      <Row gutter={16}>
+        <Col xs={24} sm={24} md={24} lg={8}>
+          {" "}
+          <SavedEvents></SavedEvents>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={8}>
+          {" "}
+          <SavedArtists></SavedArtists>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={8}>
+          {" "}
+          <SavedEvents></SavedEvents>
+        </Col>
+      </Row>
+
       <footer>
         <div>{/* TODO: Add Now Playing bar here */}</div>
       </footer>
