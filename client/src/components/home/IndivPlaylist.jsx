@@ -1,8 +1,27 @@
+import { List } from "antd";
+
 function IndivPlaylist({ samplePlaylist }) {
+  const slideStyle = {
+    // position: "relative",
+    textAlign: "center",
+  };
+
+  const imageStyle = {
+    width: "100%",
+    height: "auto",
+    // display: "block",
+    // borderRadius: "20px",
+  };
+
   return (
-    <div>
-      <img src={samplePlaylist.imageUrl} />
-      <h3>{samplePlaylist.name}</h3>
+    <div style={slideStyle}>
+      <a href={samplePlaylist.playlistUrl} target="_blank">
+        <img
+          src={samplePlaylist.imageUrl}
+          alt={samplePlaylist.name}
+          style={imageStyle}
+        />
+      </a>
     </div>
   );
 }
