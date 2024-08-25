@@ -12,19 +12,19 @@ const Profile = () => {
       <Row
         gutter={16}
         justify="center"
-        style={{ display: "flex", justifyContent: "space-evenly" }}
+        // style={{ display: "flex", justifyContent: "space-evenly" }}
       >
-        <Col flex={1} style={{ marginRight: "0px", marginLeft: "50px" }}>
+        <Col flex={8} style={{ marginRight: "0px", marginLeft: "50px" }}>
           {" "}
-          <SavedEvents></SavedEvents>
+          <SavedArtists />
         </Col>
-        <Col flex={3} style={{ marginRight: "50px", marginLeft: "0px" }}>
+        <Col flex={8} style={{ marginRight: "50px", marginLeft: "0px" }}>
           {" "}
-          <SavedArtists></SavedArtists>
+          <SavedSongs />
         </Col>
-        <Col flex={1} style={{ marginRight: "50px", marginLeft: "10px" }}>
+        <Col flex={8} style={{ marginRight: "50px", marginLeft: "10px" }}>
           {" "}
-          <SavedSongs></SavedSongs>
+          <SavedEvents />
         </Col>
       </Row>
 

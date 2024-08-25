@@ -4,7 +4,6 @@ const getAccessToken = require("./getToken");
 async function getTrack(trackQuery) {
   try {
     const accessToken = await getAccessToken();
-    console.log("Access Token:", accessToken);
     const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
       trackQuery
     )}&type=track&offset=0&limit=5`;
@@ -16,16 +15,21 @@ async function getTrack(trackQuery) {
     });
 
     const data = await response.json();
+    console.log("API Response Data:", data);
+
     if (data.tracks && data.tracks.items.length > 0) {
       const tracks = data.tracks.items.map((track) => ({
         name: track.name,
-        artists: track.artists.map((artist) => artist.name).join(", "),
+        artists: track.artists.map((artist) => ({
+          name: artist.name,
+          spotifyId: artist.id,
+        })),
         album: track.album.name,
         imageURL: track.album.images.length > 0 ? track.album.images[0].url : null,
         previewUrl: track.preview_url,
         externalUrl: track.external_urls.spotify,
       }));
-      console.log(tracks)
+      console.log('dis is my api call', tracks)
       return tracks;
     } else {
       console.log("No tracks found");
@@ -52,6 +56,7 @@ async function getArtist(artistQuery) {
     if (data.artists && data.artists.items.length > 0) {
       const artists = data.artists.items.map((artist) => ({
         name: artist.name,
+        spotifyId: artist.id,
         URI: artist.uri,
         imageURL: artist.images.length > 0 ? artist.images[0].url : null,
         externalUrl: artist.external_urls.spotify,
@@ -132,4 +137,100 @@ async function getArtistEvents(artistName) {
   }
 }
 
-module.exports = { getTrack, getArtist, getArtistEvents };
+async function getFeaturedPlaylists() {
+  try {
+      const accessToken = await getAccessToken();
+      const url = 'https://api.spotify.com/v1/browse/featured-playlists?limit=5';
+
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              Authorization: `Bearer ${accessToken}`
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error('Failed to fetch featured playlists: ' + response.statusText);
+      }
+
+      const data = await response.json();
+      const playlists = data.playlists.items.map(playlist => ({
+          description: playlist.description,
+          externalUrls: playlist.external_urls.spotify,
+          imageUrl: playlist.images[0]?.url
+      }));
+
+      return playlists;
+  } catch (error) {
+      console.error('Error in getFeaturedPlaylists:', error);
+      throw error;
+  }
+}
+
+async function getArtistFeaturedTracks(artistId) {
+  try {
+      const accessToken = await getAccessToken();
+      const url = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=US`;
+
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              Authorization: `Bearer ${accessToken}`
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error(`Failed to fetch top tracks: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const topTracks = data.tracks.slice(0, 5).map(track => ({
+          name: track.name,
+          albumName: track.album.name,
+          previewUrl: track.preview_url,
+          imageUrl: track.album.images[0]?.url,
+          externalUrl: track.external_urls.spotify
+      }));
+
+      return topTracks;
+  } catch (error) {
+      console.error('Error fetching artist top tracks:', error);
+      throw error;
+  }
+}
+
+async function getRelatedArtists(artistId) {
+  try {
+      const accessToken = await getAccessToken();
+      const url = `https://api.spotify.com/v1/artists/${artistId}/related-artists`;
+
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              Authorization: `Bearer ${accessToken}`
+          }
+      });
+
+      if (!response.ok) {
+          throw new Error(`Failed to fetch related artists: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const relatedArtists = data.artists.slice(0, 5).map(artist => ({
+          name: artist.name,
+          spotifyId: artist.id,
+          externalUrl: artist.external_urls.spotify,
+          image: artist.images[0]?.url
+      }));
+
+      return relatedArtists;
+  } catch (error) {
+      console.error('Error fetching related artists:', error);
+      throw error;
+  }
+}
+
+
+
+
+module.exports = { getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeaturedTracks, getRelatedArtists };

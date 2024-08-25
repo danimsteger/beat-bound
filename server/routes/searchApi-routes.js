@@ -1,5 +1,5 @@
 const express = require("express");
-const { getTrack, getArtist, getArtistEvents } = require("../utils/API");
+const { getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeaturedTracks, getRelatedArtists } = require("../utils/API");
 const router = express.Router();
 
 router.route("/track").get(async (req, res) => {
@@ -30,6 +30,38 @@ router.route("/artist-events").get(async (req, res) => {
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch artist events" });
+  }
+});
+
+router.route("/featured-playlists").get(async (req, res) => {
+  try {
+    const result = await getFeaturedPlaylists();
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching featured playlists:', error);
+    res.status(500).json({ error: "Failed to fetch featured playlists" });
+  }
+});
+
+router.route("/artist-featured-tracks/:artistId").get(async (req, res) => {
+  try {
+    const artistId = req.params.artistId;
+    const result = await getArtistFeaturedTracks(artistId);
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching featured tracks:', error);
+    res.status(500).json({ error: "Failed to fetch featured tracks" });
+  }
+});
+
+router.route("/related-artists/:artistId").get(async (req, res) => {
+  try {
+    const artistId = req.params.artistId;
+    const result = await getRelatedArtists(artistId);
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching related artists:', error);
+    res.status(500).json({ error: "Failed to fetch related artists" });
   }
 });
 

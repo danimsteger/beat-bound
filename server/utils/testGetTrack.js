@@ -1,6 +1,6 @@
 // combinedTest.js
 const getAccessToken = require('./getToken');
-const {getTrack, getArtist, getArtistEvents } = require('./API');
+const {getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeaturedTracks, getRelatedArtists } = require('./API');
 
 // (async () => {
 //   try {
@@ -15,18 +15,41 @@ const {getTrack, getArtist, getArtistEvents } = require('./API');
 // (async () => {
 //     try {
 //         await getArtist('Taylor Swift');
-//         await getArtist('BlackPink');
 //       }
 //     catch (error) {
 //       console.error('Error:', error);
 //     }
 //   })();
 
-getArtistEvents('Taylor Swift').then(result => {
+// getArtistEvents('Taylor Swift').then(result => {
+//   if (result.error) {
+//     console.log(result.error);
+//   } else {
+//     // console.log('Upcoming Events:', result);
+//     console.log('it worked')
+//   }
+// });
+
+getFeaturedPlaylists().then(result =>{
   if (result.error) {
     console.log(result.error);
   } else {
-    // console.log('Upcoming Events:', result);
-    console.log('it worked')
+    console.log('featured playlists data: ', result);
   }
-});
+}) 
+
+// getArtistFeaturedTracks('06HL4z0CvFAxyc27GXpf02').then(result => {
+//   if (result.error) {
+//     console.log(result.error);
+//   } else {
+//     console.log('Artist Featured songs: ', result);
+//   }
+// })
+
+// getRelatedArtists('06HL4z0CvFAxyc27GXpf02').then(result => {
+//   if (result.error) {
+//     console.log(result.error);
+//   } else {
+//     console.log('Related Artists: ', result);
+//   }
+// })

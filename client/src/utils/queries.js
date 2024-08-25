@@ -110,3 +110,50 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const GET_USERS_ARTISTS = gql`
+  query GetMyArtists {
+    me {
+      artists {
+        _id
+        name
+        imageUrl
+        spotifyId
+      }
+    }
+  }
+`;
+
+export const GET_USERS_EVENTS = gql`
+  query GetMyEvents {
+    me {
+      events {
+        _id
+        name
+        date
+        venue
+        city
+      }
+    }
+  }
+`;
+
+export const GET_USERS_SONGS = gql`
+  query GetMySongs {
+    me {
+      _id
+      firstName
+      lastName
+      songs {
+        _id
+        name
+        artist
+        album
+        imageUrl
+        externalUrl
+      }
+    }
+  }
+`;
+
+

@@ -82,65 +82,108 @@ const resolvers = {
       if (!context || !context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-
-      const newSong = await Song.create({
-        name,
-        artist,
-        album,
-        imageUrl,
-        externalUrl,
+    
+      const normalizedName = name.trim().toLowerCase();
+      const normalizedArtist = artist.trim().toLowerCase();
+      const normalizedAlbum = album.trim().toLowerCase();
+    
+      let song = await Song.findOne({
+        name: normalizedName,
+        artist: normalizedArtist,
+        album: normalizedAlbum,
       });
+    
+      if (song) {
+        if (!song.imageUrl || song.imageUrl !== imageUrl) {
+          song.imageUrl = imageUrl;
+          song.externalUrl = externalUrl; 
+          await song.save();
+        }
 
+        if (!song.users.includes(context.user._id)) {
+          song.users.push(context.user._id);
+          await song.save();
+        }
+      } else {
+        song = await Song.create({
+          name: normalizedName,
+          artist: normalizedArtist,
+          album: normalizedAlbum,
+          imageUrl,
+          externalUrl,
+          users: [context.user._id],
+        });
+      }
+    
       await User.findByIdAndUpdate(context.user._id, {
-        $push: { songs: newSong._id },
+        $addToSet: { songs: song._id },
       });
-
-      return newSong;
+    
+      return song;
     },
-
+    
+    
     addEvent: async (
       parent,
-      { name, date, venue, city, externalUrl },
+      { name, date, venue, city, externalUrl, artistNames },
       context
     ) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
 
-      const newEvent = await Event.create({
-        name,
-        date,
-        venue,
-        city,
-        externalUrl,
-        artist: [artistName],
-        users: [context.user._id],
-      });
-
+      let event = await Event.findOne({ name, date, venue, city });
+    
+      if (event) {
+        if (!event.users.includes(context.user._id)) {
+          event.users.push(context.user._id);
+          await event.save();
+        }
+      } else {
+        event = await Event.create({
+          name,
+          date,
+          venue,
+          city,
+          externalUrl,
+          artists: artistNames,
+          users: [context.user._id],
+        });
+      }
       await User.findByIdAndUpdate(context.user._id, {
-        $addToSet: { events: newEvent._id },
+        $addToSet: { events: event._id },
       });
-
-      return newEvent;
+    
+      return event;
     },
 
-    addArtist: async (parent, { name, imageUrl, externalUrl }, context) => {
+    addArtist: async (parent, { name, spotifyId, imageUrl, externalUrl }, context) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
 
-      const newArtist = await Artist.create({
-        name,
-        imageUrl,
-        externalUrl,
-        users: [context.user._id],
-      });
-
+      let artist = await Artist.findOne({ spotifyId });
+    
+      if (artist) {
+        if (!artist.users.includes(context.user._id)) {
+          artist.users.push(context.user._id);
+          await artist.save();
+        }
+      } else {
+        artist = await Artist.create({
+          name,
+          spotifyId,
+          imageUrl,
+          externalUrl,
+          users: [context.user._id],
+        });
+      }
+    
       await User.findByIdAndUpdate(context.user._id, {
-        $addToSet: { artists: newArtist._id },
+        $addToSet: { artists: artist._id },
       });
-
-      return newArtist;
+    
+      return artist;
     },
 
     addUser: async (_, { firstName, lastName, email, password }) => {

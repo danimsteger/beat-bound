@@ -1,96 +1,48 @@
-import { Carousel } from "antd";
-import IndivPlaylist from "./IndivPlaylist";
+import React, { useEffect, useState } from "react";
+import { Card, Row, Col, Container } from "react-bootstrap";
 
-// const contentStyle = {
-//   height: "160px",
-//   color: "#fff",
-//   lineHeight: "160px",
-//   textAlign: "center",
-//   background: "#364d79",
-// };
+const FeaturedPlaylists = () => {
+  const [playlists, setPlaylists] = useState([]);
 
-// Need to pass through Playlist component and map over each component!!
-// <IndivPlaylist>
+  useEffect(() => {
+    const fetchPlaylists = async () => {
+      try {
+        const response = await fetch('/api/search/featured-playlists');
+        if (!response.ok) {
+          throw new Error('Failed to fetch featured playlists');
+        }
+    
+        const data = await response.json();
+        setPlaylists(data);
+      } catch (error) {
+        console.error('Error fetching featured playlists:', error);
+      }
+    };
+    fetchPlaylists();
+  }, []);
 
-const samplePlaylists = [
-  {
-    id: 1,
-    name: "popular playlist 1",
-    imageUrl:
-      "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
-    playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
-  },
-  {
-    id: 2,
-    name: "popular playlist 2",
-    imageUrl:
-      "https://i.scdn.co/image/ab67706f00000002b219b3def5af8116125fbfe2",
-    playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
-  },
-  {
-    id: 3,
-    name: "popular playlist 3",
-    imageUrl:
-      "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
-    playlistUrl: "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
-  },
-];
-
-console.log(samplePlaylists[1].imageUrl);
-
-// currently has many carousels but haven't figured out how to make this responsive yet!!!
-function FeatPlaylistCarousel() {
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-        gap: "0px",
-        marginTop: 70,
-      }}
-    >
-      <Carousel autoplay style={{ width: "400px" }}>
-        {samplePlaylists.map((samplePlaylist) => (
-          <IndivPlaylist
-            key={samplePlaylist.id}
-            samplePlaylist={samplePlaylist}
-          />
+    <Container>
+      <h2>Featured Playlists</h2>
+      <Row>
+        {playlists.map((playlist, index) => (
+          <Col xs={12} md={6} lg={4} key={index} className="mb-4">
+            <Card>
+              {playlist.imageUrl && (
+                <Card.Img variant="top" src={playlist.imageUrl} alt="Playlist Cover" />
+              )}
+              <Card.Body>
+                <Card.Text>{playlist.description}</Card.Text>
+                <a href={playlist.externalUrls} target="_blank" rel="noopener noreferrer">
+                  Listen on Spotify
+                </a>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </Carousel>
-      <Carousel autoplay style={{ width: "400px" }}>
-        {samplePlaylists.map((samplePlaylist) => (
-          <IndivPlaylist
-            key={samplePlaylist.id}
-            samplePlaylist={samplePlaylist}
-          />
-        ))}
-      </Carousel>
-      <Carousel autoplay style={{ width: "400px" }}>
-        {samplePlaylists.map((samplePlaylist) => (
-          <IndivPlaylist
-            key={samplePlaylist.id}
-            samplePlaylist={samplePlaylist}
-          />
-        ))}
-      </Carousel>
-      <Carousel autoplay style={{ width: "400px" }}>
-        {samplePlaylists.map((samplePlaylist) => (
-          <IndivPlaylist
-            key={samplePlaylist.id}
-            samplePlaylist={samplePlaylist}
-          />
-        ))}
-      </Carousel>
-      <Carousel autoplay style={{ width: "400px" }}>
-        {samplePlaylists.map((samplePlaylist) => (
-          <IndivPlaylist
-            key={samplePlaylist.id}
-            samplePlaylist={samplePlaylist}
-          />
-        ))}
-      </Carousel>
-    </div>
+      </Row>
+    </Container>
   );
-}
+};
 
-export default FeatPlaylistCarousel;
+export default FeaturedPlaylists;
