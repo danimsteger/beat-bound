@@ -94,6 +94,12 @@ const resolvers = {
       });
     
       if (song) {
+        if (!song.imageUrl || song.imageUrl !== imageUrl) {
+          song.imageUrl = imageUrl;
+          song.externalUrl = externalUrl; 
+          await song.save();
+        }
+
         if (!song.users.includes(context.user._id)) {
           song.users.push(context.user._id);
           await song.save();

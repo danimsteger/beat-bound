@@ -1,90 +1,28 @@
-// import IndivEvent from "./IndivEvent";
+import { useQuery } from '@apollo/client';
+import { List } from 'antd';
+import { GET_USERS_EVENTS } from '../../utils/queries';
 
-import { List } from "antd";
-
-const sampleEvent = [
-  {
-    id: 1,
-    time: "7:00",
-    city: "Charlotte",
-    venue: "Bank of America Stadium",
-    eventUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-    artists: [
-      {
-        name: "Taylor Swift",
-        imageUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz-0gZGjxoAp2wa6pbtGIR_9nsVwQZMHbOQ&s",
-      },
-      {
-        name: "Sabrina Carpenter",
-        imageUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz-0gZGjxoAp2wa6pbtGIR_9nsVwQZMHbOQ&s",
-      },
-    ],
-  },
-  {
-    id: 2,
-    time: "5:00",
-    city: "Columbia",
-    venue: "Williams Brice Stadium",
-    eventUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-    artists: [
-      {
-        name: "Olivia Rodrigo",
-        imageUrl:
-          "https://media.gq.com/photos/610172681ac2ac787b459b47/4:3/w_2283,h_1712,c_limit/olivia-rodrigo-gq-september-2021-01.jpg",
-      },
-    ],
-  },
-];
 const SavedEvents = () => {
+  const { loading, error, data } = useQuery(GET_USERS_EVENTS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : Please try again</p>;
+
+  const events = data.me.events;
+
   return (
     <div style={{ margin: "5px" }}>
       <h1 style={{ textAlign: "center" }}>My Events</h1>
       <List
-        style={{
-          margin: "20px",
-        }}
+        style={{ margin: "20px" }}
         itemLayout="vertical"
-        dataSource={sampleEvent}
+        dataSource={events}
         renderItem={(item) => (
-          <List.Item
-            key={item.id}
-            style={
-              {
-                // display: "flex",
-                // alignItems: "center",
-                // justifyContent: "center",
-                // padding: "10px",
-              }
-            }
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 10,
-              }}
-            >
-              <div style={{ marginRight: "20px" }}>
-                <img width={100} alt="logo" src={item.artists[0].imageUrl} />
-              </div>
-
-              <div style={{ flex: 1 }}>
-                <List.Item.Meta
-                  title={<a href={item.eventUrl}>{item.venue}</a>}
-                  description={
-                    <div>
-                      {item.artists.map((artist, index) => (
-                        <div key={index}>{artist.name}</div>
-                      ))}
-                    </div>
-                  }
-                />
-                {item.time}
-              </div>
-            </div>
+          <List.Item key={item._id}>
+            <List.Item.Meta
+              title={<a href={`#event/${item._id}`}>{item.name}</a>} 
+              description={`${item.venue}, ${item.city} on ${item.date}`} 
+            />
           </List.Item>
         )}
       />

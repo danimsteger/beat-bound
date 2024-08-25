@@ -30,13 +30,13 @@ const {getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeat
 //   }
 // });
 
-// getFeaturedPlaylists().then(result =>{
-//   if (result.error) {
-//     console.log(result.error);
-//   } else {
-//     console.log('featured playlists data: ', result);
-//   }
-// }) 
+getFeaturedPlaylists().then(result =>{
+  if (result.error) {
+    console.log(result.error);
+  } else {
+    console.log('featured playlists data: ', result);
+  }
+}) 
 
 // getArtistFeaturedTracks('06HL4z0CvFAxyc27GXpf02').then(result => {
 //   if (result.error) {
@@ -46,10 +46,10 @@ const {getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeat
 //   }
 // })
 
-getRelatedArtists('06HL4z0CvFAxyc27GXpf02').then(result => {
-  if (result.error) {
-    console.log(result.error);
-  } else {
-    console.log('Related Artists: ', result);
-  }
-})
+// getRelatedArtists('06HL4z0CvFAxyc27GXpf02').then(result => {
+//   if (result.error) {
+//     console.log(result.error);
+//   } else {
+//     console.log('Related Artists: ', result);
+//   }
+// })
