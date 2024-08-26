@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <header id='header'>
-        <h1>Welcome to Beat Bound</h1></header>
+        <h1 id='homeheader'>Welcome to Beat Bound</h1></header>
       <section>
         <FeatPlaylistCarousel></FeatPlaylistCarousel>
       </section>
