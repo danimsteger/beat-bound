@@ -1,5 +1,5 @@
 const express = require("express");
-const { getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeaturedTracks, getRelatedArtists } = require("../utils/API");
+const { getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeaturedTracks, getRelatedArtists, getArtistById } = require("../utils/API");
 const router = express.Router();
 
 router.route("/track").get(async (req, res) => {
@@ -19,6 +19,16 @@ router.route("/artist").get(async (req, res) => {
     const result = await getArtist(artistQuery);
     res.json(result);
   } catch (error) {
+    res.status(500).json({ error: "Failed to fetch artist" });
+  }
+});
+router.route("/artist/:artistId").get(async (req, res) => {
+  try {
+    const artistId = req.params.artistId;
+    const result = await getArtistById(artistId);
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching artist:', error);
     res.status(500).json({ error: "Failed to fetch artist" });
   }
 });

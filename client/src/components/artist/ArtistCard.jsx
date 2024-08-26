@@ -1,16 +1,25 @@
 import { Card, Row, Col, Tooltip, Button } from "antd";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { StarOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
-//NEED TO ADD LINK TO THAT SPECIFIC ARTIST'S PAGE
 const ArtistCard = ({ artist }) => {
   const defaultImageUrl = "https://via.placeholder.com/100";
 
   return (
-    <Link to={`/ArtistPage/${artist.spotifyId}`}>
+    <Link
+      to={{
+        pathname: `/ArtistPage/${artist.spotifyId}`,
+        state: {
+          imageUrl: artist.image || defaultImageUrl,
+          name: artist.name,
+          externalUrl: artist.externalUrl,
+        },
+      }}
+    >
       <Card
         hoverable
         style={{
