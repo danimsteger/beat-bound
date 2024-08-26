@@ -5,7 +5,10 @@ const { Meta } = Card;
 //NEED TO ADD LINK TO THAT SPECIFIC ARTISTS PAGE!!!
 const ArtistCard = ({ artist }) => {
   return (
-    <Link to={`/ArtistPage/${artist.spotifyId}`}>
+    <Link
+      to={`/ArtistPage/${artist.spotifyId}`}
+      style={{ textDecoration: "none" }}
+    >
       <Card
         hoverable
         style={{
@@ -20,7 +23,12 @@ const ArtistCard = ({ artist }) => {
           <Col>
             <img
               src={artist.imageUrl}
-              style={{ width: 100, height: 100, marginRight: 20 }}
+              style={{
+                width: 100,
+                height: 100,
+                marginRight: 20,
+                borderRadius: 10,
+              }}
             />
           </Col>
           <Col>
@@ -33,7 +41,11 @@ const ArtistCard = ({ artist }) => {
               }}
             >
               <Meta
-                title={<span style={{ fontSize: "24px" }}>{artist.name}</span>}
+                title={
+                  <span style={{ fontSize: "24px", textDecoration: "none" }}>
+                    {artist.name}
+                  </span>
+                }
               />
             </div>
           </Col>

@@ -21,9 +21,33 @@ const SavedEvents = () => {
         renderItem={(item) => (
           <List.Item key={item._id}>
             <List.Item.Meta
-              title={<a href={`#event/${item._id}`}>{item.name}</a>}
+              title={
+                <a
+                  href={`#event/${item._id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  {item.name}
+                </a>
+              }
               description={`${item.venue}, ${item.city} on ${item.date}`}
             />
+            <Tooltip title="View on Ticketmaster">
+              <Button
+                href={item.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                type="primary"
+                shape="circle"
+                style={{ margin: "10px" }}
+                size="medium"
+              >
+                <img
+                  src="/ticketmaster.white.png"
+                  alt="spotify logo"
+                  width="20px"
+                />
+              </Button>
+            </Tooltip>
             <Tooltip title="Remove From Profile">
               <Button
                 shape="circle"
