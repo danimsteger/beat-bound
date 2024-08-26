@@ -7,6 +7,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 import Auth from "./utils/auth";
 import { Button } from "antd";
 
@@ -34,6 +35,7 @@ function App() {
     <ApolloProvider client={client}>
       <Nav />
       <Outlet />
+      <Footer />
     </ApolloProvider>
   );
 }
