@@ -19,7 +19,6 @@ const server = new ApolloServer({
 
 app.use(cors());
 app.use(routes);
-console.log(process.env.NODE_ENV);
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
@@ -39,6 +38,7 @@ const startApolloServer = async () => {
     })
   );
 
+  console.log(process.env);
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/dist")));
 
