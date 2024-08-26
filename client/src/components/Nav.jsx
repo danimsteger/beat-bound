@@ -5,9 +5,10 @@ import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import Auth from "../utils/auth";
 
-import { Layout, Button, Modal, Tabs } from "antd";
+import { Layout, Modal, Tabs, Typography } from "antd";
 import customTheme from "../styles/customTheme";
 const { Header } = Layout;
+const { Text } = Typography;
 
 const AppNavbar = () => {
   // set modal display state
@@ -22,49 +23,121 @@ const AppNavbar = () => {
             justifyContent: "space-between",
             alignItems: "center",
             backgroundColor: customTheme.token.colorPrimary,
+            textDecoration: "none",
           }}
         >
-          <div>
+          <div style={{ display: "flex" }}>
             <Link
               to="/"
               style={{
                 color: "white",
                 fontSize: "1.2rem",
                 marginRight: "20px",
+                textDecoration: "none",
+                fontWeight: "normal",
+                transition: "text-shadow 0.3s",
+                textShadow: "none",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.textShadow = "1px 1px 4px white";
+                e.target.style.fontWeight = "bold";
+              }} // Add text shadow on hover
+              onMouseLeave={(e) => {
+                e.target.style.textShadow = "none";
+                e.target.style.fontWeight = "normal";
               }}
             >
-              Beat Bound 🏚️
+              🎧 Beat Bound
+
             </Link>
             <Link
               to="/search-page"
-              style={{ color: "white", marginRight: "20px" }}
+              style={{
+                color: "white",
+                marginRight: "20px",
+                textDecoration: "none",
+                fontWeight: "normal",
+                transition: "text-shadow 0.3s",
+                textShadow: "none",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.textShadow = "1px 1px 4px white";
+                e.target.style.fontWeight = "bold";
+              }} // Add text shadow on hover
+              onMouseLeave={(e) => {
+                e.target.style.textShadow = "none";
+                e.target.style.fontWeight = "normal";
+              }}
             >
-              Search 🔍
+              <ul>Search 🔍</ul>
+
             </Link>
             {Auth.loggedIn() ? (
               <>
                 <Link
                   to="/Profile"
-                  style={{ color: "white", marginRight: "20px" }}
+                  style={{
+                    color: "white",
+                    marginRight: "20px",
+                    textDecoration: "none",
+                    fontWeight: "normal",
+                    transition: "text-shadow 0.3s",
+                    textShadow: "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.textShadow = "1px 1px 4px white";
+                    e.target.style.fontWeight = "bold";
+                  }} // Add text shadow on hover
+                  onMouseLeave={(e) => {
+                    e.target.style.textShadow = "none";
+                    e.target.style.fontWeight = "normal";
+                  }}
                 >
-                  My Profile
+                  <ul>My Profile</ul>{" "}
                 </Link>
-                <Button
-                  type="link"
+
+                <ul
                   onClick={Auth.logout}
-                  style={{ color: "white" }}
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                    fontWeight: "normal",
+                    transition: "text-shadow 0.3s",
+                    textShadow: "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.textShadow = "1px 1px 4px white";
+                    e.target.style.fontWeight = "bold";
+                  }} // Add text shadow on hover
+                  onMouseLeave={(e) => {
+                    e.target.style.textShadow = "none";
+                    e.target.style.fontWeight = "normal";
+                  }}
                 >
-                  Logout
-                </Button>
+                  <a>Logout</a>
+                </ul>
               </>
             ) : (
-              <Button
-                type="link"
+              <ul
                 onClick={() => setShowModal(true)}
-                style={{ color: "white" }}
+                style={{
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: "normal",
+                  transition: "text-shadow 0.3s",
+                  textShadow: "none",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.textShadow = "1px 1px 4px white";
+                  e.target.style.fontWeight = "bold";
+                }} // Add text shadow on hover
+                onMouseLeave={(e) => {
+                  e.target.style.textShadow = "none";
+                  e.target.style.fontWeight = "normal";
+                }}
               >
-                Login/Sign Up
-              </Button>
+                <a>Login/Signup</a>
+              </ul>
             )}
           </div>
         </Header>
