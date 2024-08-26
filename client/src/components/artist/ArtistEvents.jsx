@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { List, Tooltip, Button } from "antd";
 import { StarOutlined } from "@ant-design/icons";
+import Auth from "../../utils/auth";
 
-const ArtistEvents = ({ artistName }) => {
+const ArtistEvents = ({ artistName, onAddToMyPage }) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!artistName) return; // Do not fetch if artistName is not set
+    if (!artistName) return;
 
     const fetchEvents = async () => {
       try {
@@ -17,8 +18,9 @@ const ArtistEvents = ({ artistName }) => {
           throw new Error("Failed to fetch events");
         }
         const result = await response.json();
+        console.log("API Response:", result);
 
-        // Ensure the result is an array before setting it
+        console.log("Fetched Events:", result);
         setEvents(Array.isArray(result) ? result : []);
       } catch (err) {
         setError("Failed to load events.");
@@ -56,10 +58,16 @@ const ArtistEvents = ({ artistName }) => {
                 <List.Item.Meta
                   title={item.name}
                   description={
-                    <div>
-                      <div>{item.date}</div>
-                      <div>{item.venue}, {item.city}</div>
-                    </div>
+                    <>
+                      <strong>Date:</strong> {item.date}
+                      <br />
+                      <strong>Venue:</strong> {item.venue}, {item.city}
+                      <br />
+                      <strong>Artists:</strong>{" "}
+                      {item.artists && item.artists.length > 0
+                        ? item.artists.join(", ")
+                        : "Unknown Artists"}
+                    </>
                   }
                 />
               </div>
@@ -76,15 +84,18 @@ const ArtistEvents = ({ artistName }) => {
                     Buy Tickets
                   </Button>
                 </Tooltip>
-                <Tooltip title="Add Event to Profile">
+                {Auth.loggedIn() && (
+                  <Tooltip title="Add Event to Profile">
                   <Button
                     type="primary"
                     shape="circle"
                     icon={<StarOutlined />}
                     style={{ margin: "10px" }}
                     size="medium"
+                    onClick={() => onAddToMyPage(item)}
                   />
                 </Tooltip>
+                )}
               </div>
             </div>
           </List.Item>

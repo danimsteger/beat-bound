@@ -83,7 +83,6 @@ type Mutation {
     venue: String!
     city: String!
     externalUrl: String!
-    artistNames: [String!]!
   ): Event
 
    addArtist(

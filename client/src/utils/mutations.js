@@ -101,15 +101,13 @@ export const ADD_EVENT = gql`
     $venue: String!
     $city: String!
     $externalUrl: String!
-    $artistNames: [String!]!
   ) {
     addEvent(
       name: $name,
       date: $date,
       venue: $venue,
       city: $city,
-      externalUrl: $externalUrl,
-      artistNames: $artistNames
+      externalUrl: $externalUrl
     ) {
       _id
       name
