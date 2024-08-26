@@ -19,7 +19,6 @@ const server = new ApolloServer({
 
 app.use(cors());
 app.use(routes);
-console.log(process.env.NODE_ENV);
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {

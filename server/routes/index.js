@@ -1,14 +1,8 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 const router = express.Router();
 
-const searchApiRoutes = require('./searchApi-routes');
-router.use('/api/search', searchApiRoutes);
-if (process.env.NODE_ENV === 'production') {
-  router.use(express.static(path.join(__dirname, '../../client/build')));
-  router.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-  });
-}
+const searchApiRoutes = require("./searchApi-routes");
+router.use("/api/search", searchApiRoutes);
 
 module.exports = router;
