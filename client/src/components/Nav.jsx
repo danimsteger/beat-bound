@@ -33,13 +33,13 @@ const AppNavbar = () => {
                 marginRight: "20px",
               }}
             >
-              Beat Bound
+              Beat Bound 🏚️
             </Link>
             <Link
               to="/search-page"
               style={{ color: "white", marginRight: "20px" }}
             >
-              Search
+              Search 🔍
             </Link>
             {Auth.loggedIn() ? (
               <>
