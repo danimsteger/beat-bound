@@ -3,7 +3,6 @@ const customTheme = {
   token: {
     // Seed Token
     colorPrimary: "#673888",
-    borderRadius: 2,
     colorDanger: "#ef4f91",
     colorSecondary: "#4d1b7b",
 
