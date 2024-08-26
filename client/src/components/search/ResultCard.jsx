@@ -121,7 +121,11 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
               style={{ margin: "10px" }}
               size="medium"
             >
-              <img src="/ticketmaster.png" alt="spotify logo" width="30px" />
+              <img
+                src="/ticketmaster.white.png"
+                alt="spotify logo"
+                width="20px"
+              />
             </Button>
           </Tooltip>
           {Auth.loggedIn() && (
