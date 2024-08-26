@@ -7,7 +7,7 @@ const ArtistCard = ({ artist }) => {
   const defaultImageUrl = "https://via.placeholder.com/100";
 
   return (
-    <Link to={`/artist-page/${artist.spotifyId}`}>
+    <Link to={`/ArtistPage/${artist.spotifyId}`}>
       <Card
         hoverable
         style={{

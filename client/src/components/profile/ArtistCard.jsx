@@ -5,7 +5,7 @@ const { Meta } = Card;
 //NEED TO ADD LINK TO THAT SPECIFIC ARTISTS PAGE!!!
 const ArtistCard = ({ artist }) => {
   return (
-    <Link to="">
+    <Link to={`/ArtistPage/${artist.spotifyId}`}>
       <Card
         hoverable
         style={{
