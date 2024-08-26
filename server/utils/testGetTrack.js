@@ -30,21 +30,21 @@ const {getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeat
 //   }
 // });
 
-getFeaturedPlaylists().then(result =>{
-  if (result.error) {
-    console.log(result.error);
-  } else {
-    console.log('featured playlists data: ', result);
-  }
-}) 
-
-// getArtistFeaturedTracks('06HL4z0CvFAxyc27GXpf02').then(result => {
+// getFeaturedPlaylists().then(result =>{
 //   if (result.error) {
 //     console.log(result.error);
 //   } else {
-//     console.log('Artist Featured songs: ', result);
+//     console.log('featured playlists data: ', result);
 //   }
-// })
+// }) 
+
+getArtistFeaturedTracks('06HL4z0CvFAxyc27GXpf02').then(result => {
+  if (result.error) {
+    console.log(result.error);
+  } else {
+    console.log('Artist Featured songs: ', result);
+  }
+})
 
 // getRelatedArtists('06HL4z0CvFAxyc27GXpf02').then(result => {
 //   if (result.error) {
