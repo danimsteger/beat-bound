@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { ConfigProvider } from "antd";
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,7 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Auth from "./utils/auth";
-import { Button } from "antd";
+import customTheme from "./styles/customTheme"; // Import custom theme
 
 const httpLink = createHttpLink({
   uri: import.meta.env.VITE_GRAPHQL_URI,
@@ -30,12 +31,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+console.log(customTheme);
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Nav />
-      <Outlet />
-      <Footer />
+      <ConfigProvider prefix="my-app" theme={customTheme}>
+        <Nav />
+        <Outlet />
+        <Footer />
+      </ConfigProvider>
     </ApolloProvider>
   );
 }
