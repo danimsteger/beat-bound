@@ -6,6 +6,8 @@ import SavedEvents from "../components/profile/SavedEvents";
 const Home = () => {
   return (
     <div>
+      <header id='header'>
+        <h1>Welcome to Beat Bound</h1></header>
       <section>
         <FeatPlaylistCarousel></FeatPlaylistCarousel>
       </section>

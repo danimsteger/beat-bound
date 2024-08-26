@@ -23,7 +23,7 @@ const FeaturedPlaylists = () => {
 
   return (
     <Container>
-      <h2>Featured Playlists</h2>
+      <h2>~ Featured Playlists ~</h2>
       <Row>
         {playlists.map((playlist, index) => (
           <Col xs={12} md={6} lg={4} key={index} className="mb-4">
