@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { List, Button } from "antd";
+import { List, Button, Tooltip } from "antd";
 import { GET_USERS_SONGS } from "../../utils/queries";
 import { PlayCircleFilled } from "@ant-design/icons";
 // import SongCard from "./SongCard";
@@ -44,15 +44,38 @@ const SavedSongs = () => {
                     <div>
                       <p>{song.album}</p>
                       <p>{song.artist}</p>
-                      <Button
-                        href={song.externalUrl}
-                        shape="circle"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        type="primary"
-                        size="medium"
-                        icon={<PlayCircleFilled />}
-                      ></Button>
+                      <Tooltip title="Listen on Spotify">
+                        <Button
+                          href={song.externalUrl}
+                          shape="circle"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          type="primary"
+                          size="medium"
+                          style={{ margin: "10px" }}
+                        >
+                          <img
+                            src="/spotify.white.png"
+                            alt="spotify logo"
+                            width="30px"
+                          />
+                        </Button>
+                      </Tooltip>
+                      <Tooltip title="Remove From Profile">
+                        <Button
+                          shape="circle"
+                          rel="noopener noreferrer"
+                          type="primary"
+                          size="medium"
+                          style={{ margin: "10px" }}
+                        >
+                          <img
+                            src="/trash.white.png"
+                            alt="remove"
+                            width="30px"
+                          />
+                        </Button>
+                      </Tooltip>
                     </div>
                   }
                 />{" "}
