@@ -1,5 +1,8 @@
-import { Card, Row, Col } from "antd";
+import { Card, Row, Col, Tooltip, Button } from "antd";
 import { Link } from "react-router-dom";
+
+import { StarOutlined } from "@ant-design/icons";
+
 const { Meta } = Card;
 
 //NEED TO ADD LINK TO THAT SPECIFIC ARTIST'S PAGE
@@ -40,6 +43,17 @@ const ArtistCard = ({ artist }) => {
                 title={<span style={{ fontSize: "24px" }}>{artist.name}</span>}
               />
             </div>
+          </Col>
+          <Col>
+            <Tooltip title="Add Artist to Profile">
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<StarOutlined />}
+                style={{ margin: "10px" }}
+                size="medium"
+              />
+            </Tooltip>
           </Col>
         </Row>
       </Card>

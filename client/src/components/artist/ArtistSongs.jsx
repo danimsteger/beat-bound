@@ -10,7 +10,9 @@ const ArtistSongs = ({ artistId }) => {
   useEffect(() => {
     const fetchFeaturedTracks = async () => {
       try {
-        const response = await fetch(`/api/search/artist-featured-tracks/${artistId}`);
+        const response = await fetch(
+          `/api/search/artist-featured-tracks/${artistId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch featured tracks");
         }
@@ -36,6 +38,7 @@ const ArtistSongs = ({ artistId }) => {
 
   return (
     <div style={{ margin: "10px" }}>
+      <h1 style={{ textAlign: "center" }}>Featured Songs</h1>
       <div>
         <List
           style={{ margin: "20px" }}
