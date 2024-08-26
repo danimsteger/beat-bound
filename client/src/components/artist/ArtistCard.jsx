@@ -1,12 +1,11 @@
 import { Card, Row, Col, Tooltip, Button } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { StarOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
-const ArtistCard = ({ artist }) => {
+const ArtistCard = ({ artist, onAddToMyPage }) => {
   const defaultImageUrl = "https://via.placeholder.com/100";
 
   return (
@@ -61,6 +60,10 @@ const ArtistCard = ({ artist }) => {
                 icon={<StarOutlined />}
                 style={{ margin: "10px" }}
                 size="medium"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onAddToMyPage(artist, "artist");
+                }}
               />
             </Tooltip>
           </Col>

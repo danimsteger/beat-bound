@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { List, Tooltip, Button, Spin, Alert } from "antd";
 import { StarOutlined } from "@ant-design/icons";
 
-const ArtistSongs = ({ artistId }) => {
+const ArtistSongs = ({ artistId, onAddToMyPage }) => {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,9 +10,7 @@ const ArtistSongs = ({ artistId }) => {
   useEffect(() => {
     const fetchFeaturedTracks = async () => {
       try {
-        const response = await fetch(
-          `/api/search/artist-featured-tracks/${artistId}`
-        );
+        const response = await fetch(`/api/search/artist-featured-tracks/${artistId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch featured tracks");
         }
@@ -38,7 +36,6 @@ const ArtistSongs = ({ artistId }) => {
 
   return (
     <div style={{ margin: "10px" }}>
-      <h1 style={{ textAlign: "center" }}>Featured Songs</h1>
       <div>
         <List
           style={{ margin: "20px" }}
@@ -67,6 +64,7 @@ const ArtistSongs = ({ artistId }) => {
                       icon={<StarOutlined />}
                       style={{ margin: "10px" }}
                       size="medium"
+                      onClick={() => onAddToMyPage(item)}
                     />
                   </Tooltip>
                 </div>

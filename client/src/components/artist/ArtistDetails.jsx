@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Row, Col, Tooltip, Button } from "antd";
 import { StarOutlined } from "@ant-design/icons";
 
-const ArtistDetails = ({ setArtistName }) => {
+const ArtistDetails = ({ setArtistName, onAddToMyPage }) => {
   const { artistId } = useParams();
   const [artistData, setArtistData] = useState({
     imageUrl: "",
@@ -49,7 +49,7 @@ const ArtistDetails = ({ setArtistName }) => {
                 icon={<StarOutlined />}
                 style={{ margin: "40px" }}
                 size="large"
-                onClick={() => console.log("Add artist functionality")} // Replace with actual function
+                onClick={() => onAddToMyPage(artistData)}
               />
             </Tooltip>
             <Tooltip title="Listen on Spotify">

@@ -125,7 +125,7 @@ const resolvers = {
     
     addEvent: async (
       parent,
-      { name, date, venue, city, externalUrl, artistNames },
+      { name, date, venue, city, externalUrl,},
       context
     ) => {
       if (!context.user) {
@@ -146,7 +146,6 @@ const resolvers = {
           venue,
           city,
           externalUrl,
-          artists: artistNames,
           users: [context.user._id],
         });
       }

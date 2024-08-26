@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ArtistCard from "./ArtistCard";
 
-const RelatedArtists = ({ artistId }) => {
+const RelatedArtists = ({ artistId, onAddToMyPage }) => {
   const [relatedArtists, setRelatedArtists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,7 +38,11 @@ const RelatedArtists = ({ artistId }) => {
     <div style={{ margin: "10px" }}>
       <h1 style={{ textAlign: "center" }}>Related Artists</h1>
       {relatedArtists.map((artist) => (
-        <ArtistCard key={artist.spotifyId} artist={artist} />
+        <ArtistCard
+          key={artist.spotifyId}
+          artist={artist}
+          onAddToMyPage={onAddToMyPage}
+        />
       ))}
     </div>
   );
