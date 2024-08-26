@@ -42,6 +42,22 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage }) => {
       >
         <Col flex={3}>
           <div style={{ display: "flex", justifyContent: "center" }}>
+            <Tooltip title="Listen on Spotify">
+              <Button
+                href={artistData.externalUrl}
+                shape="circle"
+                target="_blank"
+                rel="noopener noreferrer"
+                type="primary"
+                size="large"
+                style={{ margin: "40px" }}
+              >
+                <img src="/spotify.white.png" alt="spotify logo" width="45px" />
+              </Button>
+            </Tooltip>
+            <h1 style={{ margin: "20px", marginTop: "30px" }}>
+              {artistData.name}
+            </h1>
             <Tooltip title="Add Artist to Profile">
               <Button
                 type="primary"
@@ -52,25 +68,11 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage }) => {
                 onClick={() => onAddToMyPage(artistData)}
               />
             </Tooltip>
-            <Tooltip title="Listen on Spotify">
-              <Button
-                href={artistData.externalUrl}
-                shape="circle"
-                target="_blank"
-                rel="noopener noreferrer"
-                type="primary"
-                size="medium"
-                style={{ margin: "10px" }}
-              >
-                <img src="/spotify.white.png" alt="spotify logo" width="30px" />
-              </Button>
-            </Tooltip>
-            <h1 style={{ margin: "20px", marginTop: "30px" }}>{artistData.name}</h1>
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
               src={artistData.imageUrl}
-              style={{ width: "100%", margin: 10, borderRadius: 20 }}
+              style={{ width: "75%", margin: 10, borderRadius: 20 }}
               alt={artistData.name}
             />
           </div>

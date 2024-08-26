@@ -35,7 +35,14 @@ const RelatedArtists = ({ artistId, onAddToMyPage }) => {
   }
 
   return (
-    <div style={{ margin: "10px" }}>
+    <div
+      style={{
+        margin: "10px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <h1 style={{ textAlign: "center" }}>Related Artists</h1>
       {relatedArtists.map((artist) => (
         <ArtistCard

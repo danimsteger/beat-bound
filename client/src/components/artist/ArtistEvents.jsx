@@ -13,7 +13,9 @@ const ArtistEvents = ({ artistName, onAddToMyPage }) => {
 
     const fetchEvents = async () => {
       try {
-        const response = await fetch(`/api/search/artist-events?q=${encodeURIComponent(artistName)}`);
+        const response = await fetch(
+          `/api/search/artist-events?q=${encodeURIComponent(artistName)}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }
@@ -41,7 +43,11 @@ const ArtistEvents = ({ artistName, onAddToMyPage }) => {
   }
 
   if (events.length === 0) {
-    return <div style={{ textAlign: "center", marginTop: "20px" }}>No upcoming events found</div>;
+    return (
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        No upcoming events found
+      </div>
+    );
   }
 
   return (
@@ -53,7 +59,14 @@ const ArtistEvents = ({ artistName, onAddToMyPage }) => {
         dataSource={events}
         renderItem={(item) => (
           <List.Item key={item.id}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: 10 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: 10,
+              }}
+            >
               <div style={{ flex: 1 }}>
                 <List.Item.Meta
                   title={item.name}
@@ -63,36 +76,40 @@ const ArtistEvents = ({ artistName, onAddToMyPage }) => {
                       <br />
                       <strong>Venue:</strong> {item.venue}, {item.city}
                       <br />
-                      <strong>Artists:</strong>{" "}
-                      {item.artists && item.artists.length > 0
-                        ? item.artists.join(", ")
-                        : "Unknown Artists"}
                     </>
                   }
                 />
               </div>
               <div>
-                <Tooltip title="Buy Tickets">
+                <Tooltip title="View on Ticketmaster">
                   <Button
-                    type="primary"
-                    shape="round"
-                    onClick={() => window.open(item.externalUrl, "_blank", "noopener,noreferrer")}
-                    style={{ margin: "10px" }}
-                  >
-                    Buy Tickets
-                  </Button>
-                </Tooltip>
-                {Auth.loggedIn() && (
-                  <Tooltip title="Add Event to Profile">
-                  <Button
+                    href={item.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     type="primary"
                     shape="circle"
-                    icon={<StarOutlined />}
                     style={{ margin: "10px" }}
                     size="medium"
-                    onClick={() => onAddToMyPage(item)}
-                  />
+                  >
+                    <img
+                      src="/ticketmaster.white.png"
+                      alt="spotify logo"
+                      width="20px"
+                    />
+                  </Button>
                 </Tooltip>
+
+                {Auth.loggedIn() && (
+                  <Tooltip title="Add Event to Profile">
+                    <Button
+                      type="primary"
+                      shape="circle"
+                      icon={<StarOutlined />}
+                      style={{ margin: "10px" }}
+                      size="medium"
+                      onClick={() => onAddToMyPage(item)}
+                    />
+                  </Tooltip>
                 )}
               </div>
             </div>
