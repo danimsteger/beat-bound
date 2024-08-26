@@ -20,6 +20,7 @@ const ArtistPage = () => {
   const [addEvent] = useMutation(ADD_EVENT);
 
   const handleAddToMyPage = async (item, type) => {
+    console.log("Item being added:", item);
     if (!Auth.loggedIn()) {
       console.error("User is not logged in.");
       return;
@@ -47,10 +48,18 @@ const ArtistPage = () => {
 
         alert("Song added to your page!");
       } else if (type === "artist") {
+        console.log("Adding artist with ID:", item.spotifyId);
+        console.log({
+          name: item.name,
+          spotifyId: item.spotifyId,
+          imageUrl: item.imageUrl,
+          externalUrl: item.externalUrl,
+        });
+
         await addArtist({
           variables: {
             name: item.name,
-            spotifyId: artistId,
+            spotifyId: item.spotifyId,
             imageUrl: item.imageUrl || "",
             externalUrl: item.externalUrl || "",
           },
@@ -72,6 +81,7 @@ const ArtistPage = () => {
           city: item.city || "",
           externalUrl,
         });
+
 
         await addEvent({
           variables: {
@@ -125,7 +135,7 @@ const ArtistPage = () => {
           <RelatedArtists
             artistId={artistId}
             setRelatedArtists={setRelatedArtists}
-            onAddToMyPage={handleAddToMyPage}
+            onAddToMyPage={(item) => handleAddToMyPage(item, "artist")}
           />
         </Col>
       </Row>
