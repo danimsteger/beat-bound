@@ -38,18 +38,18 @@ const {getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeat
 //   }
 // }) 
 
-getArtistFeaturedTracks('06HL4z0CvFAxyc27GXpf02').then(result => {
-  if (result.error) {
-    console.log(result.error);
-  } else {
-    console.log('Artist Featured songs: ', result);
-  }
-})
-
-// getRelatedArtists('06HL4z0CvFAxyc27GXpf02').then(result => {
+// getArtistFeaturedTracks('06HL4z0CvFAxyc27GXpf02').then(result => {
 //   if (result.error) {
 //     console.log(result.error);
 //   } else {
-//     console.log('Related Artists: ', result);
+//     console.log('Artist Featured songs: ', result);
 //   }
 // })
+
+getRelatedArtists('06HL4z0CvFAxyc27GXpf02').then(result => {
+  if (result.error) {
+    console.log(result.error);
+  } else {
+    console.log('Related Artists: ', result);
+  }
+})
