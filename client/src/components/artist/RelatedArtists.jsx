@@ -14,7 +14,6 @@ const RelatedArtists = ({ artistId, onAddToMyPage }) => {
           throw new Error("Failed to fetch related artists");
         }
         const result = await response.json();
-        console.log("Fetched Related Artists:", result);
         setRelatedArtists(result);
       } catch (err) {
         setError("Failed to load related artists.");
@@ -41,7 +40,7 @@ const RelatedArtists = ({ artistId, onAddToMyPage }) => {
         <ArtistCard
           key={artist.spotifyId}
           artist={artist}
-          onAddToMyPage={onAddToMyPage}
+          onAddToMyPage={onAddToMyPage} // Pass the correct function
         />
       ))}
     </div>

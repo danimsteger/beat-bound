@@ -9,6 +9,7 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage }) => {
     imageUrl: "",
     name: "",
     externalUrl: "",
+    spotifyId: artistId,
   });
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage }) => {
           imageUrl: artist.imageURL,
           name: artist.name,
           externalUrl: artist.externalUrl,
+          spotifyId: artistId,
         });
         setArtistName(artist.name);
       } catch (error) {

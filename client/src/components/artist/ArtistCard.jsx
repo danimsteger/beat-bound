@@ -8,6 +8,14 @@ const { Meta } = Card;
 const ArtistCard = ({ artist, onAddToMyPage }) => {
   const defaultImageUrl = "https://via.placeholder.com/100";
 
+  // Structure the data similar to ArtistDetails
+  const artistData = {
+    name: artist.name,
+    imageUrl: artist.image || defaultImageUrl,
+    externalUrl: artist.externalUrl,
+    spotifyId: artist.spotifyId, // Use the artist's actual Spotify ID
+  };
+
   return (
     <Link
       to={{
@@ -61,8 +69,9 @@ const ArtistCard = ({ artist, onAddToMyPage }) => {
                 style={{ margin: "10px" }}
                 size="medium"
                 onClick={(e) => {
-                  e.preventDefault();
-                  onAddToMyPage(artist, "artist");
+                  e.preventDefault(); // Prevent the default link behavior
+                  console.log("Adding related artist to profile:", artistData);
+                  onAddToMyPage(artistData, "artist");
                 }}
               />
             </Tooltip>
