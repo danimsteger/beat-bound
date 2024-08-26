@@ -67,13 +67,22 @@ const ArtistPage = () => {
 
         alert("Artist added to your page!");
       } else if (type === "event") {
-
         console.log("Event being added:", item);
         const externalUrl = item.externalUrl || "";
-  
+
         if (!externalUrl) {
           throw new Error("External URL is missing.");
         }
+
+        console.log("Event Mutation Variables:", {
+          name: item.name,
+          date: item.date || "",
+          venue: item.venue || "",
+          city: item.city || "",
+          externalUrl,
+        });
+
+
         await addEvent({
           variables: {
             name: item.name,
@@ -83,7 +92,7 @@ const ArtistPage = () => {
             externalUrl,
           },
         });
-  
+
         alert("Event added to your page!");
       }
     } catch (error) {
@@ -105,7 +114,7 @@ const ArtistPage = () => {
         justify="center"
         style={{ display: "flex", justifyContent: "space-evenly" }}
       >
-        <Col flex={3}>
+        <Col flex={1}>
           <ArtistDetails
             artistId={artistId}
             setArtistName={setArtistName}

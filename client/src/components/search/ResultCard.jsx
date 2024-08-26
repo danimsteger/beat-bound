@@ -6,10 +6,12 @@ import { StarOutlined, SoundOutlined } from "@ant-design/icons";
 
 const ResultCard = ({ result, type, handleAddToMyPage }) => {
   return (
-    <Card style={{ margin: 5 }}>
+    <Card style={{ margin: 5, width: 400 }}>
       {type === "track" && (
         <div>
-          {result.imageURL && <Image src={result.imageURL} />}
+          {result.imageURL && (
+            <Image src={result.imageURL} style={{ borderRadius: 10 }} />
+          )}
           <Card.Meta
             title={result.name}
             style={{ textAlign: "center", margin: 10 }}
@@ -104,10 +106,6 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
                 <br />
                 <strong>Venue:</strong> {result.venue}, {result.city}
                 <br />
-                <strong>Artists:</strong>{" "}
-                {result.artist && result.artist.length > 0
-                  ? result.artist.map((artist) => artist.name).join(", ")
-                  : "Unknown Artists"}
               </>
             }
           />

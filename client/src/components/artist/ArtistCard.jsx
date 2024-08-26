@@ -26,6 +26,7 @@ const ArtistCard = ({ artist, onAddToMyPage }) => {
           externalUrl: artist.externalUrl,
         },
       }}
+      style={{ textDecoration: "none" }}
     >
       <Card
         hoverable

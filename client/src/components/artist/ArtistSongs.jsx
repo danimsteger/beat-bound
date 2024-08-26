@@ -10,7 +10,9 @@ const ArtistSongs = ({ artistId, onAddToMyPage }) => {
   useEffect(() => {
     const fetchFeaturedTracks = async () => {
       try {
-        const response = await fetch(`/api/search/artist-featured-tracks/${artistId}`);
+        const response = await fetch(
+          `/api/search/artist-featured-tracks/${artistId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch featured tracks");
         }
@@ -36,9 +38,14 @@ const ArtistSongs = ({ artistId, onAddToMyPage }) => {
 
   return (
     <div style={{ margin: "10px" }}>
+      <h1 style={{ textAlign: "center" }}>Featured Songs</h1>
       <div>
         <List
-          style={{ margin: "20px" }}
+          style={{
+            margin: "20px",
+
+            alignItems: "center",
+          }}
           itemLayout="vertical"
           dataSource={songs}
           renderItem={(item) => (
