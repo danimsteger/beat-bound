@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 import SavedEvents from "../components/profile/SavedEvents";
 import SavedArtists from "../components/profile/SavedArtists";

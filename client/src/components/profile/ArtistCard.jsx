@@ -1,4 +1,4 @@
-import { Card, Row, Col } from "antd";
+import { Card, Row, Col, Tooltip, Button } from "antd";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
 
@@ -36,6 +36,19 @@ const ArtistCard = ({ artist }) => {
                 title={<span style={{ fontSize: "24px" }}>{artist.name}</span>}
               />
             </div>
+          </Col>
+          <Col>
+            <Tooltip title="Remove From Profile">
+              <Button
+                shape="circle"
+                rel="noopener noreferrer"
+                type="primary"
+                size="medium"
+                style={{ margin: "10px" }}
+              >
+                <img src="/trash.white.png" alt="remove" width="30px" />
+              </Button>
+            </Tooltip>
           </Col>
         </Row>
       </Card>

@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { List } from "antd";
+import { List, Tooltip, Button } from "antd";
 import { GET_USERS_EVENTS } from "../../utils/queries";
 
 const SavedEvents = () => {
@@ -24,6 +24,17 @@ const SavedEvents = () => {
               title={<a href={`#event/${item._id}`}>{item.name}</a>}
               description={`${item.venue}, ${item.city} on ${item.date}`}
             />
+            <Tooltip title="Remove From Profile">
+              <Button
+                shape="circle"
+                rel="noopener noreferrer"
+                type="primary"
+                size="medium"
+                style={{ margin: "10px" }}
+              >
+                <img src="/trash.white.png" alt="remove" width="30px" />
+              </Button>
+            </Tooltip>
           </List.Item>
         )}
       />
