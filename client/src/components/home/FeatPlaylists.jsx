@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Carousel } from "antd";
+import { Carousel } from "antd";
 
 // import { Card, Row, Col, Container } from "react-bootstrap";
 
