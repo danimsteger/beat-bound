@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container} from "react-bootstrap";
+// import { Container } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { ADD_SONG, ADD_ARTIST, ADD_EVENT } from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -145,7 +145,7 @@ const Search = () => {
   };
 
   return (
-    <Container>
+    <div style={{ margin: "50px" }}>
       <h1 className="my-4">Search</h1>
       <SearchBar
         searchTerm={searchTerm}
@@ -159,7 +159,7 @@ const Search = () => {
         lastSearchType={lastSearchType}
         handleAddToMyPage={handleAddToMyPage}
       />
-    </Container>
+    </div>
   );
 };
 

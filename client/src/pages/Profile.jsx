@@ -14,17 +14,26 @@ const Profile = () => {
         justify="center"
         // style={{ display: "flex", justifyContent: "space-evenly" }}
       >
-        <Col flex={8} style={{ marginRight: "0px", marginLeft: "50px" }}>
+        <Col
+          flex={8}
+          style={{ marginRight: "0px", marginLeft: "50px", marginTop: "80px" }}
+        >
+          {" "}
+          <SavedEvents />
+        </Col>
+        <Col
+          flex={8}
+          style={{ marginRight: "0px", marginLeft: "0px", marginTop: "80px" }}
+        >
           {" "}
           <SavedArtists />
         </Col>
-        <Col flex={8} style={{ marginRight: "50px", marginLeft: "0px" }}>
+        <Col
+          flex={8}
+          style={{ marginRight: "50px", marginLeft: "0px", marginTop: "80px" }}
+        >
           {" "}
           <SavedSongs />
-        </Col>
-        <Col flex={8} style={{ marginRight: "50px", marginLeft: "10px" }}>
-          {" "}
-          <SavedEvents />
         </Col>
       </Row>
 

@@ -1,6 +1,6 @@
-import { useQuery } from '@apollo/client';
-import { List } from 'antd';
-import { GET_USERS_EVENTS } from '../../utils/queries';
+import { useQuery } from "@apollo/client";
+import { List } from "antd";
+import { GET_USERS_EVENTS } from "../../utils/queries";
 
 const SavedEvents = () => {
   const { loading, error, data } = useQuery(GET_USERS_EVENTS);
@@ -9,6 +9,7 @@ const SavedEvents = () => {
   if (error) return <p>Error : Please try again</p>;
 
   const events = data.me.events;
+  console.log(events);
 
   return (
     <div style={{ margin: "5px" }}>
@@ -20,8 +21,8 @@ const SavedEvents = () => {
         renderItem={(item) => (
           <List.Item key={item._id}>
             <List.Item.Meta
-              title={<a href={`#event/${item._id}`}>{item.name}</a>} 
-              description={`${item.venue}, ${item.city} on ${item.date}`} 
+              title={<a href={`#event/${item._id}`}>{item.name}</a>}
+              description={`${item.venue}, ${item.city} on ${item.date}`}
             />
           </List.Item>
         )}

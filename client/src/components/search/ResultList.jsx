@@ -1,6 +1,7 @@
-import React from 'react';
-import { Row, Col } from "react-bootstrap";
-import ResultCard from './ResultCard';
+import React from "react";
+// import { Row, Col } from "react-bootstrap";
+import { Row, Col } from "antd";
+import ResultCard from "./ResultCard";
 
 const ResultsList = ({ results, lastSearchType, handleAddToMyPage }) => {
   return (
@@ -8,10 +9,10 @@ const ResultsList = ({ results, lastSearchType, handleAddToMyPage }) => {
       {results && results.length > 0 ? (
         results.map((result, index) => (
           <Col xs={12} md={6} lg={4} className="mb-4" key={index}>
-            <ResultCard 
-              result={result} 
-              type={lastSearchType} 
-              handleAddToMyPage={handleAddToMyPage} 
+            <ResultCard
+              result={result}
+              type={lastSearchType}
+              handleAddToMyPage={handleAddToMyPage}
             />
           </Col>
         ))
