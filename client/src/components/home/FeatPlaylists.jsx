@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col } from "antd";
+import { Card, Row, Col, Carousel } from "antd";
 
 // import { Card, Row, Col, Container } from "react-bootstrap";
 
@@ -26,29 +26,52 @@ const FeaturedPlaylists = () => {
   return (
     <div>
       <h2> ~ Featured Playlists ~</h2>
-      <Row gutter={[16, 16]}>
+
+      <Carousel autoplay style={{ width: 500, borderRadius: 20 }}>
         {playlists.map((playlist, index) => (
-          <Col xs={24} sm={12} lg={8} key={index}>
-            <Card
-              hoverable
-              cover={
-                playlist.imageUrl && (
-                  <img alt="Playlist Cover" src={playlist.imageUrl} />
-                )
-              }
-            >
-              <Card.Meta title={playlist.description} />
-              <a
-                href={playlist.externalUrls}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Listen on Spotify
-              </a>
-            </Card>
-          </Col>
+          <div key={index}>
+            <a>
+              <img
+                alt="Playlist Cover"
+                src={playlist.imageUrl}
+                style={{ borderRadius: 20 }}
+              />
+            </a>
+          </div>
         ))}
-      </Row>
+      </Carousel>
+      <Carousel autoplay style={{ width: 500, borderRadius: 20 }}>
+        {playlists.map(
+          (playlist, index) =>
+            index > 0 && (
+              <div key={index}>
+                <a>
+                  <img
+                    alt="Playlist Cover"
+                    src={playlist.imageUrl}
+                    style={{ borderRadius: 20 }}
+                  />
+                </a>
+              </div>
+            )
+        )}
+      </Carousel>
+      <Carousel autoplay style={{ width: 500, borderRadius: 20 }}>
+        {playlists.map(
+          (playlist, index) =>
+            index > 1 && (
+              <div key={index}>
+                <a>
+                  <img
+                    alt="Playlist Cover"
+                    src={playlist.imageUrl}
+                    style={{ borderRadius: 20 }}
+                  />
+                </a>
+              </div>
+            )
+        )}
+      </Carousel>
     </div>
   );
 };
