@@ -35,7 +35,8 @@ const RelatedArtists = ({ artistId }) => {
   }
 
   return (
-    <div>
+    <div style={{ margin: "10px" }}>
+      <h1 style={{ textAlign: "center" }}>Related Artists</h1>
       {relatedArtists.map((artist) => (
         <ArtistCard key={artist.spotifyId} artist={artist} />
       ))}

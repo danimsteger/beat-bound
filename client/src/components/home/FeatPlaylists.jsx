@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Container } from "react-bootstrap";
+import { Card, Row, Col } from "antd";
+
+// import { Card, Row, Col, Container } from "react-bootstrap";
 
 const FeaturedPlaylists = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -7,41 +9,47 @@ const FeaturedPlaylists = () => {
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
-        const response = await fetch('/api/search/featured-playlists');
+        const response = await fetch("/api/search/featured-playlists");
         if (!response.ok) {
-          throw new Error('Failed to fetch featured playlists');
+          throw new Error("Failed to fetch featured playlists");
         }
-    
+
         const data = await response.json();
         setPlaylists(data);
       } catch (error) {
-        console.error('Error fetching featured playlists:', error);
+        console.error("Error fetching featured playlists:", error);
       }
     };
     fetchPlaylists();
   }, []);
 
   return (
-    <Container>
-      <h2>~ Featured Playlists ~</h2>
-      <Row>
+    <div>
+      <h2>Featured Playlists</h2>
+      <Row gutter={[16, 16]}>
         {playlists.map((playlist, index) => (
-          <Col xs={12} md={6} lg={4} key={index} className="mb-4">
-            <Card>
-              {playlist.imageUrl && (
-                <Card.Img variant="top" src={playlist.imageUrl} alt="Playlist Cover" />
-              )}
-              <Card.Body>
-                <Card.Text>{playlist.description}</Card.Text>
-                <a href={playlist.externalUrls} target="_blank" rel="noopener noreferrer">
-                  Listen on Spotify
-                </a>
-              </Card.Body>
+          <Col xs={24} sm={12} lg={8} key={index}>
+            <Card
+              hoverable
+              cover={
+                playlist.imageUrl && (
+                  <img alt="Playlist Cover" src={playlist.imageUrl} />
+                )
+              }
+            >
+              <Card.Meta title={playlist.description} />
+              <a
+                href={playlist.externalUrls}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Listen on Spotify
+              </a>
             </Card>
           </Col>
         ))}
       </Row>
-    </Container>
+    </div>
   );
 };
 

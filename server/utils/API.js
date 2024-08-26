@@ -230,7 +230,36 @@ async function getRelatedArtists(artistId) {
   }
 }
 
+async function getArtistById(spotifyId) {
+  try {
+    const accessToken = await getAccessToken(); // Assume this function fetches a valid access token
+    const url = `https://api.spotify.com/v1/artists/${spotifyId}`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const data = await response.json();
+    if (data) {
+      const artist = {
+        name: data.name,
+        spotifyId: data.id,
+        URI: data.uri,
+        imageURL: data.images.length > 0 ? data.images[0].url : null,
+        externalUrl: data.external_urls.spotify,
+      };
+      return artist;
+    } else {
+      console.log("Artist not found");
+    }
+  } catch (error) {
+    console.error("Error fetching artist:", error);
+  }
+}
 
 
 
-module.exports = { getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeaturedTracks, getRelatedArtists };
+
+module.exports = { getTrack, getArtist, getArtistEvents, getFeaturedPlaylists, getArtistFeaturedTracks, getRelatedArtists, getArtistById };
