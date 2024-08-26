@@ -76,9 +76,7 @@ const ArtistEvents = ({ artistName, onAddToMyPage }) => {
                   <Button
                     type="primary"
                     shape="round"
-                    href={item.eventUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => window.open(item.externalUrl, "_blank", "noopener,noreferrer")}
                     style={{ margin: "10px" }}
                   >
                     Buy Tickets
