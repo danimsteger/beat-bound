@@ -234,43 +234,39 @@ const resolvers = {
       return { token, user };
     },
 
+    // Updated removeEvent resolver to remove userId from the event's users array
     removeEvent: async (_, { userId, eventId }) => {
-      return User.findOneAndUpdate(
-        { _id: userId },
+      return Event.findOneAndUpdate(
+        { _id: eventId },
         {
           $pull: {
-            events: {
-              _id: eventId,
-            },
+            users: userId, // Remove the userId from the users array in the event document
           },
         },
         { new: true }
       );
     },
 
+    // Updated removeArtist resolver to remove userId from the artist's users array
     removeArtist: async (_, { userId, artistId }) => {
-      // const artistObjectId = ObjectId(artistId);
-      return User.findOneAndUpdate(
-        { _id: userId },
+      return Artist.findOneAndUpdate(
+        { _id: artistId },
         {
           $pull: {
-            artists: {
-              _id: artistId,
-            },
+            users: userId, // Remove the userId from the users array in the artist document
           },
         },
         { new: true }
       );
     },
 
+    // Updated removeSong resolver to remove userId from the song's users array
     removeSong: async (_, { userId, songId }) => {
-      return User.findOneAndUpdate(
-        { _id: userId },
+      return Song.findOneAndUpdate(
+        { _id: songId },
         {
           $pull: {
-            songs: {
-              _id: songId,
-            },
+            users: userId, // Remove the userId from the users array in the song document
           },
         },
         { new: true }

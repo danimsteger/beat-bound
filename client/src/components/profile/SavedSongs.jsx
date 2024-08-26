@@ -1,33 +1,41 @@
-import { useQuery } from "@apollo/client";
-import { List, Button, Tooltip } from "antd";
+import { useQuery, useMutation } from "@apollo/client";
+import { List, Tooltip, Button } from "antd";
 import { GET_USERS_SONGS } from "../../utils/queries";
+import { REMOVE_SONG } from "../../utils/mutations"; // Import REMOVE_SONG mutation
 import { PlayCircleFilled } from "@ant-design/icons";
 // import SongCard from "./SongCard";
 
-const SavedSongs = () => {
+const SavedSongs = ({ userId }) => { // Receive userId as a prop
   const { loading, error, data } = useQuery(GET_USERS_SONGS);
+  const [removeSong] = useMutation(REMOVE_SONG);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   const { songs } = data.me;
   console.log(songs);
+
+  const handleRemoveSong = async (songId) => {
+    try {
+      await removeSong({
+        variables: { userId, songId }, // Use userId from props
+        refetchQueries: [{ query: GET_USERS_SONGS }], // Refetch songs after mutation to update the UI
+      });
+      console.log(`Song with ID ${songId} removed successfully`);
+    } catch (err) {
+      console.error("Error removing song:", err);
+    }
+  };
+
   return (
     <div style={{ margin: "5px" }}>
-      <h1 style={{ textAlign: "center" }}>My Songs</h1>{" "}
-      {/* <Row gutter={[16, 16]}>
-        {songs.map((song) => (
-          <Col xs={24} sm={12} md={8} lg={6} key={song._id}>
-            <SongCard song={song} />
-          </Col>
-        ))}
-      </Row> */}
+      <h1 style={{ textAlign: "center" }}>My Songs</h1>
       <List
         style={{ margin: "20px" }}
         itemLayout="vertical"
         dataSource={songs}
         renderItem={(song) => (
-          <List.Item key={song.id}>
+          <List.Item key={song._id}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <div style={{ marginRight: "30px", marginLeft: 100 }}>
                 <img
@@ -68,6 +76,7 @@ const SavedSongs = () => {
                           type="primary"
                           size="medium"
                           style={{ margin: "10px" }}
+                          onClick={() => handleRemoveSong(song._id)}
                         >
                           <img
                             src="/trash.white.png"
@@ -78,7 +87,7 @@ const SavedSongs = () => {
                       </Tooltip>
                     </div>
                   }
-                />{" "}
+                />
               </div>
             </div>
           </List.Item>
