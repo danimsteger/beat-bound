@@ -1,7 +1,39 @@
-import { List, Tooltip, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import { List, Tooltip, Button, Spin, Alert } from "antd";
 import { StarOutlined } from "@ant-design/icons";
 
-const ArtistSongs = ({ songs }) => {
+const ArtistSongs = ({ artistId }) => {
+  const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFeaturedTracks = async () => {
+      try {
+        const response = await fetch(`/api/search/artist-featured-tracks/${artistId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch featured tracks");
+        }
+        const result = await response.json();
+        setSongs(result);
+      } catch (err) {
+        setError("Failed to load featured tracks.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedTracks();
+  }, [artistId]);
+
+  if (loading) {
+    return <Spin tip="Loading featured tracks..." />;
+  }
+
+  if (error) {
+    return <Alert message="Error" description={error} type="error" showIcon />;
+  }
+
   return (
     <div style={{ margin: "10px" }}>
       <div>
@@ -10,7 +42,7 @@ const ArtistSongs = ({ songs }) => {
           itemLayout="vertical"
           dataSource={songs}
           renderItem={(item) => (
-            <List.Item key={item.id}>
+            <List.Item key={item.name}>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <div style={{ marginRight: "30px", marginLeft: 100 }}>
                   <img
@@ -23,14 +55,8 @@ const ArtistSongs = ({ songs }) => {
                 <div style={{ flex: 3 }}>
                   <List.Item.Meta
                     title={item.name}
-                    description={
-                      <div>
-                        {item.artists.map((artist, index) => (
-                          <div key={index}>{artist}</div>
-                        ))}
-                      </div>
-                    }
-                  />{" "}
+                    description={<div>{item.albumName}</div>}
+                  />
                   <Tooltip title="Add Song to Profile">
                     <Button
                       type="primary"

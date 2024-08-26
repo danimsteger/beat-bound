@@ -199,6 +199,7 @@ const sampleRelatedArtists = [
 ];
 
 const ArtistPage = () => {
+  const { artistId } = useParams();
   return (
     <div>
       <Row
@@ -231,7 +232,7 @@ const ArtistPage = () => {
           <ArtistEvents events={sampleArtist.events} />
         </Col>
         <Col flex={2}>
-          <ArtistSongs songs={sampleArtist.songs} />
+          <ArtistSongs artistId={artistId}/>
         </Col>
         <Col flex={2}>
           <RelatedArtists artists={sampleRelatedArtists} />
