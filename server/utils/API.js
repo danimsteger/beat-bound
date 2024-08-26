@@ -140,7 +140,7 @@ async function getArtistEvents(artistName) {
 async function getFeaturedPlaylists() {
   try {
       const accessToken = await getAccessToken();
-      const url = 'https://api.spotify.com/v1/browse/featured-playlists?limit=5';
+      const url = 'https://api.spotify.com/v1/browse/featured-playlists?limit=6';
 
       const response = await fetch(url, {
           method: 'GET',

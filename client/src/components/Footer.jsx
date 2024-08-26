@@ -8,9 +8,8 @@ const Footer = () => {
           <div>Kevin Hoang -
           Danielle Steger -
           Griffin Baker - 
-          Wesley Locklair 
+          Wesley Locklair
           </div>
-
 
         </div>
       </>

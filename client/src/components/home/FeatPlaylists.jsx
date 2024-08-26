@@ -25,7 +25,7 @@ const FeaturedPlaylists = () => {
 
   return (
     <div>
-      <h2>Featured Playlists</h2>
+      <h2> ~ Featured Playlists ~</h2>
       <Row gutter={[16, 16]}>
         {playlists.map((playlist, index) => (
           <Col xs={24} sm={12} lg={8} key={index}>

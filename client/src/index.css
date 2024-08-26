@@ -1,9 +1,12 @@
 /* STYLING :D  */
 #root {
     text-align: center;
-
+    font-family: monospace, sans-serif;
 }
 
+#homeheader {
+    font-weight: bold;
+}
 #footer {
     position: relative;
     bottom:0;

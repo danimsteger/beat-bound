@@ -48,6 +48,7 @@ const AppNavbar = () => {
               }}
             >
               🎧 Beat Bound
+
             </Link>
             <Link
               to="/search-page"
@@ -68,7 +69,8 @@ const AppNavbar = () => {
                 e.target.style.fontWeight = "normal";
               }}
             >
-              <ul>Search</ul>
+              <ul>Search 🔍</ul>
+
             </Link>
             {Auth.loggedIn() ? (
               <>
