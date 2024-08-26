@@ -2,16 +2,17 @@
 // import { Card, Button } from "react-bootstrap";
 import { Card, Button, Tooltip, Image } from "antd";
 import Auth from "../../utils/auth";
-import { StarOutlined } from "@ant-design/icons";
+import { StarOutlined, SoundOutlined } from "@ant-design/icons";
 
 const ResultCard = ({ result, type, handleAddToMyPage }) => {
   return (
-    <Card>
+    <Card style={{ margin: 5 }}>
       {type === "track" && (
         <div>
           {result.imageURL && <Image src={result.imageURL} />}
           <Card.Meta
             title={result.name}
+            style={{ textAlign: "center", margin: 10 }}
             description={
               <>
                 <strong>Artists:</strong>{" "}
@@ -27,20 +28,14 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
               target="_blank"
               rel="noopener noreferrer"
               type="primary"
-              icon={<StarOutlined />}
+              // icon={<SoundOutlined />}
               shape="circle"
               style={{ margin: "10px" }}
               size="medium"
-            />
+            >
+              <img src="/spotify.png" alt="spotify logo" width="30px" />
+            </Button>
           </Tooltip>
-          {result.previewUrl && (
-            <div className="mt-3">
-              <audio controls>
-                <source src={result.previewUrl} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          )}
           {Auth.loggedIn() && (
             <Tooltip title="Add Song to Profile">
               <Button
@@ -53,28 +48,49 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
               />
             </Tooltip>
           )}
+          {result.previewUrl && (
+            <div className="mt-3">
+              <audio controls>
+                <source src={result.previewUrl} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          )}
         </div>
       )}
       {type === "artist" && (
         <div>
-          {result.imageURL && <Image src={result.imageURL} />}
-          <Card.Meta title={result.name} />
-          <Button
-            href={result.externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            type="primary"
-          >
-            View on Spotify
-          </Button>
-          {Auth.loggedIn() && (
+          {result.imageURL && (
+            <Image src={result.imageURL} style={{ borderRadius: 10 }} />
+          )}
+          <Card.Meta
+            title={result.name}
+            style={{ textAlign: "center", margin: 10 }}
+          />
+          <Tooltip title="View Artist on Spotify">
             <Button
-              onClick={() => handleAddToMyPage(result)}
-              type="warning"
-              className="mt-2"
+              href={result.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              type="primary"
+              style={{ margin: "10px" }}
+              size="medium"
+              shape="circle"
             >
-              Add to My Page
+              <img src="/spotify.png" alt="spotify logo" width="30px" />
             </Button>
+          </Tooltip>
+          {Auth.loggedIn() && (
+            <Tooltip title="Add Artist to Profile">
+              <Button
+                onClick={() => handleAddToMyPage(result)}
+                type="primary"
+                shape="circle"
+                icon={<StarOutlined />}
+                style={{ margin: "10px" }}
+                size="medium"
+              ></Button>
+            </Tooltip>
           )}
         </div>
       )}
@@ -95,22 +111,30 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
               </>
             }
           />
-          <Button
-            href={result.externalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            type="primary"
-          >
-            Get Tickets
-          </Button>
-          {Auth.loggedIn() && (
+          <Tooltip title="View on Ticketmaster">
             <Button
-              onClick={() => handleAddToMyPage(result)}
-              type="warning"
-              className="mt-2"
+              href={result.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              type="primary"
+              shape="circle"
+              style={{ margin: "10px" }}
+              size="medium"
             >
-              Add to My Page
+              <img src="/ticketmaster.png" alt="spotify logo" width="30px" />
             </Button>
+          </Tooltip>
+          {Auth.loggedIn() && (
+            <Tooltip title="Add Event to Profile">
+              <Button
+                onClick={() => handleAddToMyPage(result)}
+                shape="circle"
+                icon={<StarOutlined />}
+                style={{ margin: "10px" }}
+                size="medium"
+                type="primary"
+              ></Button>
+            </Tooltip>
           )}
         </div>
       )}
