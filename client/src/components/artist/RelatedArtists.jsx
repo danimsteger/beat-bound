@@ -1,76 +1,43 @@
-import { Row, Col, Card, Button, Tooltip } from "antd";
-import { Link } from "react-router-dom";
-import { StarOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import ArtistCard from "./ArtistCard";
 
-const { Meta } = Card;
+const RelatedArtists = ({ artistId }) => {
+  const [relatedArtists, setRelatedArtists] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const RelatedArtists = ({ artists }) => {
+  useEffect(() => {
+    const fetchRelatedArtists = async () => {
+      try {
+        const response = await fetch(`/api/search/related-artists/${artistId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch related artists");
+        }
+        const result = await response.json();
+        console.log("Fetched Related Artists:", result);
+        setRelatedArtists(result);
+      } catch (err) {
+        setError("Failed to load related artists.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRelatedArtists();
+  }, [artistId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-    <div
-      style={{
-        margin: "10px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <h3 style={{ textAlign: "center" }}>Related Artists</h3>
-      {artists.map((artist) => (
-        <Link to="" key={artist.id}>
-          <Card
-            hoverable
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              width: 400,
-              margin: "20px",
-            }}
-          >
-            <Row
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Col>
-                <img
-                  src={artist.imageUrl}
-                  style={{ width: 100, height: 100, marginRight: 20 }}
-                />
-              </Col>
-              <Col>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: 100,
-                  }}
-                >
-                  <Meta
-                    title={
-                      <span style={{ fontSize: "16px" }}>{artist.name}</span>
-                    }
-                  />
-                </div>
-              </Col>
-              <Col>
-                <Tooltip title="Add Song to Profile">
-                  <Button
-                    type="primary"
-                    shape="circle"
-                    icon={<StarOutlined />}
-                    style={{ margin: "5px" }}
-                    size="medium"
-                  />
-                </Tooltip>
-              </Col>
-            </Row>
-          </Card>
-        </Link>
+    <div>
+      {relatedArtists.map((artist) => (
+        <ArtistCard key={artist.spotifyId} artist={artist} />
       ))}
     </div>
   );
