@@ -71,6 +71,7 @@ const ArtistCard = ({ artist, handleDelete }) => {
             >
               <Tooltip title="Listen on Spotify">
                 <Button
+                  onClick={(e) => e.stopPropagation()}
                   href={artist.externalUrl}
                   shape="circle"
                   target="_blank"

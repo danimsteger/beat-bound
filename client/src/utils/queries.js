@@ -22,6 +22,7 @@ export const QUERY_ARTISTS = gql`
       _id
       name
       imageUrl
+      externalUrl
       events {
         _id
         name
@@ -126,6 +127,7 @@ export const GET_USERS_ARTISTS = gql`
         name
         imageUrl
         spotifyId
+        externalUrl
       }
     }
   }
