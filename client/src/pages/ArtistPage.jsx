@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col } from "antd";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_SONG, ADD_ARTIST, ADD_EVENT } from "../utils/mutations";
+import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
 import ArtistDetails from "../components/artist/ArtistDetails";
@@ -14,48 +15,105 @@ const ArtistPage = () => {
   const { artistId } = useParams();
   const [relatedArtists, setRelatedArtists] = useState([]);
   const [artistName, setArtistName] = useState("");
+  const [addedItems, setAddedItems] = useState([]);
+  
+  const { loading, data } = useQuery(QUERY_ME);
+  const userData = data?.me || {};
 
-  const [addSong] = useMutation(ADD_SONG);
-  const [addArtist] = useMutation(ADD_ARTIST);
-  const [addEvent] = useMutation(ADD_EVENT);
+  const [addSong] = useMutation(ADD_SONG, {
+    update(cache, { data: { addSong } }) {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+  
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: {
+          me: {
+            ...me,
+            songs: [...me.songs, addSong],
+          },
+        },
+      });
+    },
+  });
+  
+  const [addArtist] = useMutation(ADD_ARTIST, {
+    update(cache, { data: { addArtist } }) {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+  
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: {
+          me: {
+            ...me,
+            artists: [...me.artists, addArtist],
+          },
+        },
+      });
+    },
+  });
+  
+  const [addEvent] = useMutation(ADD_EVENT, {
+    update(cache, { data: { addEvent } }) {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+  
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: {
+          me: {
+            ...me,
+            events: [...me.events, addEvent],
+          },
+        },
+      });
+    },
+  });
+  
+
+  const isOnProfile = (item, type) => {
+    if (type === "song") {
+      return (
+        userData.songs?.some((song) => song.externalUrl === item.externalUrl) ||
+        addedItems.includes(item.externalUrl)
+      );
+    } else if (type === "artist") {
+      return (
+        userData.artists?.some((artist) => artist.spotifyId === item.spotifyId) ||
+        addedItems.includes(item.spotifyId)
+      );
+    } else if (type === "events") {
+      return (
+        userData.events?.some((event) => event.externalUrl === item.externalUrl) ||
+        addedItems.includes(item.externalUrl)
+      );
+    }
+    return false;
+  };
 
   const handleAddToMyPage = async (item, type) => {
-    console.log("Item being added:", item);
     if (!Auth.loggedIn()) {
       console.error("User is not logged in.");
       return;
     }
-
+  
     try {
       if (type === "song") {
         let artists = "Unknown Artist";
         if (Array.isArray(item.artists) && item.artists.length > 0) {
           artists = item.artists.join(", ");
         }
-
-        const name = item.name || "Unknown Name";
-        const album = item.albumName || "Unknown Album";
-
+  
         await addSong({
           variables: {
-            name,
+            name: item.name || "Unknown Name",
             artist: artists,
-            album,
+            album: item.albumName || "Unknown Album",
             imageUrl: item.imageUrl || "",
             externalUrl: item.externalUrl || "",
           },
         });
-
-        alert("Song added to your page!");
+  
+        setAddedItems((prevItems) => [...prevItems, item.externalUrl]);
       } else if (type === "artist") {
-        console.log("Adding artist with ID:", item.spotifyId);
-        console.log({
-          name: item.name,
-          spotifyId: item.spotifyId,
-          imageUrl: item.imageUrl,
-          externalUrl: item.externalUrl,
-        });
-
         await addArtist({
           variables: {
             name: item.name,
@@ -64,49 +122,26 @@ const ArtistPage = () => {
             externalUrl: item.externalUrl || "",
           },
         });
-
-        alert("Artist added to your page!");
+  
+        setAddedItems((prevItems) => [...prevItems, item.spotifyId]);
       } else if (type === "event") {
-        console.log("Event being added:", item);
-        const externalUrl = item.externalUrl || "";
-
-        if (!externalUrl) {
-          throw new Error("External URL is missing.");
-        }
-
-        console.log("Event Mutation Variables:", {
-          name: item.name,
-          date: item.date || "",
-          venue: item.venue || "",
-          city: item.city || "",
-          externalUrl,
-        });
-
-
         await addEvent({
           variables: {
             name: item.name,
             date: item.date || "",
             venue: item.venue || "",
             city: item.city || "",
-            externalUrl,
+            externalUrl: item.externalUrl || "",
           },
         });
-
-        alert("Event added to your page!");
+  
+        setAddedItems((prevItems) => [...prevItems, item.externalUrl]);
       }
     } catch (error) {
       console.error("Error adding item to page:", error);
-      if (error.graphQLErrors && error.graphQLErrors.length > 0) {
-        console.log("GraphQL Error:", error.graphQLErrors);
-      }
-      if (error.networkError) {
-        console.log("Network Error:", error.networkError);
-      }
-      alert("There was an error adding this item to your page.");
     }
   };
-
+  
   return (
     <div>
       <Row
@@ -119,16 +154,19 @@ const ArtistPage = () => {
             artistId={artistId}
             setArtistName={setArtistName}
             onAddToMyPage={(item) => handleAddToMyPage(item, "artist")}
+            isOnProfile={(item) => isOnProfile(item, "artist")}
           />
           <ArtistEvents
             artistName={artistName}
             onAddToMyPage={(item) => handleAddToMyPage(item, "event")}
+            isOnProfile={(item) => isOnProfile(item, "events")}
           />
         </Col>
         <Col flex={2}>
           <ArtistSongs
             artistId={artistId}
             onAddToMyPage={(item) => handleAddToMyPage(item, "song")}
+            isOnProfile={(item) => isOnProfile(item, "song")}
           />
         </Col>
         <Col flex={2}>
@@ -136,6 +174,7 @@ const ArtistPage = () => {
             artistId={artistId}
             setRelatedArtists={setRelatedArtists}
             onAddToMyPage={(item) => handleAddToMyPage(item, "artist")}
+            isOnProfile={(item) => isOnProfile(item, "artist")}
           />
         </Col>
       </Row>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ArtistCard from "./ArtistCard";
 
-const RelatedArtists = ({ artistId, onAddToMyPage }) => {
-  const [relatedArtists, setRelatedArtists] = useState([]);
+const RelatedArtists = ({ artistId, onAddToMyPage, setRelatedArtists, isOnProfile }) => {
+  const [relatedArtists, setRelatedArtistsState] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,6 +14,7 @@ const RelatedArtists = ({ artistId, onAddToMyPage }) => {
           throw new Error("Failed to fetch related artists");
         }
         const result = await response.json();
+        setRelatedArtistsState(result);
         setRelatedArtists(result);
       } catch (err) {
         setError("Failed to load related artists.");
@@ -23,7 +24,7 @@ const RelatedArtists = ({ artistId, onAddToMyPage }) => {
     };
 
     fetchRelatedArtists();
-  }, [artistId]);
+  }, [artistId, setRelatedArtists]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -34,20 +35,17 @@ const RelatedArtists = ({ artistId, onAddToMyPage }) => {
   }
 
   return (
-    <div
-      style={{
-        margin: "10px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <div style={{ margin: "10px" }}>
       <h1 style={{ textAlign: "center" }}>Related Artists</h1>
       {relatedArtists.map((artist) => (
         <ArtistCard
           key={artist.spotifyId}
-          artist={artist}
-          onAddToMyPage={onAddToMyPage} // Pass the correct function
+          artist={{
+            ...artist,
+            imageUrl: artist.image // Ensuring correct key is passed
+          }}
+          onAddToMyPage={onAddToMyPage}
+          isOnProfile={isOnProfile}
         />
       ))}
     </div>

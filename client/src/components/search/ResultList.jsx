@@ -3,7 +3,7 @@ import React from "react";
 import { Row, Col } from "antd";
 import ResultCard from "./ResultCard";
 
-const ResultsList = ({ results, lastSearchType, handleAddToMyPage }) => {
+const ResultsList = ({ results, lastSearchType, handleAddToMyPage, isOnProfile }) => {
   return (
     <Row
       style={{
@@ -20,6 +20,7 @@ const ResultsList = ({ results, lastSearchType, handleAddToMyPage }) => {
               result={result}
               type={lastSearchType}
               handleAddToMyPage={handleAddToMyPage}
+              isOnProfile={isOnProfile}
             />
           </Col>
         ))

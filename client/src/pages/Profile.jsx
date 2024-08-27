@@ -1,4 +1,4 @@
-// import React from "react";
+import { useState } from "react";
 
 import SavedEvents from "../components/profile/SavedEvents";
 import SavedArtists from "../components/profile/SavedArtists";
@@ -7,6 +7,9 @@ import SavedSongs from "../components/profile/SavedSongs";
 import { Row, Col } from "antd";
 
 const Profile = () => {
+  // Add a state to track added items
+  const [addedItems, setAddedItems] = useState([]);
+
   return (
     <div>
       <Row
@@ -18,22 +21,19 @@ const Profile = () => {
           flex={8}
           style={{ marginRight: "0px", marginLeft: "50px", marginTop: "80px" }}
         >
-          {" "}
-          <SavedEvents />
+          <SavedEvents addedItems={addedItems} />
         </Col>
         <Col
           flex={8}
           style={{ marginRight: "0px", marginLeft: "0px", marginTop: "80px" }}
         >
-          {" "}
-          <SavedArtists />
+          <SavedArtists addedItems={addedItems} />
         </Col>
         <Col
           flex={8}
           style={{ marginRight: "50px", marginLeft: "0px", marginTop: "80px" }}
         >
-          {" "}
-          <SavedSongs />
+          <SavedSongs addedItems={addedItems} />
         </Col>
       </Row>
 

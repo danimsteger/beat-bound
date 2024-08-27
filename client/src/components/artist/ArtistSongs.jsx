@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { List, Tooltip, Button, Spin, Alert } from "antd";
-import { StarOutlined } from "@ant-design/icons";
+import { useState, useEffect } from "react";
+import { List, Tooltip, Button } from "antd";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
+import Auth from "../../utils/auth";
 
-const ArtistSongs = ({ artistId, onAddToMyPage }) => {
+const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,14 +11,19 @@ const ArtistSongs = ({ artistId, onAddToMyPage }) => {
   useEffect(() => {
     const fetchFeaturedTracks = async () => {
       try {
-        const response = await fetch(
-          `/api/search/artist-featured-tracks/${artistId}`
-        );
+        const response = await fetch(`/api/search/artist-featured-tracks/${artistId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch featured tracks");
         }
         const result = await response.json();
-        setSongs(result);
+
+        // Update each song with an isOnProfile flag
+        const updatedSongs = result.map((song) => ({
+          ...song,
+          isOnProfile: isOnProfile(song, "track"),
+        }));
+
+        setSongs(updatedSongs);
       } catch (err) {
         setError("Failed to load featured tracks.");
       } finally {
@@ -26,26 +32,28 @@ const ArtistSongs = ({ artistId, onAddToMyPage }) => {
     };
 
     fetchFeaturedTracks();
-  }, [artistId]);
+  }, [artistId, isOnProfile]);
 
-  if (loading) {
-    return <Spin tip="Loading featured tracks..." />;
-  }
+  const handleAddClick = async (item) => {
+    if (!item.isOnProfile) {
+      await onAddToMyPage(item);
 
-  if (error) {
-    return <Alert message="Error" description={error} type="error" showIcon />;
-  }
+      // Update the specific song to reflect it's on profile
+      setSongs((prevSongs) =>
+        prevSongs.map((song) =>
+          song.externalUrl === item.externalUrl
+            ? { ...song, isOnProfile: true }
+            : song
+        )
+      );
+    }
+  };
 
   return (
     <div style={{ margin: "10px" }}>
-      <h1 style={{ textAlign: "center" }}>Featured Songs</h1>
       <div>
         <List
-          style={{
-            margin: "20px",
-
-            alignItems: "center",
-          }}
+          style={{ margin: "20px" }}
           itemLayout="vertical"
           dataSource={songs}
           renderItem={(item) => (
@@ -64,16 +72,19 @@ const ArtistSongs = ({ artistId, onAddToMyPage }) => {
                     title={item.name}
                     description={<div>{item.albumName}</div>}
                   />
-                  <Tooltip title="Add Song to Profile">
-                    <Button
-                      type="primary"
-                      shape="circle"
-                      icon={<StarOutlined />}
-                      style={{ margin: "10px" }}
-                      size="medium"
-                      onClick={() => onAddToMyPage(item)}
-                    />
-                  </Tooltip>
+                  {Auth.loggedIn() && (
+                    <Tooltip title={item.isOnProfile ? "Already on your profile" : "Add Song to Profile"}>
+                      <Button
+                        onClick={() => handleAddClick(item)}
+                        type="primary"
+                        shape="circle"
+                        icon={item.isOnProfile ? <StarFilled /> : <StarOutlined />}
+                        style={{ margin: "10px" }}
+                        size="medium"
+                        disabled={item.isOnProfile}
+                      />
+                    </Tooltip>
+                  )}
                 </div>
               </div>
             </List.Item>

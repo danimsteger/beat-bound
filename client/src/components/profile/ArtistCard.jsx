@@ -2,8 +2,7 @@ import { Card, Row, Col, Tooltip, Button } from "antd";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
 
-//NEED TO ADD LINK TO THAT SPECIFIC ARTISTS PAGE!!!
-const ArtistCard = ({ artist }) => {
+const ArtistCard = ({ artist, handleDelete }) => {
   return (
     <Link
       to={`/ArtistPage/${artist.spotifyId}`}
@@ -53,10 +52,13 @@ const ArtistCard = ({ artist }) => {
             <Tooltip title="Remove From Profile">
               <Button
                 shape="circle"
-                rel="noopener noreferrer"
                 type="primary"
                 size="medium"
                 style={{ margin: "10px" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDelete(artist._id);
+                }}
               >
                 <img src="/trash.white.png" alt="remove" width="30px" />
               </Button>
