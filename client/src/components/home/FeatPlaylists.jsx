@@ -15,10 +15,12 @@ const FeaturedPlaylists = () => {
 
         const data = await response.json();
         setPlaylists(data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching featured playlists:", error);
       }
     };
+
     fetchPlaylists();
   }, []);
 
@@ -48,7 +50,7 @@ const FeaturedPlaylists = () => {
       >
         {playlists.map((playlist, index) => (
           <div key={index}>
-            <a>
+            <a href={playlist.externalUrls} target="_blank" rel="noreferrer">
               <img
                 alt="Playlist Cover"
                 src={playlist.imageUrl}
