@@ -112,11 +112,11 @@
     margin: 5px !important;
   }
 
-  /* .artist-image {
+  .artist-image {
     width: 80px !important;
     height: 80px !important;
     margin-right: 0px !important;
-  } */
+  }
 
   .artist-title {
     font-size: 0.9rem !important;
@@ -142,7 +142,10 @@
     flex-direction: column !important;
     width: 50px !important;
     justify-content: center;
-    background-color: orange;
+  }
+
+  .button-col {
+    height: 50px !important;
   }
 }
 /* @media (max-width: 768px) {
