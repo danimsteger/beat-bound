@@ -8,11 +8,11 @@
   font-weight: bold;
 }
 #footer {
-  position: fixed;
+  /* position: fixed; */
   bottom: 0;
   width: 100%;
   min-height: 80px;
-  padding: 20px 10px;
+  padding: 10px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,7 +115,7 @@
   .artist-image {
     width: 80px !important;
     height: 80px !important;
-    margin-right: 5px !important;
+    margin-right: 0px !important;
   }
 
   .artist-title {
@@ -132,6 +132,20 @@
 
   .artist-name {
     font-size: 2.5rem !important;
+  }
+
+  .result-card {
+    width: 320px !important;
+  }
+
+  .artist-card-row {
+    flex-direction: column !important;
+    width: 50px !important;
+    justify-content: center;
+  }
+
+  .button-col {
+    height: 50px !important;
   }
 }
 /* @media (max-width: 768px) {

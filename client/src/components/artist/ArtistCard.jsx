@@ -39,8 +39,8 @@ const ArtistCard = ({ artist, onAddToMyPage, isOnProfile }) => {
         }}
         className="artist-card"
       >
-        <Row style={{ display: "flex", justifyContent: "space-between" }}>
-          <Col>
+        <Row style={{ display: "flex" }} className="artist-card-row">
+          <Col style={{ display: "flex", justifyContent: "center" }}>
             <img
               src={artist.image || "https://via.placeholder.com/100"}
               alt={artist.name}
@@ -89,6 +89,7 @@ const ArtistCard = ({ artist, onAddToMyPage, isOnProfile }) => {
                 alignItems: "center",
                 height: 100,
               }}
+              className="button-col"
             >
               <Tooltip title="Listen on Spotify">
                 <Button

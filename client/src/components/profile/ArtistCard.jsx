@@ -22,8 +22,14 @@ const ArtistCard = ({ artist, handleDelete }) => {
         }}
         className="artist-card"
       >
-        <Row style={{ display: "flex", justifyContent: "space-between" }}>
-          <Col>
+        <Row
+          style={{
+            display: "flex",
+            // justifyContent: "space-between",
+          }}
+          className="artist-card-row"
+        >
+          <Col style={{ display: "flex", justifyContent: "center" }}>
             <img
               src={artist.imageUrl}
               style={{
@@ -68,6 +74,7 @@ const ArtistCard = ({ artist, handleDelete }) => {
                 alignItems: "center",
                 height: 100,
               }}
+              className="button-col"
             >
               <Tooltip title="Listen on Spotify">
                 <Button
