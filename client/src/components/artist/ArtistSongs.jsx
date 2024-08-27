@@ -113,25 +113,44 @@ const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
                     }
                   />
                   {Auth.loggedIn() && (
-                    <Tooltip
-                      title={
-                        item.isOnProfile
-                          ? "Already on your profile"
-                          : "Add Song to Profile"
-                      }
-                    >
-                      <Button
-                        onClick={() => handleAddClick(item)}
-                        type="primary"
-                        shape="circle"
-                        icon={
-                          item.isOnProfile ? <StarFilled /> : <StarOutlined />
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <Tooltip title="Listen on Spotify">
+                        <Button
+                          href={item.externalUrl}
+                          shape="circle"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          type="primary"
+                          size="medium"
+                          style={{ margin: "10px" }}
+                        >
+                          <img
+                            src="/spotify.png"
+                            alt="spotify logo"
+                            width="25px"
+                          />
+                        </Button>
+                      </Tooltip>
+                      <Tooltip
+                        title={
+                          item.isOnProfile
+                            ? "Already on your profile"
+                            : "Add Song to Profile"
                         }
-                        style={{ margin: "10px" }}
-                        size="medium"
-                        disabled={item.isOnProfile}
-                      />
-                    </Tooltip>
+                      >
+                        <Button
+                          onClick={() => handleAddClick(item)}
+                          type="primary"
+                          shape="circle"
+                          icon={
+                            item.isOnProfile ? <StarFilled /> : <StarOutlined />
+                          }
+                          style={{ margin: "10px" }}
+                          size="medium"
+                          disabled={item.isOnProfile}
+                        />
+                      </Tooltip>
+                    </div>
                   )}
                 </div>
               </div>

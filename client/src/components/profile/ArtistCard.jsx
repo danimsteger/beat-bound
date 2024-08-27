@@ -69,6 +69,19 @@ const ArtistCard = ({ artist, handleDelete }) => {
                 height: 100,
               }}
             >
+              <Tooltip title="Listen on Spotify">
+                <Button
+                  href={artist.externalUrl}
+                  shape="circle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  type="default"
+                  size="medium"
+                  style={{ margin: "10px" }}
+                >
+                  <img src="/spotify.png" alt="spotify logo" width="25px" />
+                </Button>
+              </Tooltip>
               <Tooltip title="Remove From Profile">
                 <Button
                   shape="circle"
