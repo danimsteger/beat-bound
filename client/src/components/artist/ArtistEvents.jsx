@@ -63,6 +63,7 @@ const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
         style={{ margin: "20px" }}
         itemLayout="vertical"
         dataSource={events}
+        className="event-list"
         renderItem={(item) => {
           const alreadyOnProfile = isOnProfile(item, "events");
           return (

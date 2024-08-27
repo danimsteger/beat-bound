@@ -57,7 +57,10 @@ const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
   };
 
   return (
-    <div style={{ margin: "10px", color: customTheme.token.colorPrimary }}>
+    <div
+      style={{ margin: "10px", color: customTheme.token.colorPrimary }}
+      className="artist-songs"
+    >
       <div>
         <h1 style={{ textAlign: "center" }} className="concert-one-regular">
           TOP SONGS
@@ -66,10 +69,14 @@ const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
           style={{ margin: "20px", color: customTheme.token.colorPrimary }}
           itemLayout="vertical"
           dataSource={songs}
+          className="song-list"
           renderItem={(item) => (
             <List.Item key={item.name}>
               <div style={{ display: "flex", alignItems: "center" }}>
-                <div style={{ marginRight: "30px", marginLeft: 100 }}>
+                <div
+                  style={{ marginRight: "30px", marginLeft: 100 }}
+                  className="song-list-item"
+                >
                   <img
                     width={125}
                     alt={item.name}
@@ -86,7 +93,7 @@ const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
                           fontSize: "1.1rem",
                           margin: 0,
                         }}
-                        className="bungee-regular"
+                        className="bungee-regular song-list-title"
                       >
                         {capitalize(item.name)}{" "}
                         {/* Capitalizing the song name */}
@@ -99,6 +106,7 @@ const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
                           fontSize: "1rem",
                           margin: 0,
                         }}
+                        className="song-list-item"
                       >
                         {item.albumName}
                       </div>

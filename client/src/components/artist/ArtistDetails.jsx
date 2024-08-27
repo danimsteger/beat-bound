@@ -106,7 +106,7 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage, isOnProfile }) => {
                   color: customTheme.token.colorSecondary,
                   fontSize: "4rem",
                 }}
-                className="bungee-regular"
+                className="bungee-regular artist-name"
               >
                 {artistData.name}
               </h1>

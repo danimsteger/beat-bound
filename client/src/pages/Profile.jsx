@@ -14,7 +14,7 @@ const Profile = () => {
   return (
     <div
       style={{
-        padding: "50px",
+        padding: "20px",
         backgroundColor: customTheme.token.colorBgContainer,
         height: "100%",
         minHeight: "calc(100vh - 100px)",
@@ -31,18 +31,21 @@ const Profile = () => {
         <Col
           flex={8}
           style={{ marginRight: "0px", marginLeft: "50px", marginTop: "80px" }}
+          className="profile-columns"
         >
           <SavedEvents addedItems={addedItems} />
         </Col>
         <Col
           flex={8}
           style={{ marginRight: "0px", marginLeft: "0px", marginTop: "80px" }}
+          className="profile-columns"
         >
           <SavedArtists addedItems={addedItems} />
         </Col>
         <Col
           flex={8}
           style={{ marginRight: "50px", marginLeft: "0px", marginTop: "80px" }}
+          className="profile-columns"
         >
           <SavedSongs addedItems={addedItems} />
         </Col>

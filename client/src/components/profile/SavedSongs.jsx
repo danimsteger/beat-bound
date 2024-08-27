@@ -62,10 +62,14 @@ const SavedSongs = ({ addedItems }) => {
         style={{ margin: "20px", color: customTheme.token.colorPrimary }}
         itemLayout="vertical"
         dataSource={songs}
+        className="song-list"
         renderItem={(song) => (
           <List.Item key={song._id}>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <div style={{ marginRight: "30px", marginLeft: 100 }}>
+              <div
+                style={{ marginRight: "30px", marginLeft: 50 }}
+                className="song-list-item"
+              >
                 <img
                   width={140}
                   alt={capitalize(song.name)} // Capitalizing the song name for display
@@ -81,7 +85,7 @@ const SavedSongs = ({ addedItems }) => {
                         color: customTheme.token.colorSecondary,
                         fontSize: "1.3rem",
                       }}
-                      className="bungee-regular"
+                      className="bungee-regular song-list-title"
                     >
                       {capitalize(song.name)} {/* Capitalizing the song name */}
                     </span>

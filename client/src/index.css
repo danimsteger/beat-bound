@@ -80,6 +80,59 @@
   .nav-title {
     font-size: 1rem !important;
   }
+
+  .footer-text {
+    font-size: 0.5rem !important;
+  }
+
+  .footer-title {
+    font-size: 0.7rem !important;
+  }
+  .song-list {
+    margin: 0px;
+  }
+
+  .song-list-item {
+    margin-right: 5 !important;
+    margin-left: 0 !important;
+    font-size: 0.7rem !important;
+  }
+
+  .song-list-title {
+    font-size: 0.8rem !important;
+  }
+  .profile-columns {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .artist-card {
+    width: 300px !important;
+    flex-direction: column !important;
+    margin: 5px !important;
+  }
+
+  .artist-image {
+    width: 80px !important;
+    height: 80px !important;
+    margin-right: 5px !important;
+  }
+
+  .artist-title {
+    font-size: 0.9rem !important;
+  }
+
+  .event-list {
+    margin: 0px !important;
+  }
+
+  .artist-songs {
+    margin: 0px;
+  }
+
+  .artist-name {
+    font-size: 2.5rem !important;
+  }
 }
 /* @media (max-width: 768px) {
   .navbar {

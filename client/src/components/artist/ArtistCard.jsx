@@ -37,6 +37,7 @@ const ArtistCard = ({ artist, onAddToMyPage, isOnProfile }) => {
           color: "white",
           borderColor: customTheme.token.colorSecondary,
         }}
+        className="artist-card"
       >
         <Row style={{ display: "flex", justifyContent: "space-between" }}>
           <Col>
@@ -49,6 +50,7 @@ const ArtistCard = ({ artist, onAddToMyPage, isOnProfile }) => {
                 marginRight: 20,
                 borderRadius: 10,
               }}
+              className="artist-image"
               onError={(e) =>
                 (e.target.src = "https://via.placeholder.com/100")
               }
@@ -71,7 +73,7 @@ const ArtistCard = ({ artist, onAddToMyPage, isOnProfile }) => {
                       textDecoration: "none",
                       color: customTheme.token.colorBgContainer,
                     }}
-                    className="bungee-regular"
+                    className="bungee-regular artist-title"
                   >
                     {artist.name}
                   </span>

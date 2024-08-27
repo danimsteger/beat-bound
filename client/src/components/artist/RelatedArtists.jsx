@@ -50,6 +50,7 @@ const RelatedArtists = ({
         alignItems: "center",
         color: customTheme.token.colorPrimary,
       }}
+      className="profile-columns"
     >
       <h1 style={{ textAlign: "center" }} className="concert-one-regular">
         RELATED ARTISTS
