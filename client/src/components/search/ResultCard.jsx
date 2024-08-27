@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Tooltip, Image } from "antd";
+import { Card, Button, Tooltip, Image, Row } from "antd";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
@@ -27,7 +27,12 @@ const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
   };
 
   return (
-    <Card style={{ margin: 5, width: 400 }} onClick={handleCardClick} hoverable>
+    <Card
+      style={{ margin: 5, width: 400 }}
+      onClick={handleCardClick}
+      className="result-card"
+      hoverable
+    >
       {type === "track" && (
         <div>
           {result.imageURL && (
@@ -62,6 +67,7 @@ const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
               </div>
             }
           />
+
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Tooltip title="Listen on Spotify">
               <Button
@@ -95,15 +101,17 @@ const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
                 />
               </Tooltip>
             )}
+          </div>
+          <Row style={{ justifyContent: "center" }}>
             {result.previewUrl && (
-              <div className="mt-3">
+              <div style={{ margin: 0 }}>
                 <audio controls>
                   <source src={result.previewUrl} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
               </div>
             )}
-          </div>
+          </Row>
         </div>
       )}
       {type === "artist" && (
