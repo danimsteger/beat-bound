@@ -43,7 +43,7 @@ const AppNavbar = () => {
                 style={{
                   color: "white",
                   fontSize: "1.8rem",
-                  marginRight: "20px",
+                  marginRight: "5px",
                   textDecoration: "none",
                   fontWeight: "normal",
                   transition: "text-shadow 0.3s",
@@ -57,7 +57,7 @@ const AppNavbar = () => {
                   e.target.style.textShadow = "none";
                   e.target.style.fontWeight = "normal";
                 }}
-                className="bungee-regular"
+                className="bungee-regular nav-title"
               >
                 🎧 Beat Bound
               </Link>
@@ -71,7 +71,7 @@ const AppNavbar = () => {
                 to="/search-page"
                 style={{
                   color: customTheme.token.colorSecondary,
-                  marginRight: "20px",
+                  marginRight: "5px",
                   textDecoration: "none",
                   fontWeight: "normal",
                   transition: "text-shadow 0.3s",
@@ -88,7 +88,7 @@ const AppNavbar = () => {
                 }}
                 className="concert-one-regular"
               >
-                <ul>SEARCH </ul>
+                <ul className="nav-item">SEARCH </ul>
               </Link>
               {Auth.loggedIn() ? (
                 <>
@@ -96,7 +96,7 @@ const AppNavbar = () => {
                     to="/Profile"
                     style={{
                       color: customTheme.token.colorSecondary,
-                      marginRight: "20px",
+                      marginRight: "5px",
                       textDecoration: "none",
                       fontWeight: "normal",
                       transition: "text-shadow 0.3s",
