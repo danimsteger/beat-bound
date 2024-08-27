@@ -189,7 +189,12 @@ async function getArtistFeaturedTracks(artistId) {
           albumName: track.album.name,
           previewUrl: track.preview_url,
           imageUrl: track.album.images[0]?.url,
-          externalUrl: track.external_urls.spotify
+          externalUrl: track.external_urls.spotify,
+          artists: track.artists.map(artist => ({
+            name: artist.name,
+            spotifyId: artist.id,
+            externalUrl: artist.external_urls.spotify
+          }))
       }));
 
       return topTracks;

@@ -101,7 +101,11 @@ const ArtistPage = () => {
       if (type === "song") {
         let artists = "Unknown Artist";
         if (Array.isArray(item.artists) && item.artists.length > 0) {
-          artists = item.artists.join(", ");
+          artists = item.artists
+            .map((artist) => artist?.name?.trim() || "Unknown Artist")
+            .join(", ");
+        } else if (item.artists && typeof item.artists === "string") {
+          artists = item.artists.trim();
         }
 
         await addSong({
