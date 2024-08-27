@@ -1,6 +1,11 @@
 import { Card, Row, Col, Button } from "antd";
 const { Meta } = Card;
 
+// Function to capitalize the first letter of each word
+const capitalize = (text) => {
+  return text.replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 const SongCard = ({ song }) => {
   return (
     <Card
@@ -31,11 +36,17 @@ const SongCard = ({ song }) => {
             }}
           >
             <Meta
-              title={<span style={{ fontSize: "24px" }}>{song.name}</span>}
+              // Capitalizing the song name
+              title={
+                <span style={{ fontSize: "24px" }}>
+                  {capitalize(song.name)}
+                </span>
+              }
               description={
                 <>
-                  <p>{song.artist}</p>
-                  <p>Album: {song.album}</p>
+                  {/* Capitalizing the artist name and album name */}
+                  <p>{capitalize(song.artist)}</p>
+                  <p>Album: {capitalize(song.album)}</p>
                   <Button
                     href={song.externalUrl}
                     target="_blank"
