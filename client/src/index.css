@@ -8,7 +8,7 @@
   font-weight: bold;
 }
 #footer {
-  position: relative;
+  position: fixed;
   bottom: 0;
   width: 100%;
   min-height: 100px;
@@ -17,6 +17,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: #ef4f91;
+  color: white;
 }
 
 .concert-one-regular {
@@ -58,7 +60,8 @@
 
 .hidden-text {
   opacity: 0;
-  transition: opacity 1s; /* Add a transition for the opacity property with a duration of 0.5 seconds */
+  transition: opacity 1s;
+  /* Add a transition for the opacity property with a duration of 0.5 seconds */
 }
 
 .bungee-regular:hover + .hidden-text {

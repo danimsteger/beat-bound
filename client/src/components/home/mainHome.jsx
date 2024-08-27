@@ -28,8 +28,18 @@ const MainHome = () => {
         Beat Bound
       </h1>
       <div className="hidden-text">
-        <h3 className=" concert-one-regular">Discover New Music</h3>
-        <h4 className="concert-one-regular">& Save it for Later</h4>
+        <h3
+          className=" concert-one-regular"
+          style={{ color: customTheme.token.colorDanger }}
+        >
+          Discover New Music
+        </h3>
+        <h4
+          className="concert-one-regular"
+          style={{ color: customTheme.token.colorDanger }}
+        >
+          & Save it for Later
+        </h4>
       </div>
       <div style={{ margin: 50 }}>
         <Link to={`/search-page`}>
