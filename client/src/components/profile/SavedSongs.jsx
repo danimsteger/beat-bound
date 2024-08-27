@@ -5,6 +5,11 @@ import { GET_USERS_SONGS } from "../../utils/queries";
 import { PlayCircleFilled } from "@ant-design/icons";
 import { REMOVE_SONG } from "../../utils/mutations";
 
+// Function to capitalize the first letter of each word
+const capitalize = (text) => {
+  return text.replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 const SavedSongs = ({ addedItems }) => {
   const { loading, error, data, refetch } = useQuery(GET_USERS_SONGS);
 
@@ -59,18 +64,22 @@ const SavedSongs = ({ addedItems }) => {
               <div style={{ marginRight: "30px", marginLeft: 100 }}>
                 <img
                   width={140}
-                  alt={song.name}
+                  alt={capitalize(song.name)} // Capitalizing the song name for display
                   src={song.imageUrl}
                   style={{ borderRadius: 10 }}
                 />
               </div>
               <div style={{ flex: 3 }}>
                 <List.Item.Meta
-                  title={song.name}
+                  title={
+                    <span style={{ fontSize: "24px" }}>
+                      {capitalize(song.name)} {/* Capitalizing the song name */}
+                    </span>
+                  }
                   description={
                     <div>
-                      <p>{song.album}</p>
-                      <p>{song.artist}</p>
+                      <p>{capitalize(song.album)}</p> {/* Capitalizing the album name */}
+                      <p>{capitalize(song.artist)}</p> {/* Capitalizing the artist name */}
                       <Tooltip title="Listen on Spotify">
                         <Button
                           href={song.externalUrl}
