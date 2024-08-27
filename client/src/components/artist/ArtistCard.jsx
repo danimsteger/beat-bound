@@ -1,33 +1,25 @@
+import { useState, useEffect } from "react";
 import { Card, Row, Col, Tooltip, Button } from "antd";
-import React from "react";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { StarOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
-const ArtistCard = ({ artist, onAddToMyPage }) => {
-  const defaultImageUrl = "https://via.placeholder.com/100";
+const ArtistCard = ({ artist, onAddToMyPage, isOnProfile }) => {
+  const [alreadyOnProfile, setAlreadyOnProfile] = useState(false);
 
-  // Structure the data similar to ArtistDetails
-  const artistData = {
-    name: artist.name,
-    imageUrl: artist.image || defaultImageUrl,
-    externalUrl: artist.externalUrl,
-    spotifyId: artist.spotifyId, // Use the artist's actual Spotify ID
+  useEffect(() => {
+    setAlreadyOnProfile(isOnProfile(artist, "artist"));
+  }, [artist, isOnProfile]);
+
+  const handleAddClick = async () => {
+    if (!alreadyOnProfile) {
+      await onAddToMyPage(artist);
+      setAlreadyOnProfile(true);
+    }
   };
-
   return (
-    <Link
-      to={{
-        pathname: `/ArtistPage/${artist.spotifyId}`,
-        state: {
-          imageUrl: artist.image || defaultImageUrl,
-          name: artist.name,
-          externalUrl: artist.externalUrl,
-        },
-      }}
-      style={{ textDecoration: "none" }}
-    >
+    <Link to={`/ArtistPage/${artist.spotifyId}`}>
       <Card
         hoverable
         style={{
@@ -41,39 +33,28 @@ const ArtistCard = ({ artist, onAddToMyPage }) => {
         <Row>
           <Col>
             <img
-              src={artist.image || defaultImageUrl}
+              src={artist.image || "https://via.placeholder.com/100"}
               alt={artist.name}
               style={{ width: 100, height: 100, marginRight: 20 }}
-              onError={(e) => (e.target.src = defaultImageUrl)}
+              onError={(e) => (e.target.src = "https://via.placeholder.com/100")}
             />
           </Col>
           <Col>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: 100,
-              }}
-            >
-              <Meta
-                title={<span style={{ fontSize: "24px" }}>{artist.name}</span>}
-              />
-            </div>
+            <Meta title={<span style={{ fontSize: "24px" }}>{artist.name}</span>} />
           </Col>
           <Col>
-            <Tooltip title="Add Artist to Profile">
+            <Tooltip title={alreadyOnProfile ? "Already on your profile" : "Add Artist to Profile"}>
               <Button
                 type="primary"
                 shape="circle"
-                icon={<StarOutlined />}
+                icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
                 style={{ margin: "10px" }}
                 size="medium"
                 onClick={(e) => {
-                  e.preventDefault(); // Prevent the default link behavior
-                  console.log("Adding related artist to profile:", artistData);
-                  onAddToMyPage(artistData, "artist");
+                  e.preventDefault();
+                  handleAddClick();
                 }}
+                disabled={alreadyOnProfile}
               />
             </Tooltip>
           </Col>

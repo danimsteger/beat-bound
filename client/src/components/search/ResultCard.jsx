@@ -1,10 +1,22 @@
-// import React from "react";
-// import { Card, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Tooltip, Image } from "antd";
 import Auth from "../../utils/auth";
-import { StarOutlined, SoundOutlined } from "@ant-design/icons";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
 
-const ResultCard = ({ result, type, handleAddToMyPage }) => {
+const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
+  const [alreadyOnProfile, setAlreadyOnProfile] = useState(false);
+
+  useEffect(() => {
+    setAlreadyOnProfile(isOnProfile(result, type));
+  }, [result, type, isOnProfile]);
+
+  const handleAddClick = async () => {
+    if (!alreadyOnProfile) {
+      await handleAddToMyPage(result);
+      setAlreadyOnProfile(true); // Update the state to reflect the addition
+    }
+  };
+
   return (
     <Card style={{ margin: 5, width: 400 }}>
       {type === "track" && (
@@ -30,7 +42,6 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
               target="_blank"
               rel="noopener noreferrer"
               type="primary"
-              // icon={<SoundOutlined />}
               shape="circle"
               style={{ margin: "10px" }}
               size="medium"
@@ -39,14 +50,19 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
             </Button>
           </Tooltip>
           {Auth.loggedIn() && (
-            <Tooltip title="Add Song to Profile">
+            <Tooltip
+              title={
+                alreadyOnProfile ? "Already on your profile" : "Add Song to Profile"
+              }
+            >
               <Button
-                onClick={() => handleAddToMyPage(result)}
+                onClick={handleAddClick}
                 type="primary"
                 shape="circle"
-                icon={<StarOutlined />}
+                icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
                 style={{ margin: "10px" }}
                 size="medium"
+                disabled={alreadyOnProfile}
               />
             </Tooltip>
           )}
@@ -83,15 +99,22 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
             </Button>
           </Tooltip>
           {Auth.loggedIn() && (
-            <Tooltip title="Add Artist to Profile">
+            <Tooltip
+              title={
+                alreadyOnProfile
+                  ? "Already on your profile"
+                  : "Add Artist to Profile"
+              }
+            >
               <Button
-                onClick={() => handleAddToMyPage(result)}
+                onClick={handleAddClick}
                 type="primary"
                 shape="circle"
-                icon={<StarOutlined />}
+                icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
                 style={{ margin: "10px" }}
                 size="medium"
-              ></Button>
+                disabled={alreadyOnProfile}
+              />
             </Tooltip>
           )}
         </div>
@@ -121,124 +144,33 @@ const ResultCard = ({ result, type, handleAddToMyPage }) => {
             >
               <img
                 src="/ticketmaster.white.png"
-                alt="spotify logo"
+                alt="ticketmaster logo"
                 width="20px"
               />
             </Button>
           </Tooltip>
           {Auth.loggedIn() && (
-            <Tooltip title="Add Event to Profile">
+            <Tooltip
+              title={
+                alreadyOnProfile
+                  ? "Already on your profile"
+                  : "Add Event to Profile"
+              }
+            >
               <Button
-                onClick={() => handleAddToMyPage(result)}
+                onClick={handleAddClick}
                 shape="circle"
-                icon={<StarOutlined />}
+                icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
                 style={{ margin: "10px" }}
                 size="medium"
                 type="primary"
-              ></Button>
+                disabled={alreadyOnProfile}
+              />
             </Tooltip>
           )}
         </div>
       )}
     </Card>
-    // <Card>
-    //   {type === "track" && (
-    //     <>
-    //       {result.imageURL && <Card.Img variant="top" src={result.imageURL} />}
-    //       <Card.Body>
-    //         <Card.Title>{result.name}</Card.Title>
-    //         <Card.Text>
-    //           <strong>Artists:</strong>{" "}
-    //           {result.artists.map((artist) => artist.name).join(", ")}
-    //           <br />
-    //           <strong>Album:</strong> {result.album}
-    //         </Card.Text>
-    //         <Button
-    //           href={result.externalUrl}
-    //           target="_blank"
-    //           rel="noopener noreferrer"
-    //           variant="success"
-    //         >
-    //           Listen on Spotify
-    //         </Button>
-    //         {result.previewUrl && (
-    //           <div className="mt-3">
-    //             <audio controls>
-    //               <source src={result.previewUrl} type="audio/mpeg" />
-    //               Your browser does not support the audio element.
-    //             </audio>
-    //           </div>
-    //         )}
-    //         {Auth.loggedIn() && (
-    //           <Button
-    //             onClick={() => handleAddToMyPage(result)}
-    //             variant="warning"
-    //             className="mt-2"
-    //           >
-    //             Add to My Page
-    //           </Button>
-    //         )}
-    //       </Card.Body>
-    //     </>
-    //   )}
-    //   {type === "artist" && (
-    //     <>
-    //       {result.imageURL && <Card.Img variant="top" src={result.imageURL} />}
-    //       <Card.Body>
-    //         <Card.Title>{result.name}</Card.Title>
-    //         <Button
-    //           href={result.externalUrl}
-    //           target="_blank"
-    //           rel="noopener noreferrer"
-    //           variant="success"
-    //         >
-    //           View on Spotify
-    //         </Button>
-    //         {Auth.loggedIn() && (
-    //           <Button
-    //             onClick={() => handleAddToMyPage(result)}
-    //             variant="warning"
-    //             className="mt-2"
-    //           >
-    //             Add to My Page
-    //           </Button>
-    //         )}
-    //       </Card.Body>
-    //     </>
-    //   )}
-    //   {type === "events" && (
-    //     <Card.Body>
-    //       <Card.Title>{result.name}</Card.Title>
-    //       <Card.Text>
-    //         <strong>Date:</strong> {result.date}
-    //         <br />
-    //         <strong>Venue:</strong> {result.venue}, {result.city}
-    //         <br />
-    //         <strong>Artists:</strong>{" "}
-    //         {result.artist && result.artist.length > 0
-    //           ? result.artist.map((artist) => artist.name).join(", ")
-    //           : "Unknown Artists"}
-    //       </Card.Text>
-    //       <Button
-    //         href={result.externalUrl}
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //         variant="success"
-    //       >
-    //         Get Tickets
-    //       </Button>
-    //       {Auth.loggedIn() && (
-    //         <Button
-    //           onClick={() => handleAddToMyPage(result)}
-    //           variant="warning"
-    //           className="mt-2"
-    //         >
-    //           Add to My Page
-    //         </Button>
-    //       )}
-    //     </Card.Body>
-    //   )}
-    // </Card>
   );
 };
 

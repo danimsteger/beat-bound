@@ -1,7 +1,7 @@
-import { useState } from "react";
-// import { Container } from "react-bootstrap";
-import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_SONG, ADD_ARTIST, ADD_EVENT } from "../utils/mutations";
+import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import SearchBar from "../components/search/SearchBar";
 import ResultsList from "../components/search/ResultList";
@@ -11,11 +11,58 @@ const Search = () => {
   const [searchType, setSearchType] = useState("track");
   const [results, setResults] = useState(null);
   const [lastSearchType, setLastSearchType] = useState("track");
+  const [addedItems, setAddedItems] = useState([]);
 
-  const [addSong] = useMutation(ADD_SONG);
-  const [addArtist] = useMutation(ADD_ARTIST);
-  const [addEvent] = useMutation(ADD_EVENT);
+  const { loading, data } = useQuery(QUERY_ME);
+  const userData = data?.me || {};
 
+  const [addSong] = useMutation(ADD_SONG, {
+    update(cache, { data: { addSong } }) {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+  
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: {
+          me: {
+            ...me,
+            songs: [...me.songs, addSong],
+          },
+        },
+      });
+    },
+  });
+  
+  const [addArtist] = useMutation(ADD_ARTIST, {
+    update(cache, { data: { addArtist } }) {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+  
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: {
+          me: {
+            ...me,
+            artists: [...me.artists, addArtist],
+          },
+        },
+      });
+    },
+  });
+  
+  const [addEvent] = useMutation(ADD_EVENT, {
+    update(cache, { data: { addEvent } }) {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+  
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: {
+          me: {
+            ...me,
+            events: [...me.events, addEvent],
+          },
+        },
+      });
+    },
+  });
   const handleSearch = async () => {
     setResults(null);
     setLastSearchType(searchType);
@@ -43,11 +90,30 @@ const Search = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log(data);
       setResults(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const isOnProfile = (item, type) => {
+    if (type === "track") {
+      return (
+        userData.songs?.some((song) => song.externalUrl === item.externalUrl) ||
+        addedItems.includes(item.externalUrl)
+      );
+    } else if (type === "artist") {
+      return (
+        userData.artists?.some((artist) => artist.spotifyId === item.spotifyId) ||
+        addedItems.includes(item.spotifyId)
+      );
+    } else if (type === "events") {
+      return (
+        userData.events?.some((event) => event.externalUrl === item.externalUrl) ||
+        addedItems.includes(item.externalUrl)
+      );
+    }
+    return false;
   };
 
   const handleAddToMyPage = async (item) => {
@@ -59,9 +125,8 @@ const Search = () => {
     try {
       if (lastSearchType === "track") {
         let artists = "Unknown Artist";
-
+        
         if (Array.isArray(item.artists) && item.artists.length > 0) {
-          console.log("item.artists in search function:", item.artists);
           artists = item.artists
             .map((artist) => artist?.name?.trim() || "Unknown Artist")
             .join(", ");
@@ -72,14 +137,6 @@ const Search = () => {
         const name = item.name ? item.name.trim() : "Unknown Name";
         const album = item.album ? item.album.trim() : "Unknown Album";
 
-        console.log("Track Mutation Variables:", {
-          name: name,
-          artist: artists,
-          album: album,
-          imageUrl: item.imageURL || "",
-          externalUrl: item.externalUrl || "",
-        });
-
         await addSong({
           variables: {
             name: name,
@@ -89,14 +146,8 @@ const Search = () => {
             externalUrl: item.externalUrl || "",
           },
         });
+        setAddedItems([...addedItems, item.externalUrl]);
       } else if (lastSearchType === "artist") {
-        console.log("Artist Mutation Variables:", {
-          name: item.name,
-          spotifyId: item.spotifyId,
-          imageUrl: item.imageURL,
-          externalUrl: item.externalUrl,
-        });
-
         await addArtist({
           variables: {
             name: item.name,
@@ -105,20 +156,12 @@ const Search = () => {
             externalUrl: item.externalUrl || "",
           },
         });
+        setAddedItems([...addedItems, item.spotifyId])
       } else if (lastSearchType === "events") {
         const artistNames =
           Array.isArray(item.artists) && item.artists.length > 0
             ? item.artists
             : ["Unknown Artist"];
-
-        console.log("Event Mutation Variables:", {
-          name: item.name,
-          date: item.date,
-          venue: item.venue,
-          city: item.city,
-          externalUrl: item.externalUrl,
-          artistNames: artistNames,
-        });
         await addEvent({
           variables: {
             name: item.name,
@@ -129,9 +172,8 @@ const Search = () => {
             artistNames: artistNames,
           },
         });
+        setAddedItems([...addedItems, item.externalUrl]);
       }
-
-      alert("Item added to your page!");
     } catch (error) {
       console.error("Error adding item to page:", error);
       if (error.graphQLErrors && error.graphQLErrors.length > 0) {
@@ -158,6 +200,7 @@ const Search = () => {
         results={results}
         lastSearchType={lastSearchType}
         handleAddToMyPage={handleAddToMyPage}
+        isOnProfile={isOnProfile}
       />
     </div>
   );

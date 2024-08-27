@@ -9,34 +9,34 @@ const typeDefs = `
     events: [Event]
   }
 
-type Event {
-  _id: ID
-  name: String
-  date: String
-  venue: String
-  city: String
-  externalUrl: String
-  users: [User]
-  artists: [Artist]
-}
+  type Event {
+    _id: ID
+    name: String
+    date: String
+    venue: String
+    city: String
+    externalUrl: String
+    users: [User]
+    artists: [Artist]
+  }
 
-type Artist {
-  _id: ID
-  name: String
-  imageUrl: String
-  spotifyId: String
-  externalUrl: String
-  users: [User]
-  songs: [Song]
-  events: [Event]
-}
+  type Artist {
+    _id: ID
+    name: String
+    imageUrl: String
+    spotifyId: String
+    externalUrl: String
+    users: [User]
+    songs: [Song]
+    events: [Event]
+  }
 
-type Auth {
-  token: ID
-  user: User
-}
+  type Auth {
+    token: ID
+    user: User
+  }
 
- type Song {
+  type Song {
     _id: ID
     name: String
     artist: String
@@ -47,65 +47,65 @@ type Auth {
     users: [User]
   }
 
-type Query {
-  users: [User]
-  songs: [Song]
-  me: User
-  user(id: ID!): User
-  events: [Event]
-  artists: [Artist]
-}
+  type Query {
+    users: [User]
+    songs: [Song]
+    me: User
+    user(id: ID!): User
+    events: [Event]
+    artists: [Artist]
+  }
 
-type Mutation {
-   addSong(
-      name: String!,
-      artist: String!,
-      album: String!,
-      imageUrl: String,
-      externalUrl: String!,
+  type Mutation {
+    addSong(
+      name: String!
+      artist: String!
+      album: String!
+      imageUrl: String
+      externalUrl: String!
     ): Song
 
-  addUser(
-    firstName: String!
-    lastName: String!
-    email: String!
-    password: String!
-  ): Auth
-
-  login(
-    email: String!
-    password: String!
+    addUser(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
     ): Auth
 
-  addEvent(
-    name: String!
-    date: String!
-    venue: String!
-    city: String!
-    externalUrl: String!
-  ): Event
+    login(
+      email: String!
+      password: String!
+    ): Auth
 
-   addArtist(
+    addEvent(
+      name: String!
+      date: String!
+      venue: String!
+      city: String!
+      externalUrl: String!
+    ): Event
+
+    addArtist(
       name: String!
       spotifyId: String!
       imageUrl: String
       externalUrl: String!
     ): Artist
 
-  removeEvent(
-    userId: ID!
-    eventId: ID!
-  ): User
+    removeUserFromEvent(
+      userId: ID!
+      eventId: ID!
+    ): Event
 
-  removeArtist(
-    userId: ID!
-    artistId: ID!
-  ): User
+    removeUserFromArtist(
+      artistId: ID!
+      userId: ID!
+    ): Artist
 
-  removeSong(
-    userId: ID!
-    songId: ID!
-  ): User
+    removeUserFromSong(
+      songId: ID!
+      userId: ID!
+    ): Song
   }
 `;
 

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 //  Fetches all songs
 export const QUERY_SONGS = gql`
@@ -94,18 +94,24 @@ export const QUERY_ME = gql`
       songs {
         _id
         name
+        artist
+        album
         imageUrl
+        externalUrl
       }
       artists {
         _id
         name
         imageUrl
+        spotifyId
       }
       events {
         _id
-        location
-        time
+        name
+        date
+        venue
         city
+        externalUrl
       }
     }
   }
@@ -114,6 +120,7 @@ export const QUERY_ME = gql`
 export const GET_USERS_ARTISTS = gql`
   query GetMyArtists {
     me {
+      _id
       artists {
         _id
         name
@@ -127,12 +134,14 @@ export const GET_USERS_ARTISTS = gql`
 export const GET_USERS_EVENTS = gql`
   query GetMyEvents {
     me {
+      _id
       events {
         _id
         name
         date
         venue
         city
+        externalUrl
       }
     }
   }
@@ -155,5 +164,3 @@ export const GET_USERS_SONGS = gql`
     }
   }
 `;
-
-

@@ -46,9 +46,18 @@ const resolvers = {
       }
 
       const currentUser = await User.findById(user._id)
-        .populate("songs")
-        .populate("artists")
-        .populate("events");
+        .populate({
+          path: "songs",
+          match: { users: user._id },
+        })
+        .populate({
+          path: "artists",
+          match: { users: user._id },
+        })
+        .populate({
+          path: "events",
+          match: { users: user._id },
+        })
 
       if (!currentUser) {
         throw new AuthenticationError("User not found");
@@ -82,21 +91,21 @@ const resolvers = {
       if (!context || !context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-    
+
       const normalizedName = name.trim().toLowerCase();
       const normalizedArtist = artist.trim().toLowerCase();
       const normalizedAlbum = album.trim().toLowerCase();
-    
+
       let song = await Song.findOne({
         name: normalizedName,
         artist: normalizedArtist,
         album: normalizedAlbum,
       });
-    
+
       if (song) {
         if (!song.imageUrl || song.imageUrl !== imageUrl) {
           song.imageUrl = imageUrl;
-          song.externalUrl = externalUrl; 
+          song.externalUrl = externalUrl;
           await song.save();
         }
 
@@ -114,18 +123,17 @@ const resolvers = {
           users: [context.user._id],
         });
       }
-    
+
       await User.findByIdAndUpdate(context.user._id, {
         $addToSet: { songs: song._id },
       });
-    
+
       return song;
     },
-    
-    
+
     addEvent: async (
       parent,
-      { name, date, venue, city, externalUrl,},
+      { name, date, venue, city, externalUrl },
       context
     ) => {
       if (!context.user) {
@@ -133,7 +141,7 @@ const resolvers = {
       }
 
       let event = await Event.findOne({ name, date, venue, city });
-    
+
       if (event) {
         if (!event.users.includes(context.user._id)) {
           event.users.push(context.user._id);
@@ -152,17 +160,21 @@ const resolvers = {
       await User.findByIdAndUpdate(context.user._id, {
         $addToSet: { events: event._id },
       });
-    
+
       return event;
     },
 
-    addArtist: async (parent, { name, spotifyId, imageUrl, externalUrl }, context) => {
+    addArtist: async (
+      parent,
+      { name, spotifyId, imageUrl, externalUrl },
+      context
+    ) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
 
       let artist = await Artist.findOne({ spotifyId });
-    
+
       if (artist) {
         if (!artist.users.includes(context.user._id)) {
           artist.users.push(context.user._id);
@@ -177,11 +189,11 @@ const resolvers = {
           users: [context.user._id],
         });
       }
-    
+
       await User.findByIdAndUpdate(context.user._id, {
         $addToSet: { artists: artist._id },
       });
-    
+
       return artist;
     },
 
@@ -233,47 +245,90 @@ const resolvers = {
       return { token, user };
     },
 
-    removeEvent: async (_, { userId, eventId }) => {
-      return User.findOneAndUpdate(
-        { _id: userId },
-        {
-          $pull: {
-            events: {
-              _id: eventId,
-            },
-          },
-        },
-        { new: true }
-      );
+    removeUserFromEvent: async (parent, { userId, eventId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+    
+      try {
+        const event = await Event.findById(eventId);
+        if (!event) {
+          throw new Error("Event not found!");
+        }
+    
+        if (!event.users.includes(userId)) {
+          throw new Error("User not found in event's users list!");
+        }
+    
+        const updatedEvent = await Event.findByIdAndUpdate(
+          eventId,
+          { $pull: { users: userId } },
+          { new: true }
+        ).populate("users");
+    
+        return updatedEvent;
+      } catch (err) {
+        console.error("Error in removeUserFromEvent resolver:", err.message);
+        console.error("Stack trace:", err.stack);
+        throw new Error("Failed to remove user from event.");
+      }
     },
 
-    removeArtist: async (_, { userId, artistId }) => {
-      // const artistObjectId = ObjectId(artistId);
-      return User.findOneAndUpdate(
-        { _id: userId },
-        {
-          $pull: {
-            artists: {
-              _id: artistId,
-            },
-          },
-        },
-        { new: true }
-      );
+    removeUserFromArtist: async (parent, { artistId, userId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+
+      try {
+        const artist = await Artist.findById(artistId);
+        if (!artist) {
+          throw new Error("Artist not found!");
+        }
+
+        if (!artist.users.includes(userId)) {
+          throw new Error("User not found in artist's users list!");
+        }
+
+        const updatedArtist = await Artist.findByIdAndUpdate(
+          artistId,
+          { $pull: { users: userId } },
+          { new: true }
+        ).populate("users");
+
+        return updatedArtist;
+      } catch (err) {
+        console.error("Error in removeUserFromArtist resolver:", err.message);
+        console.error("Stack trace:", err.stack);
+        throw new Error("Failed to remove user from artist.");
+      }
     },
 
-    removeSong: async (_, { userId, songId }) => {
-      return User.findOneAndUpdate(
-        { _id: userId },
-        {
-          $pull: {
-            songs: {
-              _id: songId,
-            },
-          },
-        },
-        { new: true }
-      );
+    removeUserFromSong: async (parent, { songId, userId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      try {
+        const song = await Song.findById(songId);
+        if (!song) {
+          throw new Error("Song not found!");
+        }
+
+        if (!song.users.includes(userId)) {
+          throw new Error("User not found in song's users list!");
+        }
+
+        const updatedSong = await Song.findByIdAndUpdate(
+          songId,
+          { $pull: { users: userId } },
+          { new: true }
+        ).populate("users");
+
+        return updatedSong;
+      } catch (err) {
+        console.error("Error in removeUserFromSong resolver:", err.message);
+        console.error("Stack trace:", err.stack);
+        throw new Error("Failed to remove user from song.");
+      }
     },
   },
 };

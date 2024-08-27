@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { List, Tooltip, Button } from "antd";
-import { StarOutlined } from "@ant-design/icons";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
 import Auth from "../../utils/auth";
 
-const ArtistEvents = ({ artistName, onAddToMyPage }) => {
+const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,16 +13,11 @@ const ArtistEvents = ({ artistName, onAddToMyPage }) => {
 
     const fetchEvents = async () => {
       try {
-        const response = await fetch(
-          `/api/search/artist-events?q=${encodeURIComponent(artistName)}`
-        );
+        const response = await fetch(`/api/search/artist-events?q=${encodeURIComponent(artistName)}`);
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }
         const result = await response.json();
-        console.log("API Response:", result);
-
-        console.log("Fetched Events:", result);
         setEvents(Array.isArray(result) ? result : []);
       } catch (err) {
         setError("Failed to load events.");
@@ -34,87 +29,65 @@ const ArtistEvents = ({ artistName, onAddToMyPage }) => {
     fetchEvents();
   }, [artistName]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (events.length === 0) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        No upcoming events found
-      </div>
-    );
-  }
-
   return (
     <div style={{ margin: "5px" }}>
       <h1 style={{ textAlign: "center", marginTop: 10 }}>Events</h1>
+      {loading && <div>Loading...</div>}
+      {error && <div>{error}</div>}
+      {events.length === 0 && <div style={{ textAlign: "center", marginTop: "20px" }}>No upcoming events found</div>}
       <List
         style={{ margin: "20px" }}
         itemLayout="vertical"
         dataSource={events}
-        renderItem={(item) => (
-          <List.Item key={item.id}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: 10,
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <List.Item.Meta
-                  title={item.name}
-                  description={
-                    <>
-                      <strong>Date:</strong> {item.date}
-                      <br />
-                      <strong>Venue:</strong> {item.venue}, {item.city}
-                      <br />
-                    </>
-                  }
-                />
-              </div>
-              <div>
-                <Tooltip title="View on Ticketmaster">
-                  <Button
-                    href={item.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    type="primary"
-                    shape="circle"
-                    style={{ margin: "10px" }}
-                    size="medium"
-                  >
-                    <img
-                      src="/ticketmaster.white.png"
-                      alt="spotify logo"
-                      width="20px"
-                    />
-                  </Button>
-                </Tooltip>
-
-                {Auth.loggedIn() && (
-                  <Tooltip title="Add Event to Profile">
+        renderItem={(item) => {
+          const alreadyOnProfile = isOnProfile(item, "events");
+          return (
+            <List.Item key={item.id}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: 10 }}>
+                <div style={{ flex: 1 }}>
+                  <List.Item.Meta
+                    title={item.name}
+                    description={
+                      <>
+                        <strong>Date:</strong> {item.date}
+                        <br />
+                        <strong>Venue:</strong> {item.venue}, {item.city}
+                      </>
+                    }
+                  />
+                </div>
+                <div>
+                  <Tooltip title="Buy Tickets">
                     <Button
+                      href={item.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       type="primary"
                       shape="circle"
-                      icon={<StarOutlined />}
                       style={{ margin: "10px" }}
                       size="medium"
-                      onClick={() => onAddToMyPage(item)}
-                    />
+                    >
+                      Buy Tickets
+                    </Button>
                   </Tooltip>
-                )}
+                  {Auth.loggedIn() && (
+                    <Tooltip title={alreadyOnProfile ? "Already on your profile" : "Add Event to Profile"}>
+                      <Button
+                        onClick={() => onAddToMyPage(item)}
+                        shape="circle"
+                        icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
+                        style={{ margin: "10px" }}
+                        size="medium"
+                        type="primary"
+                        disabled={alreadyOnProfile}
+                      />
+                    </Tooltip>
+                  )}
+                </div>
               </div>
-            </div>
-          </List.Item>
-        )}
+            </List.Item>
+          );
+        }}
       />
     </div>
   );

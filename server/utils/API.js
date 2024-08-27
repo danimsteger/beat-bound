@@ -184,7 +184,7 @@ async function getArtistFeaturedTracks(artistId) {
       }
 
       const data = await response.json();
-      const topTracks = data.tracks.slice(0, 5).map(track => ({
+      const topTracks = data.tracks.slice(0, 10).map(track => ({
           name: track.name,
           albumName: track.album.name,
           previewUrl: track.preview_url,
