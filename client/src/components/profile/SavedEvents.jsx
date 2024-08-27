@@ -63,7 +63,7 @@ const SavedEvents = ({ addedItems }) => {
                   href={`#event/${item._id}`}
                   style={{
                     textDecoration: "none",
-                    color: customTheme.token.colorDanger,
+                    color: customTheme.token.colorSecondary,
                     fontSize: "1.3rem",
                   }}
                   className="bungee-regular"

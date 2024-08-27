@@ -38,7 +38,7 @@ const FeaturedPlaylists = () => {
         className="concert-one-regular"
       >
         {" "}
-        Featured Playlists
+        FEATURED PLAYLISTS
       </h2>
 
       <Carousel

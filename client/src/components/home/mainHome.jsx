@@ -18,7 +18,7 @@ const MainHome = () => {
       }}
     >
       <h3 className="concert-one-regular" style={{ fontSize: 40 }}>
-        Welcome to
+        WELCOME TO
       </h3>
       <h1
         className="bungee-regular home-title"
@@ -32,13 +32,13 @@ const MainHome = () => {
           className=" concert-one-regular"
           style={{ color: customTheme.token.colorDanger }}
         >
-          Discover New Music
+          DISCOVER NEW MUSIC
         </h3>
         <h4
           className="concert-one-regular"
           style={{ color: customTheme.token.colorDanger }}
         >
-          & Save it for Later
+          & SAVE IT FOR LATER
         </h4>
       </div>
       <div style={{ margin: 50 }}>

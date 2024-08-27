@@ -78,7 +78,7 @@ const SavedSongs = ({ addedItems }) => {
                   title={
                     <span
                       style={{
-                        color: customTheme.token.colorDanger,
+                        color: customTheme.token.colorSecondary,
                         fontSize: "1.3rem",
                       }}
                       className="bungee-regular"

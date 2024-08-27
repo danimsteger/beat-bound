@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { List, Tooltip, Button } from "antd";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import Auth from "../../utils/auth";
+import customTheme from "../../styles/customTheme";
 
 const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
   const [events, setEvents] = useState([]);
@@ -13,7 +14,9 @@ const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
 
     const fetchEvents = async () => {
       try {
-        const response = await fetch(`/api/search/artist-events?q=${encodeURIComponent(artistName)}`);
+        const response = await fetch(
+          `/api/search/artist-events?q=${encodeURIComponent(artistName)}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }
@@ -31,10 +34,26 @@ const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
 
   return (
     <div style={{ margin: "5px" }}>
-      <h1 style={{ textAlign: "center", marginTop: 10 }}>Events</h1>
+      <h1
+        style={{
+          textAlign: "center",
+          marginTop: 10,
+          color: customTheme.token.colorSecondary,
+        }}
+        className="concert-one-regular"
+      >
+        UPCOMING EVENTS
+      </h1>
       {loading && <div>Loading...</div>}
       {error && <div>{error}</div>}
-      {events.length === 0 && <div style={{ textAlign: "center", marginTop: "20px" }}>No upcoming events found</div>}
+      {events.length === 0 && (
+        <div
+          style={{ textAlign: "center", marginTop: "20px" }}
+          className="concert-one-regular"
+        >
+          No upcoming events found
+        </div>
+      )}
       <List
         style={{ margin: "20px" }}
         itemLayout="vertical"
@@ -43,21 +62,48 @@ const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
           const alreadyOnProfile = isOnProfile(item, "events");
           return (
             <List.Item key={item.id}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: 10 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: 10,
+                }}
+              >
                 <div style={{ flex: 1 }}>
                   <List.Item.Meta
-                    title={item.name}
+                    title={
+                      <span
+                        style={{
+                          textDecoration: "none",
+                          color: customTheme.token.colorSecondary,
+                          fontSize: "1.3rem",
+                        }}
+                        className="bungee-regular"
+                      >
+                        {item.name}
+                      </span>
+                    }
                     description={
-                      <>
-                        <strong>Date:</strong> {item.date}
+                      <div
+                        className="concert-one-regular"
+                        style={{
+                          fontSize: "1rem",
+                          color: customTheme.token.colorSecondary,
+                        }}
+                      >
+                        <strong className="bungee-regular">Date:</strong>{" "}
+                        {item.date}
                         <br />
-                        <strong>Venue:</strong> {item.venue}, {item.city}
-                      </>
+                        <strong className="bungee-regular">Venue:</strong>{" "}
+                        {item.venue}, {item.city}
+                        <br />
+                      </div>
                     }
                   />
                 </div>
-                <div>
-                  <Tooltip title="Buy Tickets">
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Tooltip title="View on Ticketmaster">
                     <Button
                       href={item.externalUrl}
                       target="_blank"
@@ -67,15 +113,27 @@ const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
                       style={{ margin: "10px" }}
                       size="medium"
                     >
-                      Buy Tickets
+                      <img
+                        src="/ticketmaster.white.png"
+                        alt="ticketmaster logo"
+                        width="20px"
+                      />
                     </Button>
                   </Tooltip>
                   {Auth.loggedIn() && (
-                    <Tooltip title={alreadyOnProfile ? "Already on your profile" : "Add Event to Profile"}>
+                    <Tooltip
+                      title={
+                        alreadyOnProfile
+                          ? "Already on your profile"
+                          : "Add Event to Profile"
+                      }
+                    >
                       <Button
                         onClick={() => onAddToMyPage(item)}
                         shape="circle"
-                        icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
+                        icon={
+                          alreadyOnProfile ? <StarFilled /> : <StarOutlined />
+                        }
                         style={{ margin: "10px" }}
                         size="medium"
                         type="primary"

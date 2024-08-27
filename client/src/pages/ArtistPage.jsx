@@ -5,6 +5,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_SONG, ADD_ARTIST, ADD_EVENT } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
+import customTheme from "../styles/customTheme";
 
 import ArtistDetails from "../components/artist/ArtistDetails";
 import ArtistSongs from "../components/artist/ArtistSongs";
@@ -144,7 +145,17 @@ const ArtistPage = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        padding: "50px",
+        backgroundColor: customTheme.token.colorBgContainer,
+        height: "100%",
+        minHeight: "calc(100vh - 100px)",
+        display: "flex",
+        flexDirection: "column",
+        color: "white",
+      }}
+    >
       <Row
         gutter={40}
         justify="center"

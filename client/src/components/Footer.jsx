@@ -2,14 +2,11 @@ const Footer = () => {
   return (
     <>
       <div id="footer">
-        <header style={{ fontSize: "1.3rem" }} className="bungee-regular">
+        <header style={{ fontSize: "1.1rem" }} className="bungee-regular">
           🎧 Beat Bound 🎧
         </header>
-        <div className="concert-one-regular" style={{ fontSize: "1.3rem" }}>
-          {" "}
-          Made with 💜 By:
-        </div>
-        <div className="concert-one-regular" style={{ fontSize: "1.3rem" }}>
+        <div style={{ fontSize: "1rem" }}> Made with 💜 By:</div>
+        <div style={{ fontSize: "1rem" }}>
           Kevin Hoang - Danielle Steger - Griffin Baker - Wesley Locklair
         </div>
       </div>
