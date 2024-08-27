@@ -3,6 +3,7 @@ import { useState } from "react";
 import SavedEvents from "../components/profile/SavedEvents";
 import SavedArtists from "../components/profile/SavedArtists";
 import SavedSongs from "../components/profile/SavedSongs";
+import customTheme from "../styles/customTheme";
 
 import { Row, Col } from "antd";
 
@@ -11,7 +12,17 @@ const Profile = () => {
   const [addedItems, setAddedItems] = useState([]);
 
   return (
-    <div>
+    <div
+      style={{
+        padding: "50px",
+        backgroundColor: customTheme.token.colorBgContainer,
+        height: "100%",
+        minHeight: "calc(100vh - 100px)",
+        display: "flex",
+        flexDirection: "column",
+        color: "white",
+      }}
+    >
       <Row
         gutter={16}
         justify="center"

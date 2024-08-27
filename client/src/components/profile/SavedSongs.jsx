@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { List, Button, Tooltip } from "antd";
 import { GET_USERS_SONGS } from "../../utils/queries";
-import { PlayCircleFilled } from "@ant-design/icons";
 import { REMOVE_SONG } from "../../utils/mutations";
+import customTheme from "../../styles/customTheme";
 
 // Function to capitalize the first letter of each word
 const capitalize = (text) => {
@@ -22,7 +22,9 @@ const SavedSongs = ({ addedItems }) => {
         data: {
           me: {
             ...me,
-            songs: me.songs.filter(song => song._id !== removeUserFromSong._id),
+            songs: me.songs.filter(
+              (song) => song._id !== removeUserFromSong._id
+            ),
           },
         },
       });
@@ -52,10 +54,12 @@ const SavedSongs = ({ addedItems }) => {
   };
 
   return (
-    <div style={{ margin: "5px" }}>
-      <h1 style={{ textAlign: "center" }}>My Songs</h1>
+    <div style={{ margin: "5px", color: customTheme.token.colorPrimary }}>
+      <h1 style={{ textAlign: "center" }} className="concert-one-regular">
+        MY SONGS
+      </h1>
       <List
-        style={{ margin: "20px" }}
+        style={{ margin: "20px", color: customTheme.token.colorPrimary }}
         itemLayout="vertical"
         dataSource={songs}
         renderItem={(song) => (
@@ -72,43 +76,64 @@ const SavedSongs = ({ addedItems }) => {
               <div style={{ flex: 3 }}>
                 <List.Item.Meta
                   title={
-                    <span style={{ fontSize: "24px" }}>
+                    <span
+                      style={{
+                        color: customTheme.token.colorDanger,
+                        fontSize: "1.3rem",
+                      }}
+                      className="bungee-regular"
+                    >
                       {capitalize(song.name)} {/* Capitalizing the song name */}
                     </span>
                   }
                   description={
-                    <div>
-                      <p>{capitalize(song.album)}</p> {/* Capitalizing the album name */}
-                      <p>{capitalize(song.artist)}</p> {/* Capitalizing the artist name */}
-                      <Tooltip title="Listen on Spotify">
-                        <Button
-                          href={song.externalUrl}
-                          shape="circle"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          type="primary"
-                          size="medium"
-                          style={{ margin: "10px" }}
-                        >
-                          <PlayCircleFilled />
-                        </Button>
-                      </Tooltip>
-                      <Tooltip title="Remove From Profile">
-                        <Button
-                          shape="circle"
-                          rel="noopener noreferrer"
-                          type="primary"
-                          size="medium"
-                          style={{ margin: "10px" }}
-                          onClick={() => handleDelete(song._id)}
-                        >
-                          <img
-                            src="/trash.white.png"
-                            alt="remove"
-                            width="30px"
-                          />
-                        </Button>
-                      </Tooltip>
+                    <div
+                      style={{
+                        color: customTheme.token.colorPrimary,
+                        fontSize: "1rem",
+                      }}
+                    >
+                      <p style={{ margin: 0 }}>{capitalize(song.album)}</p>
+                      {/* Capitalizing the album name */}
+                      <p style={{ margin: 0 }}>{capitalize(song.artist)}</p>
+                      {/* Capitalizing the artist name */}
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <Tooltip title="Listen on Spotify">
+                          <Button
+                            href={song.externalUrl}
+                            shape="circle"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            type="primary"
+                            size="medium"
+                            style={{ margin: "10px" }}
+                          >
+                            <img
+                              src="/spotify.white.png"
+                              alt="spotify logo"
+                              width="25px"
+                            />
+                          </Button>
+                        </Tooltip>
+                        <Tooltip title="Remove From Profile">
+                          <Button
+                            shape="circle"
+                            rel="noopener noreferrer"
+                            type="primary"
+                            size="medium"
+                            style={{ margin: "10px" }}
+                            onClick={() => handleDelete(song._id)}
+                          >
+                            <img
+                              src="/trash.white.png"
+                              alt="remove"
+                              width="30px"
+                            />
+                          </Button>
+                        </Tooltip>
+                      </div>
                     </div>
                   }
                 />

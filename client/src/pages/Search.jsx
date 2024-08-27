@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_SONG, ADD_ARTIST, ADD_EVENT } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
@@ -6,7 +6,6 @@ import Auth from "../utils/auth";
 import SearchBar from "../components/search/SearchBar";
 import ResultsList from "../components/search/ResultList";
 import customTheme from "../styles/customTheme";
-import { Row, Col } from "antd";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
