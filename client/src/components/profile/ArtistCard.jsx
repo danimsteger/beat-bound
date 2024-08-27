@@ -22,7 +22,13 @@ const ArtistCard = ({ artist, handleDelete }) => {
         }}
         className="artist-card"
       >
-        <Row style={{ display: "flex", justifyContent: "space-between" }}>
+        <Row
+          style={{
+            display: "flex",
+            // justifyContent: "space-between",
+          }}
+          className="artist-card-row"
+        >
           <Col>
             <img
               src={artist.imageUrl}
