@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Tooltip, Image } from "antd";
-import Auth from "../../utils/auth";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import Auth from "../../utils/auth";
 
 const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
   const [alreadyOnProfile, setAlreadyOnProfile] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setAlreadyOnProfile(isOnProfile(result, type));
@@ -13,12 +15,18 @@ const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
   const handleAddClick = async () => {
     if (!alreadyOnProfile) {
       await handleAddToMyPage(result);
-      setAlreadyOnProfile(true); // Update the state to reflect the addition
+      setAlreadyOnProfile(true);
+    }
+  };
+
+  const handleCardClick = () => {
+    if (type === "artist" && result.spotifyId) {
+      navigate(`/ArtistPage/${result.spotifyId}`);
     }
   };
 
   return (
-    <Card style={{ margin: 5, width: 400 }}>
+    <Card style={{ margin: 5, width: 400 }} onClick={handleCardClick} hoverable>
       {type === "track" && (
         <div>
           {result.imageURL && (
@@ -52,7 +60,9 @@ const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
           {Auth.loggedIn() && (
             <Tooltip
               title={
-                alreadyOnProfile ? "Already on your profile" : "Add Song to Profile"
+                alreadyOnProfile
+                  ? "Already on your profile"
+                  : "Add Song to Profile"
               }
             >
               <Button
@@ -87,6 +97,7 @@ const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
           />
           <Tooltip title="View Artist on Spotify">
             <Button
+              onClick={(e) => e.stopPropagation()}
               href={result.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -107,7 +118,11 @@ const ResultCard = ({ result, type, handleAddToMyPage, isOnProfile }) => {
               }
             >
               <Button
-                onClick={handleAddClick}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  handleAddClick(e);
+                }}
                 type="primary"
                 shape="circle"
                 icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
