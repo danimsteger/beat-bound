@@ -88,11 +88,7 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage, isOnProfile }) => {
                   size="large"
                   style={{ margin: "10px" }}
                 >
-                  <img
-                    src="/spotify.white.png"
-                    alt="spotify logo"
-                    width="30px"
-                  />
+                  <img src="/spotify.png" alt="spotify logo" width="30px" />
                 </Button>
               </Tooltip>
             </div>

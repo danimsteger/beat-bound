@@ -48,7 +48,12 @@ const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
       {error && <div>{error}</div>}
       {events.length === 0 && (
         <div
-          style={{ textAlign: "center", marginTop: "20px" }}
+          style={{
+            textAlign: "center",
+            marginTop: "20px",
+            color: customTheme.token.colorSecondary,
+            fontSize: "1.3rem",
+          }}
           className="concert-one-regular"
         >
           No upcoming events found

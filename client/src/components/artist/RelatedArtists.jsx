@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import ArtistCard from "./ArtistCard";
+import customTheme from "../../styles/customTheme";
 
-const RelatedArtists = ({ artistId, onAddToMyPage, setRelatedArtists, isOnProfile }) => {
+const RelatedArtists = ({
+  artistId,
+  onAddToMyPage,
+  setRelatedArtists,
+  isOnProfile,
+}) => {
   const [relatedArtists, setRelatedArtistsState] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,14 +41,25 @@ const RelatedArtists = ({ artistId, onAddToMyPage, setRelatedArtists, isOnProfil
   }
 
   return (
-    <div style={{ margin: "10px" }}>
-      <h1 style={{ textAlign: "center" }}>Related Artists</h1>
+    <div
+      style={{
+        margin: "10px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        color: customTheme.token.colorPrimary,
+      }}
+    >
+      <h1 style={{ textAlign: "center" }} className="concert-one-regular">
+        RELATED ARTISTS
+      </h1>
       {relatedArtists.map((artist) => (
         <ArtistCard
           key={artist.spotifyId}
           artist={{
             ...artist,
-            imageUrl: artist.image // Ensuring correct key is passed
+            imageUrl: artist.image, // Ensuring correct key is passed
           }}
           onAddToMyPage={onAddToMyPage}
           isOnProfile={isOnProfile}
