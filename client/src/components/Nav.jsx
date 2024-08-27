@@ -50,7 +50,7 @@ const AppNavbar = () => {
                   textShadow: "none",
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.textShadow = "1px 1px 3px grey";
+                  e.target.style.textShadow = "1px 1px 2px grey";
                   e.target.style.fontWeight = "bold";
                 }} // Add text shadow on hover
                 onMouseLeave={(e) => {
@@ -189,3 +189,22 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
+
+{
+  /* <Modal
+        title="Login/Sign Up"
+        visible={showModal}
+        onCancel={() => setShowModal(false)}
+        footer={null}
+        className="concert-one-regular"
+      >
+        <Tabs defaultActiveKey="login">
+          <Tabs.TabPane tab="Login" key="login">
+            <LoginForm handleModalClose={() => setShowModal(false)} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Sign Up" key="signup">
+            <SignupForm handleModalClose={() => setShowModal(false)} />
+          </Tabs.TabPane>
+        </Tabs>
+      </Modal> */
+}
