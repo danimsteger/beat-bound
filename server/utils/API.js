@@ -15,7 +15,6 @@ async function getTrack(trackQuery) {
     });
 
     const data = await response.json();
-    console.log("API Response Data:", data);
 
     if (data.tracks && data.tracks.items.length > 0) {
       const tracks = data.tracks.items.map((track) => ({
@@ -29,7 +28,6 @@ async function getTrack(trackQuery) {
         previewUrl: track.preview_url,
         externalUrl: track.external_urls.spotify,
       }));
-      console.log('dis is my api call', tracks)
       return tracks;
     } else {
       console.log("No tracks found");
@@ -61,7 +59,6 @@ async function getArtist(artistQuery) {
         imageURL: artist.images.length > 0 ? artist.images[0].url : null,
         externalUrl: artist.external_urls.spotify,
       }));
-      console.log(artists);
       return artists;
     } else {
       console.log("No artist found");
@@ -123,7 +120,6 @@ async function getArtistEvents(artistName) {
         externalUrl: event.url,
         artist: [artistName],
       }));
-      console.log(formattedEvents);
 
       return formattedEvents.length > 0
         ? formattedEvents
