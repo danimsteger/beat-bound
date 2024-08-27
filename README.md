@@ -32,6 +32,13 @@
 
 ### Griffin Baker
 
+### Technologies Used
+
+## Spotify API, Ticketmaster API, and for styling we used AntD
+
 ## Deployed Site
 
 ### https://beat-bound.onrender.com
+![Screenshot 2024-08-27 103008](https://github.com/user-attachments/assets/a05efa31-d1d8-48b6-b60b-67321b101a70)
+![Screenshot 2024-08-27 103019](https://github.com/user-attachments/assets/81712c46-1960-4f4a-b80e-4f483c89e693)
+![Screenshot 2024-08-27 103027](https://github.com/user-attachments/assets/fcb49764-3a96-4a5c-a3bc-0ee8b898c335)
