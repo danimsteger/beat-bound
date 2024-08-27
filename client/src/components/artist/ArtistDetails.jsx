@@ -104,7 +104,7 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage, isOnProfile }) => {
                   margin: "10px",
                   marginTop: "px",
                   color: customTheme.token.colorSecondary,
-                  fontSize: "4rem",
+                  fontSize: "3.5rem",
                 }}
                 className="bungee-regular artist-name"
               >

@@ -31,7 +31,7 @@ const ArtistCard = ({ artist, onAddToMyPage, isOnProfile }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          width: 450,
+          width: 500,
           margin: "10px",
           backgroundColor: customTheme.token.colorPrimary,
           color: "white",

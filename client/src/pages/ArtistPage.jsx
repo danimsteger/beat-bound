@@ -147,7 +147,7 @@ const ArtistPage = () => {
   return (
     <div
       style={{
-        padding: "50px",
+        padding: "20px",
         backgroundColor: customTheme.token.colorBgContainer,
         height: "100%",
         minHeight: "calc(100vh - 100px)",
@@ -174,7 +174,7 @@ const ArtistPage = () => {
             isOnProfile={(item) => isOnProfile(item, "events")}
           />
         </Col>
-        <Col flex={10}>
+        <Col flex={15}>
           <ArtistSongs
             artistId={artistId}
             onAddToMyPage={(item) => handleAddToMyPage(item, "song")}
