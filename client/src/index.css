@@ -1,20 +1,153 @@
 /* STYLING :D  */
 #root {
-    text-align: center;
-    font-family: monospace, sans-serif;
+  text-align: center;
+  font-family: monospace, sans-serif;
 }
 
 #homeheader {
-    font-weight: bold;
+  font-weight: bold;
 }
 #footer {
-    position: relative;
-    bottom:0;
-    width: 100%;
-    min-height: 100px;
-    padding: 20px 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  min-height: 80px;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ef4f91;
+  color: white;
 }
+
+.concert-one-regular {
+  font-family: "Concert One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.bungee-regular {
+  font-family: "Bungee", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.carousel {
+  width: 100%; /* Set the width of the carousel to 100% */
+}
+
+/* Styles for the first Carousel (always visible) */
+.first-carousel {
+  display: block; /* Display the first carousel by default */
+}
+
+/* Styles for the additional Carousels (hidden on smaller screens) */
+.second-carousel,
+.third-carousel {
+  display: none; /* Hide all carousels except the first one */
+}
+
+/* Media query for smaller screens (e.g., mobile devices) */
+@media screen and (max-width: 768px) {
+  /* Hide the additional Carousels on smaller screens */
+  .second-carousel,
+  .third-carousel {
+    display: none !important;
+    border-radius: 0;
+  }
+}
+
+.hidden-text {
+  opacity: 0;
+  transition: opacity 1s;
+  /* Add a transition for the opacity property with a duration of 0.5 seconds */
+}
+
+.bungee-regular:hover + .hidden-text {
+  opacity: 1 !important; /* Change the opacity to 1 to reveal the hidden text on hover */
+}
+
+.bungee-regular:hover {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  ul {
+    font-size: 0.7rem !important;
+  }
+
+  .nav-title {
+    font-size: 1rem !important;
+  }
+
+  .footer-text {
+    font-size: 0.5rem !important;
+  }
+
+  .footer-title {
+    font-size: 0.7rem !important;
+  }
+  .song-list {
+    margin: 0px;
+  }
+
+  .song-list-item {
+    margin-right: 5 !important;
+    margin-left: 0 !important;
+    font-size: 0.7rem !important;
+  }
+
+  .song-list-title {
+    font-size: 0.8rem !important;
+  }
+  .profile-columns {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .artist-card {
+    width: 300px !important;
+    flex-direction: column !important;
+    margin: 5px !important;
+  }
+
+  .artist-image {
+    width: 80px !important;
+    height: 80px !important;
+    margin-right: 5px !important;
+  }
+
+  .artist-title {
+    font-size: 0.9rem !important;
+  }
+
+  .event-list {
+    margin: 0px !important;
+  }
+
+  .artist-songs {
+    margin: 0px;
+  }
+
+  .artist-name {
+    font-size: 2.5rem !important;
+  }
+}
+/* @media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px;
+    margin: 0;
+  }
+
+  .navbar a {
+    margin: 0px 0;
+  }
+
+  .navbar ul {
+    list-style: none;
+    padding: 0;
+  }
+} */

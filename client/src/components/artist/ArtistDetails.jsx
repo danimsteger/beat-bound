@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col, Tooltip, Button } from "antd";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
+import customTheme from "../../styles/customTheme";
 
 const ArtistDetails = ({ setArtistName, onAddToMyPage, isOnProfile }) => {
   const { artistId } = useParams();
@@ -53,36 +54,68 @@ const ArtistDetails = ({ setArtistName, onAddToMyPage, isOnProfile }) => {
       >
         <Col flex={3}>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Tooltip title={alreadyOnProfile ? "Already on your profile" : "Add Artist to Profile"}>
-              <Button
-                type="primary"
-                shape="circle"
-                icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
-                style={{ margin: "40px" }}
-                size="large"
-                onClick={handleAddClick}
-                disabled={alreadyOnProfile}
-              />
-            </Tooltip>
-            <Tooltip title="Listen on Spotify">
-              <Button
-                href={artistData.externalUrl}
-                shape="circle"
-                target="_blank"
-                rel="noopener noreferrer"
-                type="primary"
-                size="medium"
-                style={{ margin: "10px" }}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 15,
+              }}
+            >
+              <Tooltip
+                title={
+                  alreadyOnProfile
+                    ? "Already on your profile"
+                    : "Add Artist to Profile"
+                }
               >
-                <img src="/spotify.white.png" alt="spotify logo" width="30px" />
-              </Button>
-            </Tooltip>
-            <h1 style={{ margin: "20px", marginTop: "30px" }}>{artistData.name}</h1>
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={alreadyOnProfile ? <StarFilled /> : <StarOutlined />}
+                  style={{ margin: "10px" }}
+                  size="large"
+                  onClick={handleAddClick}
+                  disabled={alreadyOnProfile}
+                />
+              </Tooltip>
+              <Tooltip title="Listen on Spotify">
+                <Button
+                  href={artistData.externalUrl}
+                  shape="circle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  type="primary"
+                  size="large"
+                  style={{ margin: "10px" }}
+                >
+                  <img src="/spotify.png" alt="spotify logo" width="30px" />
+                </Button>
+              </Tooltip>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h1
+                style={{
+                  margin: "10px",
+                  marginTop: "px",
+                  color: customTheme.token.colorSecondary,
+                  fontSize: "3.5rem",
+                }}
+                className="bungee-regular artist-name"
+              >
+                {artistData.name}
+              </h1>
+            </div>
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
               src={artistData.imageUrl}
-              style={{ width: "100%", margin: 10, borderRadius: 20 }}
+              style={{ width: "80%", margin: 10, borderRadius: 20 }}
               alt={artistData.name}
             />
           </div>

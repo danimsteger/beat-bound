@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_SONG, ADD_ARTIST, ADD_EVENT } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import SearchBar from "../components/search/SearchBar";
 import ResultsList from "../components/search/ResultList";
+import customTheme from "../styles/customTheme";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,7 +20,7 @@ const Search = () => {
   const [addSong] = useMutation(ADD_SONG, {
     update(cache, { data: { addSong } }) {
       const { me } = cache.readQuery({ query: QUERY_ME });
-  
+
       cache.writeQuery({
         query: QUERY_ME,
         data: {
@@ -31,11 +32,11 @@ const Search = () => {
       });
     },
   });
-  
+
   const [addArtist] = useMutation(ADD_ARTIST, {
     update(cache, { data: { addArtist } }) {
       const { me } = cache.readQuery({ query: QUERY_ME });
-  
+
       cache.writeQuery({
         query: QUERY_ME,
         data: {
@@ -47,11 +48,11 @@ const Search = () => {
       });
     },
   });
-  
+
   const [addEvent] = useMutation(ADD_EVENT, {
     update(cache, { data: { addEvent } }) {
       const { me } = cache.readQuery({ query: QUERY_ME });
-  
+
       cache.writeQuery({
         query: QUERY_ME,
         data: {
@@ -104,13 +105,15 @@ const Search = () => {
       );
     } else if (type === "artist") {
       return (
-        userData.artists?.some((artist) => artist.spotifyId === item.spotifyId) ||
-        addedItems.includes(item.spotifyId)
+        userData.artists?.some(
+          (artist) => artist.spotifyId === item.spotifyId
+        ) || addedItems.includes(item.spotifyId)
       );
     } else if (type === "events") {
       return (
-        userData.events?.some((event) => event.externalUrl === item.externalUrl) ||
-        addedItems.includes(item.externalUrl)
+        userData.events?.some(
+          (event) => event.externalUrl === item.externalUrl
+        ) || addedItems.includes(item.externalUrl)
       );
     }
     return false;
@@ -125,7 +128,7 @@ const Search = () => {
     try {
       if (lastSearchType === "track") {
         let artists = "Unknown Artist";
-        
+
         if (Array.isArray(item.artists) && item.artists.length > 0) {
           artists = item.artists
             .map((artist) => artist?.name?.trim() || "Unknown Artist")
@@ -156,7 +159,7 @@ const Search = () => {
             externalUrl: item.externalUrl || "",
           },
         });
-        setAddedItems([...addedItems, item.spotifyId])
+        setAddedItems([...addedItems, item.spotifyId]);
       } else if (lastSearchType === "events") {
         const artistNames =
           Array.isArray(item.artists) && item.artists.length > 0
@@ -187,8 +190,19 @@ const Search = () => {
   };
 
   return (
-    <div style={{ margin: "50px" }}>
-      <h1 className="my-4">Search</h1>
+    <div
+      style={{
+        padding: "30px",
+        backgroundColor: customTheme.token.colorSecondary,
+        height: "100%",
+        minHeight: "calc(100vh - 100px)",
+        display: "flex",
+        flexDirection: "column",
+        color: "white",
+      }}
+    >
+      <h1 className="concert-one-regular">SEARCH</h1>
+
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}

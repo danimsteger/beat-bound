@@ -19,126 +19,151 @@ const AppNavbar = () => {
       <Layout>
         <Header
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            backgroundColor: customTheme.token.colorPrimary,
+            // display: "flex",
+            // justifyContent: "space-between",
+            // alignItems: "center",
+            backgroundColor: customTheme.token.colorDanger,
             textDecoration: "none",
+            padding: 15,
           }}
         >
-          <div style={{ display: "flex" }}>
-            <Link
-              to="/"
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
               style={{
-                color: "white",
-                fontSize: "1.2rem",
-                marginRight: "20px",
-                textDecoration: "none",
-                fontWeight: "normal",
-                transition: "text-shadow 0.3s",
-                textShadow: "none",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.textShadow = "1px 1px 4px white";
-                e.target.style.fontWeight = "bold";
-              }} // Add text shadow on hover
-              onMouseLeave={(e) => {
-                e.target.style.textShadow = "none";
-                e.target.style.fontWeight = "normal";
+                display: "flex",
               }}
             >
-              🎧 Beat Bound
-
-            </Link>
-            <Link
-              to="/search-page"
-              style={{
-                color: "white",
-                marginRight: "20px",
-                textDecoration: "none",
-                fontWeight: "normal",
-                transition: "text-shadow 0.3s",
-                textShadow: "none",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.textShadow = "1px 1px 4px white";
-                e.target.style.fontWeight = "bold";
-              }} // Add text shadow on hover
-              onMouseLeave={(e) => {
-                e.target.style.textShadow = "none";
-                e.target.style.fontWeight = "normal";
-              }}
-            >
-              <ul>Search 🔍</ul>
-
-            </Link>
-            {Auth.loggedIn() ? (
-              <>
-                <Link
-                  to="/Profile"
-                  style={{
-                    color: "white",
-                    marginRight: "20px",
-                    textDecoration: "none",
-                    fontWeight: "normal",
-                    transition: "text-shadow 0.3s",
-                    textShadow: "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.textShadow = "1px 1px 4px white";
-                    e.target.style.fontWeight = "bold";
-                  }} // Add text shadow on hover
-                  onMouseLeave={(e) => {
-                    e.target.style.textShadow = "none";
-                    e.target.style.fontWeight = "normal";
-                  }}
-                >
-                  <ul>My Profile</ul>{" "}
-                </Link>
-
-                <ul
-                  onClick={Auth.logout}
-                  style={{
-                    color: "white",
-                    textDecoration: "none",
-                    fontWeight: "normal",
-                    transition: "text-shadow 0.3s",
-                    textShadow: "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.textShadow = "1px 1px 4px white";
-                    e.target.style.fontWeight = "bold";
-                  }} // Add text shadow on hover
-                  onMouseLeave={(e) => {
-                    e.target.style.textShadow = "none";
-                    e.target.style.fontWeight = "normal";
-                  }}
-                >
-                  <a>Logout</a>
-                </ul>
-              </>
-            ) : (
-              <ul
-                onClick={() => setShowModal(true)}
+              <Link
+                to="/"
                 style={{
                   color: "white",
+                  fontSize: "1.8rem",
+                  marginRight: "5px",
                   textDecoration: "none",
                   fontWeight: "normal",
                   transition: "text-shadow 0.3s",
                   textShadow: "none",
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.textShadow = "1px 1px 4px white";
+                  e.target.style.textShadow = "1px 1px 2px grey";
                   e.target.style.fontWeight = "bold";
                 }} // Add text shadow on hover
                 onMouseLeave={(e) => {
                   e.target.style.textShadow = "none";
                   e.target.style.fontWeight = "normal";
                 }}
+                className="bungee-regular nav-title"
               >
-                <a>Login/Signup</a>
-              </ul>
-            )}
+                🎧 Beat Bound
+              </Link>
+            </div>
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              <Link
+                to="/search-page"
+                style={{
+                  color: customTheme.token.colorSecondary,
+                  marginRight: "5px",
+                  textDecoration: "none",
+                  fontWeight: "normal",
+                  transition: "text-shadow 0.3s",
+                  textShadow: "none",
+                  fontSize: "1.3rem",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.textShadow = "1px 1px 2px grey";
+                  e.target.style.fontWeight = "bold";
+                }} // Add text shadow on hover
+                onMouseLeave={(e) => {
+                  e.target.style.textShadow = "none";
+                  e.target.style.fontWeight = "normal";
+                }}
+                className="concert-one-regular"
+              >
+                <ul className="nav-item">SEARCH </ul>
+              </Link>
+              {Auth.loggedIn() ? (
+                <>
+                  <Link
+                    to="/Profile"
+                    style={{
+                      color: customTheme.token.colorSecondary,
+                      marginRight: "5px",
+                      textDecoration: "none",
+                      fontWeight: "normal",
+                      transition: "text-shadow 0.3s",
+                      textShadow: "none",
+                      fontSize: "1.3rem",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.textShadow = "1px 1px 2px grey";
+                      e.target.style.fontWeight = "bold";
+                    }} // Add text shadow on hover
+                    onMouseLeave={(e) => {
+                      e.target.style.textShadow = "none";
+                      e.target.style.fontWeight = "normal";
+                    }}
+                    className="concert-one-regular"
+                  >
+                    <ul>PROFILE</ul>{" "}
+                  </Link>
+
+                  <ul
+                    onClick={Auth.logout}
+                    style={{
+                      color: customTheme.token.colorSecondary,
+                      textDecoration: "none",
+                      fontWeight: "normal",
+                      transition: "text-shadow 0.3s",
+                      textShadow: "none",
+                      fontSize: "1.3rem",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.textShadow = "1px 1px 2px grey";
+                      e.target.style.fontWeight = "bold";
+                    }} // Add text shadow on hover
+                    onMouseLeave={(e) => {
+                      e.target.style.textShadow = "none";
+                      e.target.style.fontWeight = "normal";
+                    }}
+                    className="concert-one-regular"
+                  >
+                    <a>LOGOUT</a>
+                  </ul>
+                </>
+              ) : (
+                <ul
+                  onClick={() => setShowModal(true)}
+                  style={{
+                    color: customTheme.token.colorSecondary,
+                    textDecoration: "none",
+                    fontWeight: "normal",
+                    transition: "text-shadow 0.3s",
+                    textShadow: "none",
+                    fontSize: "1.3rem",
+                  }}
+                  className="concert-one-regular"
+                  onMouseEnter={(e) => {
+                    e.target.style.textShadow = "1px 1px 2px grey";
+                    e.target.style.fontWeight = "bold";
+                  }} // Add text shadow on hover
+                  onMouseLeave={(e) => {
+                    e.target.style.textShadow = "none";
+                    e.target.style.fontWeight = "normal";
+                  }}
+                >
+                  <a>LOGIN / SIGNUP</a>
+                </ul>
+              )}
+            </div>
           </div>
         </Header>
       </Layout>
@@ -148,6 +173,7 @@ const AppNavbar = () => {
         visible={showModal}
         onCancel={() => setShowModal(false)}
         footer={null}
+        className="concert-one-regular"
       >
         <Tabs defaultActiveKey="login">
           <Tabs.TabPane tab="Login" key="login">
@@ -163,3 +189,22 @@ const AppNavbar = () => {
 };
 
 export default AppNavbar;
+
+{
+  /* <Modal
+        title="Login/Sign Up"
+        visible={showModal}
+        onCancel={() => setShowModal(false)}
+        footer={null}
+        className="concert-one-regular"
+      >
+        <Tabs defaultActiveKey="login">
+          <Tabs.TabPane tab="Login" key="login">
+            <LoginForm handleModalClose={() => setShowModal(false)} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Sign Up" key="signup">
+            <SignupForm handleModalClose={() => setShowModal(false)} />
+          </Tabs.TabPane>
+        </Tabs>
+      </Modal> */
+}

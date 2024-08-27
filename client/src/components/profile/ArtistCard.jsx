@@ -1,5 +1,6 @@
 import { Card, Row, Col, Tooltip, Button } from "antd";
 import { Link } from "react-router-dom";
+import customTheme from "../../styles/customTheme";
 const { Meta } = Card;
 
 const ArtistCard = ({ artist, handleDelete }) => {
@@ -14,11 +15,14 @@ const ArtistCard = ({ artist, handleDelete }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          width: 400,
+          width: 500,
           margin: "20px",
+          backgroundColor: customTheme.token.colorPrimary,
+          color: "white",
         }}
+        className="artist-card"
       >
-        <Row>
+        <Row style={{ display: "flex", justifyContent: "space-between" }}>
           <Col>
             <img
               src={artist.imageUrl}
@@ -28,6 +32,7 @@ const ArtistCard = ({ artist, handleDelete }) => {
                 marginRight: 20,
                 borderRadius: 10,
               }}
+              className="artist-image"
             />
           </Col>
           <Col>
@@ -41,7 +46,14 @@ const ArtistCard = ({ artist, handleDelete }) => {
             >
               <Meta
                 title={
-                  <span style={{ fontSize: "24px", textDecoration: "none" }}>
+                  <span
+                    style={{
+                      fontSize: "1.3rem",
+                      textDecoration: "none",
+                      color: customTheme.token.colorBgContainer,
+                    }}
+                    className="bungee-regular artist-title"
+                  >
                     {artist.name}
                   </span>
                 }
@@ -49,20 +61,29 @@ const ArtistCard = ({ artist, handleDelete }) => {
             </div>
           </Col>
           <Col>
-            <Tooltip title="Remove From Profile">
-              <Button
-                shape="circle"
-                type="primary"
-                size="medium"
-                style={{ margin: "10px" }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleDelete(artist._id);
-                }}
-              >
-                <img src="/trash.white.png" alt="remove" width="30px" />
-              </Button>
-            </Tooltip>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 100,
+              }}
+            >
+              <Tooltip title="Remove From Profile">
+                <Button
+                  shape="circle"
+                  type="default"
+                  size="medium"
+                  style={{ margin: "10px" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete(artist._id);
+                  }}
+                >
+                  <img src="/trashcan.primary.png" alt="remove" width="25px" />
+                </Button>
+              </Tooltip>
+            </div>
           </Col>
         </Row>
       </Card>

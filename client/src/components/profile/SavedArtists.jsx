@@ -3,6 +3,7 @@ import { useQuery, useMutation, useApolloClient } from "@apollo/client";
 import ArtistCard from "./ArtistCard";
 import { GET_USERS_ARTISTS } from "../../utils/queries";
 import { REMOVE_ARTIST } from "../../utils/mutations";
+import customTheme from "../../styles/customTheme";
 
 const SavedArtists = ({ addedItems }) => {
   const client = useApolloClient();
@@ -17,7 +18,9 @@ const SavedArtists = ({ addedItems }) => {
         data: {
           me: {
             ...me,
-            artists: me.artists.filter(artist => artist._id !== removeUserFromArtist._id),
+            artists: me.artists.filter(
+              (artist) => artist._id !== removeUserFromArtist._id
+            ),
           },
         },
       });
@@ -26,11 +29,13 @@ const SavedArtists = ({ addedItems }) => {
   });
 
   useEffect(() => {
-    refetch().then(() => {
-      console.log("Refetch completed");
-    }).catch(e => {
-      console.error("Refetch error:", e);
-    });
+    refetch()
+      .then(() => {
+        console.log("Refetch completed");
+      })
+      .catch((e) => {
+        console.error("Refetch error:", e);
+      });
   }, [addedItems, refetch]);
 
   if (loading) return <p>Loading...</p>;
@@ -59,8 +64,19 @@ const SavedArtists = ({ addedItems }) => {
   };
 
   return (
-    <div style={{ margin: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-      <h1 style={{ textAlign: "center" }}>My Artists</h1>
+    <div
+      style={{
+        margin: "10px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        color: customTheme.token.colorPrimary,
+      }}
+    >
+      <h1 style={{ textAlign: "center" }} className="concert-one-regular">
+        MY ARTISTS
+      </h1>
       {artists.map((artist) => (
         <ArtistCard
           key={artist._id}
