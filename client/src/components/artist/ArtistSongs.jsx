@@ -58,7 +58,7 @@ const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
 
   return (
     <div
-      style={{ margin: "10px", color: customTheme.token.colorPrimary }}
+      style={{ margin: "0px", color: customTheme.token.colorPrimary }}
       className="artist-songs"
     >
       <div>
@@ -66,7 +66,7 @@ const ArtistSongs = ({ artistId, onAddToMyPage, isOnProfile }) => {
           TOP SONGS
         </h1>
         <List
-          style={{ margin: "20px", color: customTheme.token.colorPrimary }}
+          style={{ margin: "10px", color: customTheme.token.colorPrimary }}
           itemLayout="vertical"
           dataSource={songs}
           className="song-list"

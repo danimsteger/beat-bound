@@ -157,7 +157,7 @@ const ArtistPage = () => {
       }}
     >
       <Row
-        gutter={40}
+        gutter={0}
         justify="center"
         style={{ display: "flex", justifyContent: "space-evenly" }}
       >
@@ -174,7 +174,7 @@ const ArtistPage = () => {
             isOnProfile={(item) => isOnProfile(item, "events")}
           />
         </Col>
-        <Col flex={2}>
+        <Col flex={10}>
           <ArtistSongs
             artistId={artistId}
             onAddToMyPage={(item) => handleAddToMyPage(item, "song")}
