@@ -111,7 +111,7 @@ const SavedSongs = ({ addedItems }) => {
                             style={{ margin: "10px" }}
                           >
                             <img
-                              src="/spotify.white.png"
+                              src="/spotify.png"
                               alt="spotify logo"
                               width="25px"
                             />

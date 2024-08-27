@@ -89,7 +89,7 @@ const ArtistEvents = ({ artistName, onAddToMyPage, isOnProfile }) => {
                         className="concert-one-regular"
                         style={{
                           fontSize: "1rem",
-                          color: customTheme.token.colorSecondary,
+                          color: customTheme.token.colorPrimary,
                         }}
                       >
                         <strong className="bungee-regular">Date:</strong>{" "}
