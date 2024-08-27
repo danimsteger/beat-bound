@@ -20,7 +20,11 @@ const ResultsList = ({
     >
       {results && results.length > 0 ? (
         results.map((result, index) => (
-          <Col key={index} style={{ margin: 20, display: "flex" }}>
+          <Col
+            key={index}
+            style={{ margin: 20, display: "flex" }}
+            className="profile-columns"
+          >
             <ResultCard
               result={result}
               type={lastSearchType}

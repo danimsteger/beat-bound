@@ -12,10 +12,10 @@ const SearchBar = ({
   handleSearch,
 }) => {
   return (
-    <div style={{ margin: 40 }}>
+    <div style={{}}>
       <Form>
         <Row align="middle" style={{ justifyContent: "center" }}>
-          <Col xs={6} md={4} lg={4} style={{}}>
+          <Col xs={10} md={4} lg={4} style={{ margin: 10 }}>
             <Search
               type="text"
               value={searchTerm}
@@ -23,7 +23,7 @@ const SearchBar = ({
               placeholder="Search..."
             />
           </Col>
-          <Col xs={6} md={2}>
+          <Col xs={3} md={2} style={{ margin: 20 }}>
             <Select
               value={searchType}
               onChange={(value) => setSearchType(value)}
@@ -33,7 +33,7 @@ const SearchBar = ({
               <Option value="events">Events</Option>
             </Select>
           </Col>
-          <Col xs={6} md={2}>
+          <Col xs={3} md={2} style={{ margin: 30 }}>
             <Button onClick={handleSearch}>Search</Button>
           </Col>
         </Row>

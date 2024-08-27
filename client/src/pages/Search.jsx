@@ -192,7 +192,7 @@ const Search = () => {
   return (
     <div
       style={{
-        padding: "50px",
+        padding: "30px",
         backgroundColor: customTheme.token.colorSecondary,
         height: "100%",
         minHeight: "calc(100vh - 100px)",
