@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col } from "antd";
 import { useMutation, useQuery } from "@apollo/client";
@@ -16,14 +16,14 @@ const ArtistPage = () => {
   const [relatedArtists, setRelatedArtists] = useState([]);
   const [artistName, setArtistName] = useState("");
   const [addedItems, setAddedItems] = useState([]);
-  
+
   const { loading, data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
   const [addSong] = useMutation(ADD_SONG, {
     update(cache, { data: { addSong } }) {
       const { me } = cache.readQuery({ query: QUERY_ME });
-  
+
       cache.writeQuery({
         query: QUERY_ME,
         data: {
@@ -35,11 +35,11 @@ const ArtistPage = () => {
       });
     },
   });
-  
+
   const [addArtist] = useMutation(ADD_ARTIST, {
     update(cache, { data: { addArtist } }) {
       const { me } = cache.readQuery({ query: QUERY_ME });
-  
+
       cache.writeQuery({
         query: QUERY_ME,
         data: {
@@ -51,11 +51,11 @@ const ArtistPage = () => {
       });
     },
   });
-  
+
   const [addEvent] = useMutation(ADD_EVENT, {
     update(cache, { data: { addEvent } }) {
       const { me } = cache.readQuery({ query: QUERY_ME });
-  
+
       cache.writeQuery({
         query: QUERY_ME,
         data: {
@@ -67,7 +67,6 @@ const ArtistPage = () => {
       });
     },
   });
-  
 
   const isOnProfile = (item, type) => {
     if (type === "song") {
@@ -77,13 +76,15 @@ const ArtistPage = () => {
       );
     } else if (type === "artist") {
       return (
-        userData.artists?.some((artist) => artist.spotifyId === item.spotifyId) ||
-        addedItems.includes(item.spotifyId)
+        userData.artists?.some(
+          (artist) => artist.spotifyId === item.spotifyId
+        ) || addedItems.includes(item.spotifyId)
       );
     } else if (type === "events") {
       return (
-        userData.events?.some((event) => event.externalUrl === item.externalUrl) ||
-        addedItems.includes(item.externalUrl)
+        userData.events?.some(
+          (event) => event.externalUrl === item.externalUrl
+        ) || addedItems.includes(item.externalUrl)
       );
     }
     return false;
@@ -94,14 +95,14 @@ const ArtistPage = () => {
       console.error("User is not logged in.");
       return;
     }
-  
+
     try {
       if (type === "song") {
         let artists = "Unknown Artist";
         if (Array.isArray(item.artists) && item.artists.length > 0) {
           artists = item.artists.join(", ");
         }
-  
+
         await addSong({
           variables: {
             name: item.name || "Unknown Name",
@@ -111,7 +112,7 @@ const ArtistPage = () => {
             externalUrl: item.externalUrl || "",
           },
         });
-  
+
         setAddedItems((prevItems) => [...prevItems, item.externalUrl]);
       } else if (type === "artist") {
         await addArtist({
@@ -122,7 +123,7 @@ const ArtistPage = () => {
             externalUrl: item.externalUrl || "",
           },
         });
-  
+
         setAddedItems((prevItems) => [...prevItems, item.spotifyId]);
       } else if (type === "event") {
         await addEvent({
@@ -134,14 +135,14 @@ const ArtistPage = () => {
             externalUrl: item.externalUrl || "",
           },
         });
-  
+
         setAddedItems((prevItems) => [...prevItems, item.externalUrl]);
       }
     } catch (error) {
       console.error("Error adding item to page:", error);
     }
   };
-  
+
   return (
     <div>
       <Row

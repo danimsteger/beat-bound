@@ -1,20 +1,70 @@
 /* STYLING :D  */
 #root {
-    text-align: center;
-    font-family: monospace, sans-serif;
+  text-align: center;
+  font-family: monospace, sans-serif;
 }
 
 #homeheader {
-    font-weight: bold;
+  font-weight: bold;
 }
 #footer {
-    position: relative;
-    bottom:0;
-    width: 100%;
-    min-height: 100px;
-    padding: 20px 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  min-height: 100px;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.concert-one-regular {
+  font-family: "Concert One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.bungee-regular {
+  font-family: "Bungee", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.carousel {
+  width: 100%; /* Set the width of the carousel to 100% */
+}
+
+/* Styles for the first Carousel (always visible) */
+.first-carousel {
+  display: block; /* Display the first carousel by default */
+}
+
+/* Styles for the additional Carousels (hidden on smaller screens) */
+.second-carousel,
+.third-carousel {
+  display: none; /* Hide all carousels except the first one */
+}
+
+/* Media query for smaller screens (e.g., mobile devices) */
+@media screen and (max-width: 768px) {
+  /* Hide the additional Carousels on smaller screens */
+  .second-carousel,
+  .third-carousel {
+    display: none !important;
+    border-radius: 0;
+  }
+}
+
+.hidden-text {
+  opacity: 0;
+  transition: opacity 1s; /* Add a transition for the opacity property with a duration of 0.5 seconds */
+}
+
+.bungee-regular:hover + .hidden-text {
+  opacity: 1 !important; /* Change the opacity to 1 to reveal the hidden text on hover */
+}
+
+.bungee-regular:hover {
+  font-weight: bold;
 }

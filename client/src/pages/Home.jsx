@@ -1,16 +1,22 @@
 import FeatPlaylistCarousel from "../components/home/FeatPlaylists";
 import { Row, Col } from "antd";
 
-import SavedEvents from "../components/profile/SavedEvents";
+import MainHome from "../components/home/mainHome";
 
 const Home = () => {
   return (
     <div>
-      <header id='header'>
-        <h1 id='homeheader'>Welcome to Beat Bound</h1></header>
-      <section>
-        <FeatPlaylistCarousel></FeatPlaylistCarousel>
-      </section>
+      <Row justify="center">
+        <Col flex={1}>
+          <FeatPlaylistCarousel></FeatPlaylistCarousel>
+        </Col>
+        <Col flex={20}>
+          <MainHome></MainHome>
+        </Col>
+        <Col flex={1}>
+          <FeatPlaylistCarousel></FeatPlaylistCarousel>
+        </Col>
+      </Row>
     </div>
   );
 };
